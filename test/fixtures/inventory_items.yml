@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  location: one
+  item: one
+  quantity: 1
+  added_at: 2025-09-30 18:42:04
+
+two:
+  location: two
+  item: two
+  quantity: 1
+  added_at: 2025-09-30 18:42:04

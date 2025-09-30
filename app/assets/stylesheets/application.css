@@ -1,0 +1,462 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+
+/* Base Styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+/* Typography */
+h1, h2, h3 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-top: 2rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+/* Links */
+a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+.back-link {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.back-link:hover {
+  color: #34495e;
+}
+
+/* Layout */
+.header {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.dashboard {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr 2fr;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Search Form */
+.search-form {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 2px solid #e1e8ed;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+/* Cards */
+.locations-section,
+.inventory-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.locations-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  margin-top: 1rem;
+}
+
+.location-card {
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fafbfc;
+}
+
+.location-card h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.location-link,
+.item-link {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.location-link:hover,
+.item-link:hover {
+  color: #3498db;
+}
+
+/* Tables */
+.inventory-table,
+.items-table {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #34495e;
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 500;
+}
+
+td {
+  padding: 1rem;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Utility Classes */
+.barcode {
+  color: #7f8c8d;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+.description {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+.quantity {
+  font-weight: 600;
+  color: #27ae60;
+  font-size: 1.1rem;
+}
+
+.timestamp {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #7f8c8d;
+}
+
+.empty-state h3 {
+  color: #95a5a6;
+  margin-bottom: 0.5rem;
+}
+
+/* Item and Location Detail Pages */
+.breadcrumb {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.page-header,
+.location-header,
+.item-header {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.location-contents,
+.item-locations,
+.items-list {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.items-grid,
+.locations-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: 1rem;
+}
+
+.item-card,
+.location-entry {
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: #fafbfc;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.item-info,
+.location-info {
+  flex: 1;
+}
+
+.quantity-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantity-info .quantity {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #27ae60;
+}
+
+.unit {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.item-count,
+.total-items,
+.total-quantity {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.no-locations {
+  color: #e74c3c;
+  font-style: italic;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.pagination a,
+.pagination span {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e1e8ed;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #3498db;
+}
+
+.pagination .current {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+.pagination a:hover {
+  background-color: #f8f9fa;
+  text-decoration: none;
+}
+
+/* Forms */
+.form-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-width: 600px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e1e8ed;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-hint {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn-secondary {
+  background-color: #95a5a6;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.2s;
+}
+
+.btn-secondary:hover {
+  background-color: #7f8c8d;
+  text-decoration: none;
+  color: white;
+}
+
+.error-messages {
+  background-color: #fee;
+  border: 1px solid #e74c3c;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.error-messages h3 {
+  color: #e74c3c;
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+}
+
+.error-messages ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.error-messages li {
+  color: #e74c3c;
+  margin-bottom: 0.25rem;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn-success {
+  background-color: #27ae60;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #219a52;
+}
+
+/* Flash messages */
+.flash-notice {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border: 1px solid #c3e6cb;
+}

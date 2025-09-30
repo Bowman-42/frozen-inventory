@@ -1,0 +1,36 @@
+# Frozen Inventory Git Ignore Information
+
+This .gitignore file is configured for the Frozen Inventory Rails application.
+
+## Key Files Being Ignored (Security & Performance):
+
+### Database Files
+- *.sqlite3, *.sqlite3-*, *.db (development databases)
+- /storage/* (SQLite database storage)
+
+### Secrets & Configuration
+- .env* files (environment variables with secrets)
+- /config/master.key (Rails encrypted credentials key)
+- /config/credentials/*.key (additional credential keys)
+- /.kamal/secrets* (deployment secrets)
+
+### Logs & Temporary Files
+- /log/* (application logs)
+- /tmp/* (temporary files and caches)
+
+### System & IDE Files
+- .DS_Store (macOS), Thumbs.db (Windows)
+- .vscode/, .idea/, *.swp (IDE configuration)
+
+### Dependencies & Assets
+- /node_modules (if using Node.js)
+- /public/assets (compiled assets)
+- /vendor/bundle (bundled gems)
+
+## Files Being Tracked:
+- Application source code (app/, config/, lib/)
+- Gemfile & Gemfile.lock (dependency definitions)
+- Database migrations (db/migrate/)
+- Tests (test/)
+- Documentation (README.md)
+- Configuration templates (without secrets)

@@ -1,0 +1,78 @@
+<% if notice %>
+  <div class="flash-notice"><%= notice %></div>
+<% end %>
+
+<div class="header">
+  <h1>Frozen Inventory System</h1>
+
+  <div class="action-buttons">
+    <%= link_to "➕ New Fridge", new_location_path, class: "btn btn-success" %>
+    <%= link_to "📦 New Item", new_item_path, class: "btn btn-success" %>
+    <%= link_to "📋 All Items", items_path, class: "btn btn-secondary" %>
+  </div>
+
+  <%= form_with url: inventory_search_path, method: :get, local: true, class: "search-form" do |f| %>
+    <%= f.text_field :q, placeholder: "Search items or locations...", value: params[:q], class: "search-input" %>
+    <%= f.submit "Search", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<div class="dashboard">
+  <div class="locations-section">
+    <h2>Fridges</h2>
+    <div class="locations-grid">
+      <% @locations.each do |location| %>
+        <div class="location-card">
+          <h3><%= link_to location.name, location_path(location.barcode), class: "location-link" %></h3>
+          <p class="barcode">Barcode: <%= location.barcode %></p>
+          <p class="description"><%= location.description %></p>
+          <p class="item-count"><%= pluralize(location.total_items, 'item') %></p>
+        </div>
+      <% end %>
+
+      <% if @locations.empty? %>
+        <p class="empty-state">No fridges configured yet.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="inventory-section">
+    <h2>Recent Inventory Items</h2>
+    <div class="inventory-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Location</th>
+            <th>Quantity</th>
+            <th>Added</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @inventory_items.each do |inventory_item| %>
+            <tr>
+              <td>
+                <%= link_to inventory_item.item.name, item_path(inventory_item.item.barcode), class: "item-link" %>
+                <br><small class="barcode"><%= inventory_item.item.barcode %></small>
+              </td>
+              <td>
+                <%= link_to inventory_item.location.name, location_path(inventory_item.location.barcode), class: "location-link" %>
+                <br><small class="barcode"><%= inventory_item.location.barcode %></small>
+              </td>
+              <td class="quantity"><%= inventory_item.quantity %></td>
+              <td class="timestamp"><%= time_ago_in_words(inventory_item.added_at) %> ago</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <% if defined?(@inventory_items) && @inventory_items.respond_to?(:current_page) %>
+        <%= paginate @inventory_items %>
+      <% end %>
+
+      <% if @inventory_items.empty? %>
+        <p class="empty-state">No inventory items found.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

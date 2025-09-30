@@ -1,0 +1,45 @@
+<div class="breadcrumb">
+  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %> |
+  <%= link_to "All Items", items_path, class: "back-link" %>
+</div>
+
+<div class="item-header">
+  <h1><%= @item.name %></h1>
+  <p class="barcode">Barcode: <%= @item.barcode %></p>
+  <% if @item.description.present? %>
+    <p class="description"><%= @item.description %></p>
+  <% end %>
+  <p class="total-quantity">Total Quantity: <%= @item.total_quantity %></p>
+</div>
+
+<div class="item-locations">
+  <h2>Stored In</h2>
+
+  <% if @inventory_items.any? %>
+    <div class="locations-list">
+      <% @inventory_items.each do |inventory_item| %>
+        <div class="location-entry">
+          <div class="location-info">
+            <h3><%= link_to inventory_item.location.name, location_path(inventory_item.location.barcode), class: "location-link" %></h3>
+            <p class="barcode">Barcode: <%= inventory_item.location.barcode %></p>
+            <% if inventory_item.location.description.present? %>
+              <p class="description"><%= inventory_item.location.description %></p>
+            <% end %>
+          </div>
+          <div class="quantity-info">
+            <span class="quantity"><%= inventory_item.quantity %></span>
+            <span class="unit">units</span>
+          </div>
+          <div class="timestamp">
+            Added <%= time_ago_in_words(inventory_item.added_at) %> ago
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <h3>Not stored anywhere</h3>
+      <p>This item is not currently stored in any fridge.</p>
+    </div>
+  <% end %>
+</div>

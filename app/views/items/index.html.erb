@@ -1,0 +1,61 @@
+<% if notice %>
+  <div class="flash-notice"><%= notice %></div>
+<% end %>
+
+<div class="breadcrumb">
+  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %>
+</div>
+
+<div class="page-header">
+  <h1>All Items</h1>
+  <p>Browse all items in the inventory system</p>
+
+  <div class="action-buttons">
+    <%= link_to "📦 New Item", new_item_path, class: "btn btn-success" %>
+  </div>
+</div>
+
+<div class="items-list">
+  <% if @items.any? %>
+    <div class="items-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Barcode</th>
+            <th>Total Quantity</th>
+            <th>Locations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @items.each do |item| %>
+            <tr>
+              <td>
+                <%= link_to item.name, item_path(item.barcode), class: "item-link" %>
+                <% if item.description.present? %>
+                  <br><small class="description"><%= item.description %></small>
+                <% end %>
+              </td>
+              <td class="barcode"><%= item.barcode %></td>
+              <td class="quantity"><%= item.total_quantity %></td>
+              <td class="locations">
+                <% if item.locations.any? %>
+                  <%= item.locations.map(&:name).join(", ") %>
+                <% else %>
+                  <span class="no-locations">Not in any fridge</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <%= paginate @items %>
+  <% else %>
+    <div class="empty-state">
+      <h3>No items found</h3>
+      <p>No items have been added to the system yet.</p>
+    </div>
+  <% end %>
+</div>

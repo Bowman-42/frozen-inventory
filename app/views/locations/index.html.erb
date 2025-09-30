@@ -1,0 +1,48 @@
+<% if notice %>
+  <div class="flash-notice"><%= notice %></div>
+<% end %>
+
+<div class="breadcrumb">
+  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %>
+</div>
+
+<div class="page-header">
+  <h1>All Fridges</h1>
+  <p>Browse all fridges and freezers in the system</p>
+
+  <div class="action-buttons">
+    <%= link_to "➕ New Fridge", new_location_path, class: "btn btn-success" %>
+  </div>
+</div>
+
+<div class="locations-list">
+  <% if @locations.any? %>
+    <div class="locations-grid">
+      <% @locations.each do |location| %>
+        <div class="location-card">
+          <h3><%= link_to location.name, location_path(location.barcode), class: "location-link" %></h3>
+          <p class="barcode">Barcode: <%= location.barcode %></p>
+          <% if location.description.present? %>
+            <p class="description"><%= location.description %></p>
+          <% end %>
+          <p class="item-count"><%= pluralize(location.total_items, 'item') %></p>
+
+          <% if location.inventory_items.any? %>
+            <div class="recent-items">
+              <small>Recent items:</small>
+              <% location.inventory_items.includes(:item).limit(3).each do |inv_item| %>
+                <small class="item-preview"><%= inv_item.item.name %> (<%= inv_item.quantity %>)</small>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <h3>No fridges found</h3>
+      <p>No fridges have been added to the system yet.</p>
+      <%= link_to "Create your first fridge", new_location_path, class: "btn btn-success" %>
+    </div>
+  <% end %>
+</div>
