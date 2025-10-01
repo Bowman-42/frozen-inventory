@@ -1,0 +1,54 @@
+<div class="breadcrumb">
+  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %> |
+  <%= link_to "All Items", items_path, class: "back-link" %> |
+  <%= link_to @item.name, item_path(@item.barcode), class: "back-link" %>
+</div>
+
+<div class="page-header">
+  <h1>Edit Item</h1>
+  <p>Update item information</p>
+</div>
+
+<div class="form-container">
+  <%= form_with model: @item, url: item_path(@item.barcode), method: :patch, local: true, class: "item-form" do |f| %>
+    <% if @item.errors.any? %>
+      <div class="error-messages">
+        <h3><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h3>
+        <ul>
+          <% @item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <label class="form-label">Barcode</label>
+      <input type="text" class="form-input" value="<%= @item.barcode %>" disabled>
+      <small class="form-hint">Barcode cannot be changed</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :name, class: "form-label" %>
+      <%= f.text_field :name, class: "form-input", placeholder: "e.g., Whole Milk", required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :category_id, "Category", class: "form-label" %>
+      <%= f.collection_select :category_id, Category.ordered, :id, :name,
+          { prompt: "Select a category (optional)", selected: @item.category_id },
+          { class: "form-input" } %>
+      <small class="form-hint">Categorize this item to make it easier to find</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :description, class: "form-label" %>
+      <%= f.text_area :description, class: "form-textarea", placeholder: "Optional description of the item", rows: 3 %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "Update Item", class: "btn btn-primary" %>
+      <%= link_to "Cancel", item_path(@item.barcode), class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>

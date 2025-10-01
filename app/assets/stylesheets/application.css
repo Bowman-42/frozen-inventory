@@ -451,6 +451,22 @@ tr:hover {
   background-color: #219a52;
 }
 
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.actions {
+  white-space: nowrap;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
 /* Flash messages */
 .flash-notice {
   background-color: #d4edda;

@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       get :search
     end
   end
-  resources :items, only: [:index, :show, :new, :create], param: :barcode do
+  resources :items, only: [:index, :show, :new, :create, :edit, :update], param: :barcode do
     collection do
       post :print_barcodes
       get :search

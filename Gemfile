@@ -42,6 +42,9 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# CSV processing (required for Ruby 3.4.0+)
+gem "csv"
+
 # Barcode generation and PDF printing
 gem "barby"
 gem "rqrcode"

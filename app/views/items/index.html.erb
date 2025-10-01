@@ -50,6 +50,7 @@
               <th>Barcode</th>
               <th>Total Quantity</th>
               <th>Locations</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -79,6 +80,9 @@
                   <% else %>
                     <span class="no-locations">Not in any fridge</span>
                   <% end %>
+                </td>
+                <td class="actions">
+                  <%= link_to "Edit", edit_item_path(item.barcode), class: "btn btn-sm btn-secondary" %>
                 </td>
               </tr>
             <% end %>

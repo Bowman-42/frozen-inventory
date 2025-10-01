@@ -56,6 +56,20 @@ class ItemsController < ApplicationController
     end
   end
 
+  def edit
+    @item = Item.find_by!(barcode: params[:barcode])
+  end
+
+  def update
+    @item = Item.find_by!(barcode: params[:barcode])
+
+    if @item.update(item_params)
+      redirect_to item_path(@item.barcode), notice: 'Item was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def print_barcodes
     @items = Item.where(id: params[:item_ids])
 
