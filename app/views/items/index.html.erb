@@ -79,47 +79,22 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const selectAllCheckbox = document.getElementById('select-all');
-  const itemCheckboxes = document.querySelectorAll('.item-checkbox');
-  const printButton = document.getElementById('print-selected-btn');
-  const form = document.getElementById('barcode-print-form');
-
-  // Handle select all functionality
-  if (selectAllCheckbox) {
-    selectAllCheckbox.addEventListener('change', function() {
-      itemCheckboxes.forEach(checkbox => {
-        checkbox.checked = this.checked;
-      });
-      updatePrintButton();
-    });
-  }
-
-  // Handle individual checkbox changes
-  itemCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-      updateSelectAllState();
-      updatePrintButton();
-    });
-  });
-
-  // Handle print button click
-  if (printButton && form) {
-    printButton.addEventListener('click', function() {
-      form.submit();
-    });
-  }
-
+function initializeItemsPrintButton() {
   function updateSelectAllState() {
+    const selectAllCheckbox = document.getElementById('select-all');
     const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
-    if (selectAllCheckbox) {
-      selectAllCheckbox.checked = checkedBoxes.length === itemCheckboxes.length;
-      selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < itemCheckboxes.length;
+    const allItemCheckboxes = document.querySelectorAll('.item-checkbox');
+
+    if (selectAllCheckbox && allItemCheckboxes.length > 0) {
+      selectAllCheckbox.checked = checkedBoxes.length === allItemCheckboxes.length;
+      selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < allItemCheckboxes.length;
     }
   }
 
   function updatePrintButton() {
+    const printButton = document.getElementById('print-selected-btn');
     const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
+
     if (printButton) {
       printButton.disabled = checkedBoxes.length === 0;
       printButton.textContent = checkedBoxes.length > 0
@@ -128,8 +103,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Initial state
-  updateSelectAllState();
-  updatePrintButton();
-});
+  // Use event delegation for dynamic content
+  document.addEventListener('change', function(e) {
+    if (e.target && e.target.id === 'select-all') {
+      // Handle select all checkbox
+      const isChecked = e.target.checked;
+      document.querySelectorAll('.item-checkbox').forEach(function(checkbox) {
+        checkbox.checked = isChecked;
+      });
+      updatePrintButton();
+    } else if (e.target && e.target.classList.contains('item-checkbox')) {
+      // Handle individual item checkbox
+      updateSelectAllState();
+      updatePrintButton();
+    }
+  });
+
+  // Handle print button click
+  document.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'print-selected-btn') {
+      const form = document.getElementById('barcode-print-form');
+      if (form) {
+        form.submit();
+      }
+    }
+  });
+
+  // Initialize button state after a short delay to ensure DOM is ready
+  setTimeout(function() {
+    updateSelectAllState();
+    updatePrintButton();
+  }, 50);
+}
+
+// Initialize on both DOMContentLoaded and Turbo events
+document.addEventListener('DOMContentLoaded', initializeItemsPrintButton);
+document.addEventListener('turbo:load', initializeItemsPrintButton);
+document.addEventListener('turbo:render', initializeItemsPrintButton);
 </script>
