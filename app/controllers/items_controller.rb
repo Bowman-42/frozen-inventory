@@ -1,9 +1,28 @@
+require_relative '../services/barcode_printer'
+
 class ItemsController < ApplicationController
   def index
     @items = Item.includes(:inventory_items, :locations)
                  .order(:name)
                  .page(params[:page])
                  .per(20)
+  end
+
+  def search
+    @query = params[:q]
+
+    if @query.present?
+      @items = Item.includes(:inventory_items, :locations)
+                   .where('LOWER(name) LIKE ? OR LOWER(barcode) LIKE ? OR LOWER(description) LIKE ?',
+                          "%#{@query.downcase}%", "%#{@query.downcase}%", "%#{@query.downcase}%")
+                   .order(:name)
+                   .page(params[:page])
+                   .per(20)
+    else
+      @items = Item.none.page(params[:page]).per(20)
+    end
+
+    render :index
   end
 
   def show
@@ -25,9 +44,25 @@ class ItemsController < ApplicationController
     end
   end
 
+  def print_barcodes
+    @items = Item.where(id: params[:item_ids])
+
+    if @items.empty?
+      redirect_to items_path, alert: 'No items selected for printing.'
+      return
+    end
+
+    pdf = BarcodePrinter.generate_pdf(@items, type: :item)
+
+    send_data pdf,
+              filename: "item_barcodes_#{Date.current.strftime('%Y%m%d')}.pdf",
+              type: 'application/pdf',
+              disposition: 'inline'  # Changed from 'attachment' to 'inline'
+  end
+
   private
 
   def item_params
-    params.require(:item).permit(:name, :barcode, :description)
+    params.require(:item).permit(:name, :description)
   end
 end

@@ -1,6 +1,6 @@
 class InventoryItem < ApplicationRecord
   belongs_to :location
-  belongs_to :item
+  belongs_to :item, counter_cache: :total_quantity
 
   validates :quantity, presence: true, numericality: { greater_than: 0 }
   validates :added_at, presence: true

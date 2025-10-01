@@ -12,44 +12,62 @@
 
   <div class="action-buttons">
     <%= link_to "📦 New Item", new_item_path, class: "btn btn-success" %>
+    <button type="button" id="print-selected-btn" class="btn btn-primary" disabled>🖨️ Print Selected Barcodes</button>
   </div>
+
+  <%= form_with url: search_items_path, method: :get, local: true, class: "search-form" do |f| %>
+    <%= f.text_field :q, placeholder: "Search items by name, barcode, or description...", value: params[:q], class: "search-input" %>
+    <%= f.submit "Search", class: "btn btn-primary" %>
+    <% if params[:q].present? %>
+      <%= link_to "Clear", items_path, class: "btn btn-secondary" %>
+    <% end %>
+  <% end %>
 </div>
 
 <div class="items-list">
   <% if @items.any? %>
-    <div class="items-table">
-      <table>
-        <thead>
-          <tr>
-            <th>Item Name</th>
-            <th>Barcode</th>
-            <th>Total Quantity</th>
-            <th>Locations</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @items.each do |item| %>
+    <%= form_tag print_barcodes_items_path, method: :post, id: "barcode-print-form", target: "_blank" do %>
+      <div class="items-table">
+        <table>
+          <thead>
             <tr>
-              <td>
-                <%= link_to item.name, item_path(item.barcode), class: "item-link" %>
-                <% if item.description.present? %>
-                  <br><small class="description"><%= item.description %></small>
-                <% end %>
-              </td>
-              <td class="barcode"><%= item.barcode %></td>
-              <td class="quantity"><%= item.total_quantity %></td>
-              <td class="locations">
-                <% if item.locations.any? %>
-                  <%= item.locations.map(&:name).join(", ") %>
-                <% else %>
-                  <span class="no-locations">Not in any fridge</span>
-                <% end %>
-              </td>
+              <th>
+                <input type="checkbox" id="select-all" />
+                <label for="select-all">Select All</label>
+              </th>
+              <th>Item Name</th>
+              <th>Barcode</th>
+              <th>Total Quantity</th>
+              <th>Locations</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            <% @items.each do |item| %>
+              <tr>
+                <td>
+                  <%= check_box_tag "item_ids[]", item.id, false, class: "item-checkbox", id: "item_#{item.id}" %>
+                </td>
+                <td>
+                  <%= link_to item.name, item_path(item.barcode), class: "item-link" %>
+                  <% if item.description.present? %>
+                    <br><small class="description"><%= item.description %></small>
+                  <% end %>
+                </td>
+                <td class="barcode"><%= item.barcode %></td>
+                <td class="quantity"><%= item.total_quantity %></td>
+                <td class="locations">
+                  <% if item.locations.any? %>
+                    <%= item.locations.map(&:name).join(", ") %>
+                  <% else %>
+                    <span class="no-locations">Not in any fridge</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
 
     <%= paginate @items %>
   <% else %>
@@ -59,3 +77,59 @@
     </div>
   <% end %>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const selectAllCheckbox = document.getElementById('select-all');
+  const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+  const printButton = document.getElementById('print-selected-btn');
+  const form = document.getElementById('barcode-print-form');
+
+  // Handle select all functionality
+  if (selectAllCheckbox) {
+    selectAllCheckbox.addEventListener('change', function() {
+      itemCheckboxes.forEach(checkbox => {
+        checkbox.checked = this.checked;
+      });
+      updatePrintButton();
+    });
+  }
+
+  // Handle individual checkbox changes
+  itemCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      updateSelectAllState();
+      updatePrintButton();
+    });
+  });
+
+  // Handle print button click
+  if (printButton && form) {
+    printButton.addEventListener('click', function() {
+      form.submit();
+    });
+  }
+
+  function updateSelectAllState() {
+    const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
+    if (selectAllCheckbox) {
+      selectAllCheckbox.checked = checkedBoxes.length === itemCheckboxes.length;
+      selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < itemCheckboxes.length;
+    }
+  }
+
+  function updatePrintButton() {
+    const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
+    if (printButton) {
+      printButton.disabled = checkedBoxes.length === 0;
+      printButton.textContent = checkedBoxes.length > 0
+        ? `🖨️ Print ${checkedBoxes.length} Barcode${checkedBoxes.length === 1 ? '' : 's'}`
+        : '🖨️ Print Selected Barcodes';
+    }
+  }
+
+  // Initial state
+  updateSelectAllState();
+  updatePrintButton();
+});
+</script>

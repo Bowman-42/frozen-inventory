@@ -18,8 +18,18 @@ Rails.application.routes.draw do
 
   # Web interface routes
   root 'inventory#index'
-  resources :locations, only: [:index, :show, :new, :create], param: :barcode
-  resources :items, only: [:index, :show, :new, :create], param: :barcode
+  resources :locations, only: [:index, :show, :new, :create], param: :barcode do
+    collection do
+      post :print_barcodes
+      get :search
+    end
+  end
+  resources :items, only: [:index, :show, :new, :create], param: :barcode do
+    collection do
+      post :print_barcodes
+      get :search
+    end
+  end
   get 'inventory', to: 'inventory#index'
   get 'inventory/search', to: 'inventory#search'
 

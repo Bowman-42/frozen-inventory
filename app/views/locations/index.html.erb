@@ -12,32 +12,64 @@
 
   <div class="action-buttons">
     <%= link_to "➕ New Fridge", new_location_path, class: "btn btn-success" %>
+    <button type="button" id="print-selected-btn" class="btn btn-primary" disabled>🖨️ Print Selected Barcodes</button>
   </div>
+
+  <%= form_with url: search_locations_path, method: :get, local: true, class: "search-form" do |f| %>
+    <%= f.text_field :q, placeholder: "Search fridges by name, barcode, or description...", value: params[:q], class: "search-input" %>
+    <%= f.submit "Search", class: "btn btn-primary" %>
+    <% if params[:q].present? %>
+      <%= link_to "Clear", locations_path, class: "btn btn-secondary" %>
+    <% end %>
+  <% end %>
 </div>
 
 <div class="locations-list">
   <% if @locations.any? %>
-    <div class="locations-grid">
-      <% @locations.each do |location| %>
-        <div class="location-card">
-          <h3><%= link_to location.name, location_path(location.barcode), class: "location-link" %></h3>
-          <p class="barcode">Barcode: <%= location.barcode %></p>
-          <% if location.description.present? %>
-            <p class="description"><%= location.description %></p>
-          <% end %>
-          <p class="item-count"><%= pluralize(location.total_items, 'item') %></p>
-
-          <% if location.inventory_items.any? %>
-            <div class="recent-items">
-              <small>Recent items:</small>
-              <% location.inventory_items.includes(:item).limit(3).each do |inv_item| %>
-                <small class="item-preview"><%= inv_item.item.name %> (<%= inv_item.quantity %>)</small>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+    <%= form_tag print_barcodes_locations_path, method: :post, id: "barcode-print-form", target: "_blank" do %>
+      <div class="locations-table">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox" id="select-all" />
+                <label for="select-all">Select All</label>
+              </th>
+              <th>Fridge Name</th>
+              <th>Barcode</th>
+              <th>Total Items</th>
+              <th>Recent Items</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @locations.each do |location| %>
+              <tr>
+                <td>
+                  <%= check_box_tag "location_ids[]", location.id, false, class: "location-checkbox", id: "location_#{location.id}" %>
+                </td>
+                <td>
+                  <%= link_to location.name, location_path(location.barcode), class: "location-link" %>
+                  <% if location.description.present? %>
+                    <br><small class="description"><%= location.description %></small>
+                  <% end %>
+                </td>
+                <td class="barcode"><%= location.barcode %></td>
+                <td class="quantity"><%= pluralize(location.total_items, 'item') %></td>
+                <td class="recent-items">
+                  <% if location.inventory_items.any? %>
+                    <% location.inventory_items.includes(:item).limit(3).each do |inv_item| %>
+                      <small class="item-preview"><%= inv_item.item.name %> (<%= inv_item.quantity %>)</small>
+                    <% end %>
+                  <% else %>
+                    <span class="no-items">Empty</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
   <% else %>
     <div class="empty-state">
       <h3>No fridges found</h3>
@@ -46,3 +78,59 @@
     </div>
   <% end %>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const selectAllCheckbox = document.getElementById('select-all');
+  const locationCheckboxes = document.querySelectorAll('.location-checkbox');
+  const printButton = document.getElementById('print-selected-btn');
+  const form = document.getElementById('barcode-print-form');
+
+  // Handle select all functionality
+  if (selectAllCheckbox) {
+    selectAllCheckbox.addEventListener('change', function() {
+      locationCheckboxes.forEach(checkbox => {
+        checkbox.checked = this.checked;
+      });
+      updatePrintButton();
+    });
+  }
+
+  // Handle individual checkbox changes
+  locationCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      updateSelectAllState();
+      updatePrintButton();
+    });
+  });
+
+  // Handle print button click
+  if (printButton && form) {
+    printButton.addEventListener('click', function() {
+      form.submit();
+    });
+  }
+
+  function updateSelectAllState() {
+    const checkedBoxes = document.querySelectorAll('.location-checkbox:checked');
+    if (selectAllCheckbox) {
+      selectAllCheckbox.checked = checkedBoxes.length === locationCheckboxes.length;
+      selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < locationCheckboxes.length;
+    }
+  }
+
+  function updatePrintButton() {
+    const checkedBoxes = document.querySelectorAll('.location-checkbox:checked');
+    if (printButton) {
+      printButton.disabled = checkedBoxes.length === 0;
+      printButton.textContent = checkedBoxes.length > 0
+        ? `🖨️ Print ${checkedBoxes.length} Barcode${checkedBoxes.length === 1 ? '' : 's'}`
+        : '🖨️ Print Selected Barcodes';
+    }
+  }
+
+  // Initial state
+  updateSelectAllState();
+  updatePrintButton();
+});
+</script>

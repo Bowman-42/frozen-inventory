@@ -5,7 +5,20 @@ class Location < ApplicationRecord
   validates :name, presence: true
   validates :barcode, presence: true, uniqueness: true
 
+  before_validation :generate_barcode, on: :create
+
   def total_items
     inventory_items.sum(:quantity)
+  end
+
+  private
+
+  def generate_barcode
+    return if barcode.present?
+
+    loop do
+      self.barcode = "LOC#{SecureRandom.alphanumeric(8).upcase}"
+      break unless Location.exists?(barcode: barcode)
+    end
   end
 end

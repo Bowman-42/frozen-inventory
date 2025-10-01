@@ -5,9 +5,10 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :barcode, presence: true, uniqueness: true
 
-  def total_quantity
-    inventory_items.sum(:quantity)
-  end
+  before_validation :generate_barcode, on: :create
+
+  # total_quantity is now cached in the database column
+  # Rails will automatically read from the total_quantity attribute
 
   def locations_with_quantity
     inventory_items.includes(:location).map do |inv_item|
@@ -16,6 +17,17 @@ class Item < ApplicationRecord
         quantity: inv_item.quantity,
         added_at: inv_item.added_at
       }
+    end
+  end
+
+  private
+
+  def generate_barcode
+    return if barcode.present?
+
+    loop do
+      self.barcode = "ITM#{SecureRandom.alphanumeric(8).upcase}"
+      break unless Item.exists?(barcode: barcode)
     end
   end
 end
