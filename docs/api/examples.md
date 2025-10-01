@@ -111,15 +111,14 @@ curl -X GET http://localhost:3000/api/v1/items/ITEM001
 
 ### 4. Add New Items to Inventory
 
-Add 3 frozen pizzas to the basement freezer:
+Add 1 frozen pizza to the basement freezer (repeat 3 times for 3 pizzas):
 
 ```bash
 curl -X POST http://localhost:3000/api/v1/add-item \
   -H "Content-Type: application/json" \
   -d '{
     "location_barcode": "FRIDGE002",
-    "item_barcode": "ITEM003",
-    "quantity": 3
+    "item_barcode": "ITEM003"
   }'
 ```
 
@@ -129,7 +128,7 @@ curl -X POST http://localhost:3000/api/v1/add-item \
   "data": {
     "inventory_item": {
       "id": 15,
-      "quantity": 3,
+      "quantity": 1,
       "added_at": "2024-01-15T11:00:00Z"
     },
     "location": {
@@ -149,25 +148,24 @@ curl -X POST http://localhost:3000/api/v1/add-item \
 
 ### 5. Add More of Existing Items
 
-Add 2 more milk cartons to existing inventory:
+Add 1 more milk carton to existing inventory (repeat for multiple items):
 
 ```bash
 curl -X POST http://localhost:3000/api/v1/add-item \
   -H "Content-Type: application/json" \
   -d '{
     "location_barcode": "FRIDGE001",
-    "item_barcode": "ITEM001",
-    "quantity": 2
+    "item_barcode": "ITEM001"
   }'
 ```
 
-**Response (quantities combined):**
+**Response (quantity incremented):**
 ```json
 {
   "data": {
     "inventory_item": {
       "id": 1,
-      "quantity": 4,
+      "quantity": 3,
       "added_at": "2024-01-15T09:00:00Z"
     },
     "location": {
@@ -194,8 +192,7 @@ curl -X POST http://localhost:3000/api/v1/remove-item \
   -H "Content-Type: application/json" \
   -d '{
     "location_barcode": "FRIDGE001",
-    "item_barcode": "ITEM001",
-    "quantity": 1
+    "item_barcode": "ITEM001"
   }'
 ```
 
@@ -205,7 +202,7 @@ curl -X POST http://localhost:3000/api/v1/remove-item \
   "data": {
     "inventory_item": {
       "id": 1,
-      "quantity": 3,
+      "quantity": 2,
       "added_at": "2024-01-15T09:00:00Z"
     },
     "removed_quantity": 1,
@@ -224,17 +221,16 @@ curl -X POST http://localhost:3000/api/v1/remove-item \
 }
 ```
 
-### 7. Remove All Items of a Type
+### 7. Remove Last Item (Complete Removal)
 
-Remove all remaining milk cartons:
+Remove the last milk carton (when quantity is 1):
 
 ```bash
 curl -X POST http://localhost:3000/api/v1/remove-item \
   -H "Content-Type: application/json" \
   -d '{
     "location_barcode": "FRIDGE001",
-    "item_barcode": "ITEM001",
-    "quantity": 5
+    "item_barcode": "ITEM001"
   }'
 ```
 
@@ -243,7 +239,7 @@ curl -X POST http://localhost:3000/api/v1/remove-item \
 {
   "data": {
     "message": "Item completely removed from location",
-    "removed_quantity": 3,
+    "removed_quantity": 1,
     "location": {
       "id": 1,
       "name": "Main Kitchen Fridge",
@@ -281,8 +277,7 @@ curl -X POST http://localhost:3000/api/v1/add-item \
   -H "Content-Type: application/json" \
   -d '{
     "location_barcode": "FRIDGE001",
-    "item_barcode": "ITEM001",
-    "quantity": 1
+    "item_barcode": "ITEM001"
   }'
 ```
 
@@ -322,8 +317,7 @@ curl -X GET http://localhost:3000/api/v1/locations/INVALID
 curl -X POST http://localhost:3000/api/v1/add-item \
   -H "Content-Type: application/json" \
   -d '{
-    "item_barcode": "ITEM001",
-    "quantity": 1
+    "item_barcode": "ITEM001"
   }'
 ```
 
@@ -341,8 +335,7 @@ curl -X POST http://localhost:3000/api/v1/remove-item \
   -H "Content-Type: application/json" \
   -d '{
     "location_barcode": "FRIDGE001",
-    "item_barcode": "NONEXISTENT",
-    "quantity": 1
+    "item_barcode": "NONEXISTENT"
   }'
 ```
 
@@ -364,7 +357,7 @@ For bulk operations, make multiple API calls:
 for item in ITEM001 ITEM002 ITEM003; do
   curl -X POST http://localhost:3000/api/v1/add-item \
     -H "Content-Type: application/json" \
-    -d "{\"location_barcode\":\"FRIDGE001\",\"item_barcode\":\"$item\",\"quantity\":1}"
+    -d "{\"location_barcode\":\"FRIDGE001\",\"item_barcode\":\"$item\"}"
   echo "" # New line for readability
 done
 ```
@@ -403,8 +396,7 @@ http GET localhost:3000/api/v1/status
 # Add item
 http POST localhost:3000/api/v1/add-item \
   location_barcode=FRIDGE001 \
-  item_barcode=ITEM001 \
-  quantity:=2
+  item_barcode=ITEM001
 ```
 
 ### Using JavaScript (Fetch)
@@ -422,8 +414,7 @@ const addResponse = await fetch('http://localhost:3000/api/v1/add-item', {
   },
   body: JSON.stringify({
     location_barcode: 'FRIDGE001',
-    item_barcode: 'ITEM001',
-    quantity: 2
+    item_barcode: 'ITEM001'
   })
 });
 const addData = await addResponse.json();
@@ -442,8 +433,7 @@ print(response.json())
 add_response = requests.post('http://localhost:3000/api/v1/add-item',
   json={
     'location_barcode': 'FRIDGE001',
-    'item_barcode': 'ITEM001',
-    'quantity': 2
+    'item_barcode': 'ITEM001'
   })
 print(add_response.json())
 ```

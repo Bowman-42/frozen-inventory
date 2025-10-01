@@ -150,21 +150,19 @@ GET /api/v1/items/ITEM001
 
 ### POST /api/v1/add-item
 
-Adds items to a specific location in the inventory.
+Adds exactly 1 item to a specific location in the inventory per API call.
 
 **Request Body:**
 ```json
 {
   "location_barcode": "FRIDGE001",
-  "item_barcode": "ITEM001",
-  "quantity": 2
+  "item_barcode": "ITEM001"
 }
 ```
 
 **Parameters:**
 - `location_barcode` (required) - Barcode of the target location
 - `item_barcode` (required) - Barcode of the item to add
-- `quantity` (optional) - Number of items to add (defaults to 1)
 
 **Request:**
 ```http
@@ -173,8 +171,7 @@ Content-Type: application/json
 
 {
   "location_barcode": "FRIDGE001",
-  "item_barcode": "ITEM001",
-  "quantity": 2
+  "item_barcode": "ITEM001"
 }
 ```
 
@@ -184,7 +181,7 @@ Content-Type: application/json
   "data": {
     "inventory_item": {
       "id": 1,
-      "quantity": 4,
+      "quantity": 3,
       "added_at": "2024-01-15T10:30:00Z"
     },
     "location": {
@@ -208,29 +205,28 @@ Content-Type: application/json
 - `404 Not Found` - Location or item not found
 
 **Behavior:**
-- If the item already exists in the location, the quantities are combined
-- If the item doesn't exist in the location, a new inventory entry is created
+- Each API call adds exactly 1 item to the location
+- If the item already exists in the location, the quantity is incremented by 1
+- If the item doesn't exist in the location, a new inventory entry is created with quantity 1
 - The `added_at` timestamp reflects the original addition time for existing entries
 
 ---
 
 ### POST /api/v1/remove-item
 
-Removes items from a specific location in the inventory.
+Removes exactly 1 item from a specific location in the inventory per API call.
 
 **Request Body:**
 ```json
 {
   "location_barcode": "FRIDGE001",
-  "item_barcode": "ITEM001",
-  "quantity": 1
+  "item_barcode": "ITEM001"
 }
 ```
 
 **Parameters:**
 - `location_barcode` (required) - Barcode of the target location
 - `item_barcode` (required) - Barcode of the item to remove
-- `quantity` (optional) - Number of items to remove (defaults to 1)
 
 **Request:**
 ```http
@@ -239,8 +235,7 @@ Content-Type: application/json
 
 {
   "location_barcode": "FRIDGE001",
-  "item_barcode": "ITEM001",
-  "quantity": 1
+  "item_barcode": "ITEM001"
 }
 ```
 
@@ -296,9 +291,10 @@ Content-Type: application/json
 - `404 Not Found` - Location, item, or inventory entry not found
 
 **Behavior:**
-- If the removal quantity is less than the current quantity, the quantity is reduced
-- If the removal quantity is greater than or equal to the current quantity, the inventory entry is completely removed
-- Returns the actual quantity that was removed
+- Each API call removes exactly 1 item from the location
+- If the current quantity is greater than 1, the quantity is decremented by 1
+- If the current quantity is 1, the inventory entry is completely removed
+- Returns the actual quantity that was removed (always 1 or the final quantity if completely removed)
 
 ---
 

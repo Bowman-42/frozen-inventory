@@ -75,8 +75,7 @@ curl -X POST http://localhost:3000/api/v1/add-item \
   -H "Content-Type: application/json" \
   -d '{
     "location_barcode": "FRIDGE001",
-    "item_barcode": "ITEM001",
-    "quantity": 2
+    "item_barcode": "ITEM001"
   }'
 ```
 
@@ -86,10 +85,11 @@ curl -X POST http://localhost:3000/api/v1/remove-item \
   -H "Content-Type: application/json" \
   -d '{
     "location_barcode": "FRIDGE001",
-    "item_barcode": "ITEM001",
-    "quantity": 1
+    "item_barcode": "ITEM001"
   }'
 ```
+
+**Note**: Each API call adds or removes exactly 1 item. Multiple items require multiple API calls.
 
 ## Barcode Requirements
 
