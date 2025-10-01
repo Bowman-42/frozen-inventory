@@ -2,11 +2,10 @@ class Api::V1::InventoryController < Api::V1::BaseController
   def add_item
     location_barcode = params[:location_barcode]
     item_barcode = params[:item_barcode]
-    quantity = params[:quantity]&.to_i || 1
+    quantity = 1  # Fixed quantity of 1 per barcode scan
 
     return render_error('Location barcode is required') if location_barcode.blank?
     return render_error('Item barcode is required') if item_barcode.blank?
-    return render_error('Quantity must be greater than 0') if quantity <= 0
 
     location = Location.find_by(barcode: location_barcode)
     return render_error('Location not found') unless location
@@ -55,11 +54,10 @@ class Api::V1::InventoryController < Api::V1::BaseController
   def remove_item
     location_barcode = params[:location_barcode]
     item_barcode = params[:item_barcode]
-    quantity = params[:quantity]&.to_i || 1
+    quantity = 1  # Fixed quantity of 1 per barcode scan
 
     return render_error('Location barcode is required') if location_barcode.blank?
     return render_error('Item barcode is required') if item_barcode.blank?
-    return render_error('Quantity must be greater than 0') if quantity <= 0
 
     location = Location.find_by(barcode: location_barcode)
     return render_error('Location not found') unless location

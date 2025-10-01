@@ -147,14 +147,15 @@ suspend fun processLocationBarcode(barcode: String) {
 
 When a user scans an item barcode to add it:
 
+**Note**: The API always adds exactly 1 item per barcode scan. There is no quantity parameter - each scan represents one unit.
+
 ```swift
 // iOS Swift
-func addItemToLocation(locationBarcode: String, itemBarcode: String, quantity: Int) async {
+func addItemToLocation(locationBarcode: String, itemBarcode: String) async {
     do {
         let result = try await addItem(
             locationBarcode: locationBarcode,
-            itemBarcode: itemBarcode,
-            quantity: quantity
+            itemBarcode: itemBarcode
         )
         // Show success message
         showSuccess(result.message ?? "Item added successfully")
@@ -165,7 +166,7 @@ func addItemToLocation(locationBarcode: String, itemBarcode: String, quantity: I
     }
 }
 
-func addItem(locationBarcode: String, itemBarcode: String, quantity: Int) async throws -> AddItemResponse {
+func addItem(locationBarcode: String, itemBarcode: String) async throws -> AddItemResponse {
     let url = URL(string: "\(APIConfig.baseURL)/add-item")!
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
@@ -173,8 +174,7 @@ func addItem(locationBarcode: String, itemBarcode: String, quantity: Int) async 
 
     let requestBody = AddItemRequest(
         locationBarcode: locationBarcode,
-        itemBarcode: itemBarcode,
-        quantity: quantity
+        itemBarcode: itemBarcode
     )
 
     request.httpBody = try JSONEncoder().encode(requestBody)
@@ -204,9 +204,9 @@ func addItem(locationBarcode: String, itemBarcode: String, quantity: Int) async 
 
 ```kotlin
 // Android Kotlin
-suspend fun addItemToLocation(locationBarcode: String, itemBarcode: String, quantity: Int) {
+suspend fun addItemToLocation(locationBarcode: String, itemBarcode: String) {
     try {
-        val request = AddItemRequest(locationBarcode, itemBarcode, quantity)
+        val request = AddItemRequest(locationBarcode, itemBarcode)
         val response = apiService.addItem(request)
 
         if (response.isSuccessful) {
@@ -225,14 +225,15 @@ suspend fun addItemToLocation(locationBarcode: String, itemBarcode: String, quan
 
 When a user removes items:
 
+**Note**: The API always removes exactly 1 item per barcode scan. Each scan decrements the quantity by one unit.
+
 ```swift
 // iOS Swift
-func removeItemFromLocation(locationBarcode: String, itemBarcode: String, quantity: Int) async {
+func removeItemFromLocation(locationBarcode: String, itemBarcode: String) async {
     do {
         let result = try await removeItem(
             locationBarcode: locationBarcode,
-            itemBarcode: itemBarcode,
-            quantity: quantity
+            itemBarcode: itemBarcode
         )
         showSuccess(result.message ?? "Item removed successfully")
         refreshLocationInventory(locationBarcode)
@@ -306,12 +307,10 @@ struct InventoryItem: Codable {
 struct AddItemRequest: Codable {
     let locationBarcode: String
     let itemBarcode: String
-    let quantity: Int
 
     enum CodingKeys: String, CodingKey {
         case locationBarcode = "location_barcode"
         case itemBarcode = "item_barcode"
-        case quantity
     }
 }
 ```
@@ -357,8 +356,7 @@ data class InventoryItem(
 
 data class AddItemRequest(
     @SerializedName("location_barcode") val locationBarcode: String,
-    @SerializedName("item_barcode") val itemBarcode: String,
-    val quantity: Int
+    @SerializedName("item_barcode") val itemBarcode: String
 )
 ```
 
