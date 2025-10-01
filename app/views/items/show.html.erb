@@ -5,11 +5,18 @@
 
 <div class="item-header">
   <h1><%= @item.name %></h1>
-  <p class="barcode">Barcode: <%= @item.barcode %></p>
-  <% if @item.description.present? %>
-    <p class="description"><%= @item.description %></p>
-  <% end %>
-  <p class="total-quantity">Total Quantity: <%= @item.total_quantity %></p>
+  <div class="item-details">
+    <p class="barcode">Barcode: <%= @item.barcode %></p>
+    <% if @item.category %>
+      <p class="category">Category: <%= link_to @item.category.name, category_path(@item.category), class: "category-link" %></p>
+    <% else %>
+      <p class="category">Category: <span class="no-category">Uncategorized</span></p>
+    <% end %>
+    <% if @item.description.present? %>
+      <p class="description"><%= @item.description %></p>
+    <% end %>
+    <p class="total-quantity">Total Quantity: <%= @item.total_quantity %></p>
+  </div>
 </div>
 
 <div class="item-locations">

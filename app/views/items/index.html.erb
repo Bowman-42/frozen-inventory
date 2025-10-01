@@ -15,13 +15,23 @@
     <button type="button" id="print-selected-btn" class="btn btn-primary" disabled>🖨️ Print Selected Barcodes</button>
   </div>
 
-  <%= form_with url: search_items_path, method: :get, local: true, class: "search-form" do |f| %>
-    <%= f.text_field :q, placeholder: "Search items by name, barcode, or description...", value: params[:q], class: "search-input" %>
-    <%= f.submit "Search", class: "btn btn-primary" %>
-    <% if params[:q].present? %>
-      <%= link_to "Clear", items_path, class: "btn btn-secondary" %>
+  <div class="filters-section">
+    <%= form_with url: search_items_path, method: :get, local: true, class: "search-form" do |f| %>
+      <%= f.text_field :q, placeholder: "Search items by name, barcode, or description...", value: params[:q], class: "search-input" %>
+      <%= f.submit "Search", class: "btn btn-primary" %>
+      <% if params[:q].present? %>
+        <%= link_to "Clear", items_path, class: "btn btn-secondary" %>
+      <% end %>
     <% end %>
-  <% end %>
+
+    <div class="category-filter">
+      <%= form_with url: items_path, method: :get, local: true, class: "filter-form" do |f| %>
+        <%= f.collection_select :category_id, Category.ordered, :id, :name,
+            { prompt: "All Categories", selected: params[:category_id] },
+            { class: "filter-select", onchange: "this.form.submit();" } %>
+      <% end %>
+    </div>
+  </div>
 </div>
 
 <div class="items-list">
@@ -36,6 +46,7 @@
                 <label for="select-all">Select All</label>
               </th>
               <th>Item Name</th>
+              <th>Category</th>
               <th>Barcode</th>
               <th>Total Quantity</th>
               <th>Locations</th>
@@ -51,6 +62,13 @@
                   <%= link_to item.name, item_path(item.barcode), class: "item-link" %>
                   <% if item.description.present? %>
                     <br><small class="description"><%= item.description %></small>
+                  <% end %>
+                </td>
+                <td class="category">
+                  <% if item.category %>
+                    <%= link_to item.category.name, category_path(item.category), class: "category-link" %>
+                  <% else %>
+                    <span class="no-category">Uncategorized</span>
                   <% end %>
                 </td>
                 <td class="barcode"><%= item.barcode %></td>
@@ -141,3 +159,48 @@ document.addEventListener('DOMContentLoaded', initializeItemsPrintButton);
 document.addEventListener('turbo:load', initializeItemsPrintButton);
 document.addEventListener('turbo:render', initializeItemsPrintButton);
 </script>
+
+<style>
+.filters-section {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.search-form {
+  flex: 1;
+}
+
+.category-filter {
+  min-width: 200px;
+}
+
+.filter-form {
+  margin: 0;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  font-size: 14px;
+}
+
+.category-link {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.category-link:hover {
+  text-decoration: underline;
+}
+
+.no-category {
+  color: #6c757d;
+  font-style: italic;
+  font-size: 0.9em;
+}
+</style>

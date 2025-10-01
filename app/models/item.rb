@@ -1,4 +1,5 @@
 class Item < ApplicationRecord
+  belongs_to :category, optional: true
   has_many :inventory_items, dependent: :destroy
   has_many :locations, through: :inventory_items
 
@@ -6,6 +7,10 @@ class Item < ApplicationRecord
   validates :barcode, presence: true, uniqueness: true
 
   before_validation :generate_barcode, on: :create
+
+  scope :by_category, ->(category) { where(category: category) }
+  scope :with_category, -> { joins(:category) }
+  scope :without_category, -> { where(category: nil) }
 
   # total_quantity is now cached in the database column
   # Rails will automatically read from the total_quantity attribute

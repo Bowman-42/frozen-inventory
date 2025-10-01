@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_01_085442) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_01_130135) do
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
   create_table "inventory_items", force: :cascade do |t|
     t.integer "location_id", null: false
     t.integer "item_id", null: false
@@ -29,7 +37,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_01_085442) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "total_quantity", default: 0, null: false
+    t.integer "category_id"
     t.index ["barcode"], name: "index_items_on_barcode"
+    t.index ["category_id"], name: "index_items_on_category_id"
     t.index ["total_quantity"], name: "index_items_on_total_quantity"
   end
 
@@ -44,4 +54,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_01_085442) do
 
   add_foreign_key "inventory_items", "items"
   add_foreign_key "inventory_items", "locations"
+  add_foreign_key "items", "categories"
 end

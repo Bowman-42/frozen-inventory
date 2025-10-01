@@ -1,4 +1,53 @@
 namespace :test_data do
+  desc "Create test categories (Usage: NR=5 rake test_data:create_categories or rake test_data:create_categories)"
+  task :create_categories, [:nr] => :environment do |task, args|
+    nr = (ENV['NR'] || args[:nr] || 1).to_i
+
+    puts "Creating #{nr} test categor#{'ies' if nr > 1}#{nr == 1 ? 'y' : ''}..."
+
+    category_data = [
+      { name: "Frozen Foods", description: "Frozen meals, vegetables, and prepared foods" },
+      { name: "Dairy Products", description: "Milk, cheese, yogurt, and other dairy items" },
+      { name: "Meat & Poultry", description: "Fresh and frozen meat and poultry products" },
+      { name: "Seafood", description: "Fresh and frozen fish and seafood" },
+      { name: "Beverages", description: "Milk, juices, and other cold beverages" },
+      { name: "Desserts", description: "Ice cream, frozen desserts, and sweet treats" },
+      { name: "Vegetables", description: "Fresh and frozen vegetables" },
+      { name: "Fruits", description: "Fresh and frozen fruits and berries" },
+      { name: "Breakfast Items", description: "Breakfast foods, cereals, and morning items" },
+      { name: "Snacks", description: "Frozen snacks and quick meal items" },
+      { name: "Condiments", description: "Sauces, dressings, and condiments requiring refrigeration" },
+      { name: "Plant-Based", description: "Vegan and vegetarian alternatives" }
+    ]
+
+    created_count = 0
+
+    nr.times do |i|
+      data = category_data[i % category_data.length]
+      name = data[:name]
+      description = data[:description]
+
+      # Add number suffix if we're creating more categories than unique names
+      if i >= category_data.length
+        suffix = (i / category_data.length) + 1
+        name += " #{suffix}"
+        description += " (Group #{suffix})"
+      end
+
+      category = Category.create!(
+        name: name,
+        description: description
+      )
+
+      created_count += 1
+      puts "✅ Created category: #{category.name}"
+    rescue ActiveRecord::RecordInvalid => e
+      puts "❌ Failed to create category: #{e.message}"
+    end
+
+    puts "📊 Successfully created #{created_count} out of #{nr} requested categories"
+    puts "🏷️  Total categories in database: #{Category.count}"
+  end
   desc "Create test locations (Usage: NR=5 rake test_data:create_locations or rake test_data:create_locations)"
   task :create_locations, [:nr] => :environment do |task, args|
     nr = (ENV['NR'] || args[:nr] || 1).to_i
@@ -56,53 +105,88 @@ namespace :test_data do
 
     puts "Creating #{nr} test item#{'s' if nr > 1}..."
 
-    item_names = [
-      "Frozen Pizza", "Ice Cream Vanilla", "Chicken Breast", "Ground Beef",
-      "Frozen Vegetables", "Fish Fillets", "Frozen Berries", "Yogurt Cups",
-      "Cheese Slices", "Milk Whole", "Butter Sticks", "Frozen Waffles",
-      "Turkey Slices", "Frozen Pasta", "Ice Cream Chocolate", "Frozen Corn",
-      "Beef Steaks", "Frozen Shrimp", "Cottage Cheese", "Heavy Cream",
-      "Frozen Fries", "Breakfast Sausage", "Frozen Spinach", "Mozzarella",
-      "Almond Milk", "Frozen Burgers", "Salmon Fillets", "Greek Yogurt",
-      "Cheddar Cheese", "Coconut Milk", "Frozen Onions", "Pork Chops"
+    # Ensure we have some categories
+    if Category.count == 0
+      puts "⚠️  No categories found. Creating default categories..."
+      Rake::Task['test_data:create_categories'].invoke(6)
+      Rake::Task['test_data:create_categories'].reenable
+    end
+
+    # Map items to appropriate categories
+    item_data = [
+      { name: "Frozen Pizza", description: "Frozen ready-to-cook meal", category: "Frozen Foods" },
+      { name: "Ice Cream Vanilla", description: "Premium dairy dessert", category: "Desserts" },
+      { name: "Chicken Breast", description: "Fresh protein source", category: "Meat & Poultry" },
+      { name: "Ground Beef", description: "Ground meat for cooking", category: "Meat & Poultry" },
+      { name: "Frozen Vegetables", description: "Mixed frozen vegetables", category: "Vegetables" },
+      { name: "Fish Fillets", description: "Fresh fish fillets", category: "Seafood" },
+      { name: "Frozen Berries", description: "Frozen fruit mix", category: "Fruits" },
+      { name: "Yogurt Cups", description: "Individual yogurt servings", category: "Dairy Products" },
+      { name: "Cheese Slices", description: "Processed cheese slices", category: "Dairy Products" },
+      { name: "Milk Whole", description: "Fresh dairy milk", category: "Beverages" },
+      { name: "Butter Sticks", description: "Salted butter portions", category: "Dairy Products" },
+      { name: "Frozen Waffles", description: "Breakfast frozen items", category: "Breakfast Items" },
+      { name: "Turkey Slices", description: "Sliced deli meat", category: "Meat & Poultry" },
+      { name: "Frozen Pasta", description: "Frozen pasta meals", category: "Frozen Foods" },
+      { name: "Ice Cream Chocolate", description: "Chocolate flavored dessert", category: "Desserts" },
+      { name: "Frozen Corn", description: "Frozen corn kernels", category: "Vegetables" },
+      { name: "Beef Steaks", description: "Premium beef cuts", category: "Meat & Poultry" },
+      { name: "Frozen Shrimp", description: "Frozen seafood", category: "Seafood" },
+      { name: "Cottage Cheese", description: "Dairy cottage cheese", category: "Dairy Products" },
+      { name: "Heavy Cream", description: "Cooking cream", category: "Dairy Products" },
+      { name: "Frozen Fries", description: "Frozen potato products", category: "Snacks" },
+      { name: "Breakfast Sausage", description: "Breakfast meat", category: "Breakfast Items" },
+      { name: "Frozen Spinach", description: "Frozen leafy greens", category: "Vegetables" },
+      { name: "Mozzarella", description: "Italian cheese", category: "Dairy Products" },
+      { name: "Almond Milk", description: "Plant-based milk", category: "Plant-Based" },
+      { name: "Frozen Burgers", description: "Frozen beef patties", category: "Meat & Poultry" },
+      { name: "Salmon Fillets", description: "Fresh salmon cuts", category: "Seafood" },
+      { name: "Greek Yogurt", description: "Thick Greek-style yogurt", category: "Dairy Products" },
+      { name: "Cheddar Cheese", description: "Sharp cheddar", category: "Dairy Products" },
+      { name: "Coconut Milk", description: "Dairy-free milk alternative", category: "Plant-Based" },
+      { name: "Frozen Onions", description: "Frozen chopped onions", category: "Vegetables" },
+      { name: "Pork Chops", description: "Fresh pork cuts", category: "Meat & Poultry" }
     ]
 
-    descriptions = [
-      "Frozen ready-to-cook meal", "Premium dairy dessert", "Fresh protein source",
-      "Ground meat for cooking", "Mixed frozen vegetables", "Fresh fish fillets",
-      "Frozen fruit mix", "Individual yogurt servings", "Processed cheese slices",
-      "Fresh dairy milk", "Salted butter portions", "Breakfast frozen items",
-      "Sliced deli meat", "Frozen pasta meals", "Chocolate flavored dessert",
-      "Frozen corn kernels", "Premium beef cuts", "Frozen seafood",
-      "Dairy cottage cheese", "Cooking cream", "Frozen potato products",
-      "Breakfast meat", "Frozen leafy greens", "Italian cheese",
-      "Plant-based milk", "Frozen beef patties", "Fresh salmon cuts",
-      "Thick Greek-style yogurt", "Sharp cheddar", "Dairy-free milk alternative",
-      "Frozen chopped onions", "Fresh pork cuts"
-    ]
-
+    categories_map = Category.all.index_by(&:name)
     created_count = 0
 
     nr.times do |i|
-      name = item_names[i % item_names.length]
-      # Add number suffix if we're creating more items than unique names
-      name += " #{(i / item_names.length) + 1}" if i >= item_names.length
+      data = item_data[i % item_data.length]
+      name = data[:name]
+      description = data[:description]
+      category_name = data[:category]
 
-      description = descriptions[i % descriptions.length]
+      # Add number suffix if we're creating more items than unique names
+      if i >= item_data.length
+        suffix = (i / item_data.length) + 1
+        name += " #{suffix}"
+      end
+
+      # Find the category
+      category = categories_map[category_name]
 
       item = Item.create!(
         name: name,
-        description: description
+        description: description,
+        category: category
       )
 
       created_count += 1
-      puts "✅ Created item: #{item.name} (#{item.barcode})"
+      category_display = category ? " [#{category.name}]" : " [Uncategorized]"
+      puts "✅ Created item: #{item.name} (#{item.barcode})#{category_display}"
     rescue ActiveRecord::RecordInvalid => e
       puts "❌ Failed to create item: #{e.message}"
     end
 
     puts "📊 Successfully created #{created_count} out of #{nr} requested items"
     puts "📦 Total items in database: #{Item.count}"
+    puts "🏷️  Items by category:"
+    Category.joins(:items).group('categories.name').count.each do |category_name, count|
+      puts "  • #{category_name}: #{count} items"
+    end
+    uncategorized_count = Item.where(category: nil).count
+    puts "  • Uncategorized: #{uncategorized_count} items" if uncategorized_count > 0
   end
 
   desc "Add items to locations randomly (Usage: NR=20 rake test_data:add_items_to_locations or rake test_data:add_items_to_locations)"
@@ -199,10 +283,21 @@ namespace :test_data do
     puts "📊 Test Data Statistics"
     puts "=" * 40
     puts "📍 Locations: #{Location.count}"
+    puts "🏷️  Categories: #{Category.count}"
     puts "📦 Items: #{Item.count}"
     puts "🔄 Inventory Items: #{InventoryItem.count}"
     puts "💾 Total Quantity: #{InventoryItem.sum(:quantity)}"
     puts ""
+
+    if Category.any?
+      puts "🏷️  Categories:"
+      Category.includes(:items).each do |category|
+        puts "  • #{category.name}: #{category.items.count} items"
+      end
+      uncategorized_count = Item.where(category: nil).count
+      puts "  • Uncategorized: #{uncategorized_count} items" if uncategorized_count > 0
+      puts ""
+    end
 
     if Location.any?
       puts "📍 Locations:"
@@ -214,10 +309,11 @@ namespace :test_data do
 
     if Item.any?
       puts "📦 Items with inventory:"
-      Item.joins(:inventory_items).includes(:inventory_items).group(:id).each do |item|
+      Item.joins(:inventory_items).includes(:inventory_items, :category).group(:id).each do |item|
         total = item.inventory_items.sum(:quantity)
         locations = item.inventory_items.includes(:location).map { |ii| ii.location.name }.uniq
-        puts "  • #{item.name} (#{item.barcode}): #{total} total in #{locations.join(', ')}"
+        category_info = item.category ? " [#{item.category.name}]" : " [Uncategorized]"
+        puts "  • #{item.name} (#{item.barcode})#{category_info}: #{total} total in #{locations.join(', ')}"
       end
     end
   end
@@ -227,13 +323,16 @@ namespace :test_data do
     puts "🗑️  Clearing all test data..."
 
     InventoryItem.destroy_all
-    puts "✅ Cleared #{InventoryItem.count} inventory items"
+    puts "✅ Cleared inventory items"
 
     Item.destroy_all
-    puts "✅ Cleared #{Item.count} items"
+    puts "✅ Cleared items"
 
     Location.destroy_all
-    puts "✅ Cleared #{Location.count} locations"
+    puts "✅ Cleared locations"
+
+    Category.destroy_all
+    puts "✅ Cleared categories"
 
     puts "🧹 All test data cleared!"
   end

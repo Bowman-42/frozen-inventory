@@ -2,22 +2,34 @@ require_relative '../services/barcode_printer'
 
 class ItemsController < ApplicationController
   def index
-    @items = Item.includes(:inventory_items, :locations)
-                 .order(:name)
-                 .page(params[:page])
-                 .per(20)
+    @items = Item.includes(:inventory_items, :locations, :category)
+
+    # Filter by category if specified
+    if params[:category_id].present?
+      @items = @items.where(category_id: params[:category_id])
+    end
+
+    @items = @items.order(:name)
+                   .page(params[:page])
+                   .per(20)
   end
 
   def search
     @query = params[:q]
 
     if @query.present?
-      @items = Item.includes(:inventory_items, :locations)
+      @items = Item.includes(:inventory_items, :locations, :category)
                    .where('LOWER(name) LIKE ? OR LOWER(barcode) LIKE ? OR LOWER(description) LIKE ?',
                           "%#{@query.downcase}%", "%#{@query.downcase}%", "%#{@query.downcase}%")
-                   .order(:name)
-                   .page(params[:page])
-                   .per(20)
+
+      # Apply category filter to search results if specified
+      if params[:category_id].present?
+        @items = @items.where(category_id: params[:category_id])
+      end
+
+      @items = @items.order(:name)
+                     .page(params[:page])
+                     .per(20)
     else
       @items = Item.none.page(params[:page]).per(20)
     end
@@ -63,6 +75,6 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :description)
+    params.require(:item).permit(:name, :description, :category_id)
   end
 end
