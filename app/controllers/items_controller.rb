@@ -25,6 +25,12 @@ class ItemsController < ApplicationController
     end
 
     @items = @items.page(params[:page]).per(20)
+
+    # Preload oldest inventory items to avoid N+1 queries
+    item_ids = @items.map(&:id)
+    @oldest_inventory_items = InventoryItem.oldest_per_item
+                                          .where(item_id: item_ids)
+                                          .group_by(&:item_id)
   end
 
   def search
@@ -56,10 +62,17 @@ class ItemsController < ApplicationController
       end
 
       @items = @items.page(params[:page]).per(20)
+
+      # Preload oldest inventory items for search results
+      item_ids = @items.map(&:id)
+      @oldest_inventory_items = InventoryItem.oldest_per_item
+                                            .where(item_id: item_ids)
+                                            .group_by(&:item_id)
     else
       @items = Item.none.page(params[:page]).per(20)
       @sort_column = params[:sort] || 'name'
       @sort_direction = params[:direction] || 'asc'
+      @oldest_inventory_items = {}
     end
 
     render :index
@@ -68,6 +81,9 @@ class ItemsController < ApplicationController
   def show
     @item = Item.find_by!(barcode: params[:barcode])
     @inventory_items = @item.inventory_items.includes(:location).order(:created_at)
+
+    # Find the oldest storage location for this item
+    @oldest_inventory_item = @item.inventory_items.includes(:location).order(:added_at).first
   end
 
   def new

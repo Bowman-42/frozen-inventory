@@ -25,6 +25,10 @@ class Item < ApplicationRecord
     end
   end
 
+  def oldest_inventory_item
+    inventory_items.includes(:location).order(:added_at).first
+  end
+
   private
 
   def generate_barcode

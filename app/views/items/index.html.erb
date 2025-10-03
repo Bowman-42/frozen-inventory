@@ -76,6 +76,7 @@
                   <% end %>
                 <% end %>
               </th>
+              <th>Oldest Storage</th>
               <th>Locations</th>
               <th>Actions</th>
             </tr>
@@ -107,6 +108,17 @@
                   <% end %>
                 </td>
                 <td class="quantity"><%= item.total_quantity %></td>
+                <td class="oldest-storage">
+                  <% oldest_inventory = @oldest_inventory_items[item.id]&.first %>
+                  <% if oldest_inventory %>
+                    <% days_stored = (Date.current - oldest_inventory.added_at.to_date).to_i %>
+                    <span class="storage-duration-badge <%= 'warning' if days_stored > 120 %> <%= 'danger' if days_stored > 180 %>">
+                      <%= pluralize(days_stored, 'day') %>
+                    </span>
+                    <br>
+                    <small>in <%= link_to oldest_inventory.location.name, location_path(oldest_inventory.location.barcode), class: "location-link" %></small>
+                  <% end %>
+                </td>
                 <td class="locations">
                   <% if item.locations.any? %>
                     <%= item.locations.map(&:name).join(", ") %>

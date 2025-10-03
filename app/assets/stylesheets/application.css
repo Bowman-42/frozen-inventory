@@ -744,6 +744,62 @@ tr:hover {
   font-style: italic;
 }
 
+/* Oldest Storage Column */
+.oldest-storage {
+  text-align: center;
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+.storage-duration-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: #28a745;
+  color: white;
+  margin-bottom: 0.25rem;
+}
+
+.storage-duration-badge.warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.storage-duration-badge.danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Oldest item/storage info in detail views */
+.oldest-item-info,
+.oldest-storage-info {
+  color: #6c757d;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+.oldest-item-info .storage-duration-badge,
+.oldest-storage-info .storage-duration-badge {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  margin: 0 0.25rem;
+}
+
+/* Storage duration badges in item/location cards */
+.timestamp .storage-duration-badge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  margin-bottom: 0.25rem;
+  display: inline-block;
+}
+
+.timestamp small {
+  color: #6c757d;
+  font-style: italic;
+}
+
 @media (max-width: 768px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);

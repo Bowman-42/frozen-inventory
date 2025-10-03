@@ -9,6 +9,17 @@
     <p class="description"><%= @location.description %></p>
   <% end %>
   <p class="total-items">Total: <%= pluralize(@location.total_items, 'item') %></p>
+
+  <% if @oldest_inventory_item %>
+    <% days_stored = (Date.current - @oldest_inventory_item.added_at.to_date).to_i %>
+    <p class="oldest-item-info">
+      Oldest item:
+      <span class="storage-duration-badge <%= 'warning' if days_stored > 120 %> <%= 'danger' if days_stored > 180 %>">
+        <%= pluralize(days_stored, 'day') %> ago
+      </span>
+      (<%= link_to @oldest_inventory_item.item.name, item_path(@oldest_inventory_item.item.barcode), class: "item-link" %>)
+    </p>
+  <% end %>
 </div>
 
 <div class="location-contents">
@@ -30,7 +41,12 @@
             <span class="unit">units</span>
           </div>
           <div class="timestamp">
-            Added <%= time_ago_in_words(inventory_item.added_at) %> ago
+            <% days_stored = (Date.current - inventory_item.added_at.to_date).to_i %>
+            <span class="storage-duration-badge <%= 'warning' if days_stored > 120 %> <%= 'danger' if days_stored > 180 %>">
+              <%= pluralize(days_stored, 'day') %>
+            </span>
+            <br>
+            <small>Added <%= time_ago_in_words(inventory_item.added_at) %> ago</small>
           </div>
         </div>
       <% end %>

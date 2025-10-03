@@ -22,6 +22,9 @@ class LocationsController < ApplicationController
   def show
     @location = Location.find_by!(barcode: params[:barcode])
     @inventory_items = @location.inventory_items.includes(:item).order(:created_at)
+
+    # Find the oldest item in this location
+    @oldest_inventory_item = @location.inventory_items.order(:added_at).first
   end
 
   def new

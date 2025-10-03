@@ -12,6 +12,15 @@ class InventoryItem < ApplicationRecord
 
   scope :by_location, ->(location) { where(location: location) }
   scope :by_item, ->(item) { where(item: item) }
+  scope :oldest_per_item, -> {
+    joins("INNER JOIN (
+      SELECT item_id, MIN(added_at) as oldest_added_at
+      FROM inventory_items
+      GROUP BY item_id
+    ) oldest ON inventory_items.item_id = oldest.item_id
+              AND inventory_items.added_at = oldest.oldest_added_at")
+    .includes(:location)
+  }
 
   private
 

@@ -189,7 +189,7 @@ namespace :test_data do
     puts "  • Uncategorized: #{uncategorized_count} items" if uncategorized_count > 0
   end
 
-  desc "Add items to locations randomly (Usage: NR=20 rake test_data:add_items_to_locations or rake test_data:add_items_to_locations)"
+  desc "Add items to locations with realistic storage ages (Usage: NR=20 rake test_data:add_items_to_locations)"
   task :add_items_to_locations, [:nr] => :environment do |task, args|
     nr = (ENV['NR'] || args[:nr] || 1).to_i
 
@@ -225,17 +225,19 @@ namespace :test_data do
 
     selected_locations.each do |location|
       quantity = rand(1..10)
+      days_ago = generate_storage_age
 
       inventory_item = InventoryItem.create!(
         location: location,
         item: sample_item,
         quantity: quantity,
-        added_at: Time.current - rand(30).days
+        added_at: Time.current - days_ago.days
       )
 
       items_in_multiple_locations.add(sample_item.id)
       created_count += 1
-      puts "✅ Added #{quantity}x #{sample_item.name} to #{location.name}"
+      storage_info = format_storage_info(days_ago)
+      puts "✅ Added #{quantity}x #{sample_item.name} to #{location.name}#{storage_info}"
     end
 
     # Add remaining items randomly
@@ -244,6 +246,7 @@ namespace :test_data do
       location = locations.sample
       item = items.sample
       quantity = rand(1..15)
+      days_ago = generate_storage_age
 
       # Check if this combination already exists
       existing = InventoryItem.find_by(location: location, item: item)
@@ -257,9 +260,10 @@ namespace :test_data do
           location: location,
           item: item,
           quantity: quantity,
-          added_at: Time.current - rand(30).days
+          added_at: Time.current - days_ago.days
         )
-        puts "✅ Added #{quantity}x #{item.name} to #{location.name}"
+        storage_info = format_storage_info(days_ago)
+        puts "✅ Added #{quantity}x #{item.name} to #{location.name}#{storage_info}"
       end
 
       created_count += 1
@@ -318,6 +322,30 @@ namespace :test_data do
     end
   end
 
+  desc "Clear only inventory items and reset item quantities (keeps items, locations, categories)"
+  task :clear_inventory => :environment do
+    puts "🗑️  Clearing inventory items only..."
+
+    # Get count before clearing
+    inventory_count = InventoryItem.count
+    item_count = Item.count
+
+    # Clear all inventory items
+    InventoryItem.destroy_all
+    puts "✅ Cleared #{inventory_count} inventory items"
+
+    # Reset all item total_quantity to 0
+    Item.update_all(total_quantity: 0)
+    puts "✅ Reset total_quantity to 0 for #{item_count} items"
+
+    puts "🧹 Inventory cleared! Items, locations, and categories preserved."
+    puts "📊 Remaining data:"
+    puts "  📍 Locations: #{Location.count}"
+    puts "  🏷️  Categories: #{Category.count}"
+    puts "  📦 Items: #{Item.count}"
+    puts "  🔄 Inventory Items: #{InventoryItem.count}"
+  end
+
   desc "Clear all test data"
   task :clear => :environment do
     puts "🗑️  Clearing all test data..."
@@ -335,5 +363,38 @@ namespace :test_data do
     puts "✅ Cleared categories"
 
     puts "🧹 All test data cleared!"
+  end
+
+  # Helper methods for generating realistic storage ages
+  def generate_storage_age
+    # Distribution of storage ages to test all badge colors:
+    # 60% recent (0-119 days) - green badges
+    # 25% warning (120-180 days) - yellow badges
+    # 15% danger (181-365 days) - red badges
+
+    rand_value = rand(100)
+
+    case rand_value
+    when 0..59
+      # Recent items (green badges)
+      rand(0..119)
+    when 60..84
+      # Warning items (yellow badges)
+      rand(120..180)
+    else
+      # Danger items (red badges)
+      rand(181..365)
+    end
+  end
+
+  def format_storage_info(days_ago)
+    case days_ago
+    when 0..119
+      " (#{days_ago} days ago - fresh)"
+    when 120..180
+      " (#{days_ago} days ago - ⚠️ getting old)"
+    else
+      " (#{days_ago} days ago - 🚨 very old)"
+    end
   end
 end
