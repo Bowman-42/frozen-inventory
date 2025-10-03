@@ -26,4 +26,17 @@ class InventoryController < ApplicationController
 
     render :index
   end
+
+  def oldest_items
+    # Get items stored the longest (oldest added_at first)
+    @oldest_inventory_items = InventoryItem.includes(:location, :item, item: :category)
+                                         .order(:added_at)
+                                         .page(params[:page])
+                                         .per(50)
+
+    # Calculate days stored for statistics
+    @oldest_item = InventoryItem.order(:added_at).first
+    @total_old_items = InventoryItem.where('added_at < ?', 120.days.ago).count
+    @very_old_items = InventoryItem.where('added_at < ?', 180.days.ago).count
+  end
 end

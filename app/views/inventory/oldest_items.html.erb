@@ -1,0 +1,101 @@
+<div class="breadcrumb">
+  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %>
+</div>
+
+<div class="page-header">
+  <h1>🕒 Oldest Stored Items</h1>
+  <p>Items that have been stored the longest - consider using these first</p>
+</div>
+
+<div class="oldest-items-stats">
+  <div class="stats-grid">
+    <% if @oldest_item %>
+      <div class="stat-card">
+        <h3>Oldest Item</h3>
+        <p class="stat-value"><%= time_ago_in_words(@oldest_item.added_at) %> ago</p>
+        <p class="stat-label">
+          <%= link_to @oldest_item.item.name, item_path(@oldest_item.item.barcode), class: "item-link" %>
+          in <%= link_to @oldest_item.location.name, location_path(@oldest_item.location.barcode), class: "location-link" %>
+        </p>
+      </div>
+    <% end %>
+
+    <div class="stat-card">
+      <h3>Items > 120 Days</h3>
+      <p class="stat-value warning"><%= @total_old_items %></p>
+      <p class="stat-label">Items stored over 4 months</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Items > 180 Days</h3>
+      <p class="stat-value danger"><%= @very_old_items %></p>
+      <p class="stat-label">Items stored over 6 months</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Total Items</h3>
+      <p class="stat-value"><%= @oldest_inventory_items.total_count %></p>
+      <p class="stat-label">All inventory items</p>
+    </div>
+  </div>
+</div>
+
+<div class="oldest-items-list">
+  <% if @oldest_inventory_items.any? %>
+    <div class="items-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Storage Duration</th>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Quantity</th>
+            <th>Added Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @oldest_inventory_items.each do |inventory_item| %>
+            <% days_stored = (Date.current - inventory_item.added_at.to_date).to_i %>
+            <tr class="<%= 'very-old' if days_stored > 180 %>">
+              <td class="storage-duration">
+                <span class="duration-badge <%= 'warning' if days_stored > 120 %> <%= 'danger' if days_stored > 180 %>">
+                  <%= pluralize(days_stored, 'day') %>
+                </span>
+              </td>
+              <td>
+                <%= link_to inventory_item.item.name, item_path(inventory_item.item.barcode), class: "item-link" %>
+                <% if inventory_item.item.description.present? %>
+                  <br><small class="description"><%= inventory_item.item.description %></small>
+                <% end %>
+              </td>
+              <td class="category">
+                <% if inventory_item.item.category %>
+                  <%= link_to inventory_item.item.category.name, category_path(inventory_item.item.category), class: "category-link" %>
+                <% else %>
+                  <span class="no-category">Uncategorized</span>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to inventory_item.location.name, location_path(inventory_item.location.barcode), class: "location-link" %>
+                <br><small class="barcode"><%= inventory_item.location.barcode %></small>
+              </td>
+              <td class="quantity"><%= inventory_item.quantity %></td>
+              <td class="added-date">
+                <%= inventory_item.added_at.strftime("%Y-%m-%d %H:%M") %>
+                <br><small class="time-ago"><%= time_ago_in_words(inventory_item.added_at) %> ago</small>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <%= paginate @oldest_inventory_items %>
+  <% else %>
+    <div class="empty-state">
+      <h3>No items found</h3>
+      <p>No inventory items are currently stored.</p>
+    </div>
+  <% end %>
+</div>

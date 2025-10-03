@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   end
   get 'inventory', to: 'inventory#index'
   get 'inventory/search', to: 'inventory#search'
+  get 'inventory/oldest', to: 'inventory#oldest_items'
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

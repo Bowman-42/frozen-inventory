@@ -46,10 +46,36 @@
                 <label for="select-all">Select All</label>
               </th>
               <th>Print Copies</th>
-              <th>Item Name</th>
-              <th>Category</th>
-              <th>Barcode</th>
-              <th>Total Quantity</th>
+              <th class="sortable">
+                <%= link_to items_path(sort: 'name', direction: (@sort_column == 'name' && @sort_direction == 'asc') ? 'desc' : 'asc', category_id: params[:category_id], q: params[:q]), class: "sort-link" do %>
+                  Item Name
+                  <% if @sort_column == 'name' %>
+                    <span class="sort-indicator <%= @sort_direction %>">
+                      <%= @sort_direction == 'asc' ? '▲' : '▼' %>
+                    </span>
+                  <% end %>
+                <% end %>
+              </th>
+              <th class="sortable">
+                <%= link_to items_path(sort: 'category', direction: (@sort_column == 'category' && @sort_direction == 'asc') ? 'desc' : 'asc', category_id: params[:category_id], q: params[:q]), class: "sort-link" do %>
+                  Category
+                  <% if @sort_column == 'category' %>
+                    <span class="sort-indicator <%= @sort_direction %>">
+                      <%= @sort_direction == 'asc' ? '▲' : '▼' %>
+                    </span>
+                  <% end %>
+                <% end %>
+              </th>
+              <th class="sortable">
+                <%= link_to items_path(sort: 'quantity', direction: (@sort_column == 'quantity' && @sort_direction == 'asc') ? 'desc' : 'asc', category_id: params[:category_id], q: params[:q]), class: "sort-link" do %>
+                  Total Quantity
+                  <% if @sort_column == 'quantity' %>
+                    <span class="sort-indicator <%= @sort_direction %>">
+                      <%= @sort_direction == 'asc' ? '▲' : '▼' %>
+                    </span>
+                  <% end %>
+                <% end %>
+              </th>
               <th>Locations</th>
               <th>Actions</th>
             </tr>
@@ -80,7 +106,6 @@
                     <span class="no-category">Uncategorized</span>
                   <% end %>
                 </td>
-                <td class="barcode"><%= item.barcode %></td>
                 <td class="quantity"><%= item.total_quantity %></td>
                 <td class="locations">
                   <% if item.locations.any? %>

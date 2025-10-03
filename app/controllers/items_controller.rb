@@ -9,9 +9,22 @@ class ItemsController < ApplicationController
       @items = @items.where(category_id: params[:category_id])
     end
 
-    @items = @items.order(:name)
-                   .page(params[:page])
-                   .per(20)
+    # Handle sorting
+    @sort_column = params[:sort] || 'name'
+    @sort_direction = params[:direction] || 'asc'
+
+    case @sort_column
+    when 'name'
+      @items = @items.order("items.name #{@sort_direction}")
+    when 'category'
+      @items = @items.left_joins(:category).order("categories.name #{@sort_direction}")
+    when 'quantity'
+      @items = @items.order("items.total_quantity #{@sort_direction}")
+    else
+      @items = @items.order(:name)
+    end
+
+    @items = @items.page(params[:page]).per(20)
   end
 
   def search
@@ -27,11 +40,26 @@ class ItemsController < ApplicationController
         @items = @items.where(category_id: params[:category_id])
       end
 
-      @items = @items.order(:name)
-                     .page(params[:page])
-                     .per(20)
+      # Handle sorting for search results
+      @sort_column = params[:sort] || 'name'
+      @sort_direction = params[:direction] || 'asc'
+
+      case @sort_column
+      when 'name'
+        @items = @items.order("items.name #{@sort_direction}")
+      when 'category'
+        @items = @items.left_joins(:category).order("categories.name #{@sort_direction}")
+      when 'quantity'
+        @items = @items.order("items.total_quantity #{@sort_direction}")
+      else
+        @items = @items.order(:name)
+      end
+
+      @items = @items.page(params[:page]).per(20)
     else
       @items = Item.none.page(params[:page]).per(20)
+      @sort_column = params[:sort] || 'name'
+      @sort_direction = params[:direction] || 'asc'
     end
 
     render :index

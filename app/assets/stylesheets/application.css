@@ -184,6 +184,38 @@ th {
   font-weight: 500;
 }
 
+th.sortable {
+  padding: 0;
+}
+
+.sort-link {
+  display: block;
+  padding: 1rem;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.sort-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.sort-indicator {
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+  opacity: 0.8;
+}
+
+.sort-indicator.asc {
+  color: #3498db;
+}
+
+.sort-indicator.desc {
+  color: #3498db;
+}
+
 td {
   padding: 1rem;
   border-bottom: 1px solid #e1e8ed;
@@ -621,6 +653,104 @@ tr:hover {
 
   .pricing-container {
     padding: 1rem;
+  }
+}
+
+/* Oldest Items Page */
+.oldest-items-stats {
+  margin-bottom: 2rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e1e8ed;
+  text-align: center;
+}
+
+.stat-card h3 {
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+}
+
+.stat-value.warning {
+  color: #f39c12;
+}
+
+.stat-value.danger {
+  color: #e74c3c;
+}
+
+.stat-label {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.storage-duration {
+  text-align: center;
+}
+
+.duration-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background-color: #28a745;
+  color: white;
+}
+
+.duration-badge.warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.duration-badge.danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.very-old {
+  background-color: #fff5f5;
+}
+
+.added-date {
+  white-space: nowrap;
+}
+
+.time-ago {
+  color: #6c757d;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
   }
 }
 
