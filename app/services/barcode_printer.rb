@@ -54,35 +54,34 @@ class BarcodePrinter
       # Draw border for debugging (remove in production)
       pdf.stroke_bounds
 
-      # Item/Location name in bold at the top
-      pdf.font_size(10) do
-        pdf.formatted_text_box([{text: item.name, styles: [:bold]}],
-                               at: [5, height - 5],
-                               width: width - 10,
-                               height: 15,
-                               overflow: :shrink_to_fit,
-                               align: :center)
-      end
-
       # Generate barcode using Prawn's native barcode support
       barcode = Barby::Code128B.new(item.barcode)
 
       # Use a more conservative barcode width approach
       # Code128 typically needs about 11 modules per character plus overhead
-      barcode_height = 30
+      barcode_height = 50
       char_count = item.barcode.length
 
       # Calculate approximate width: each char = ~8pts, plus margins
       estimated_width = char_count * 8 + 40
-      max_width = width - 40  # Leave 20pt margin each side
+      max_width = width - 20  # Leave 20pt margin each side
       barcode_width = [estimated_width, max_width].min
-
+      puts "#{estimated_width} - #{width} - #{max_width}"
       # Center the barcode horizontally
       barcode_x = (width - barcode_width) / 2
 
-      # Calculate vertical center
-      available_height = height - 35
-      barcode_y = height - 20 - ((available_height - barcode_height) / 2)
+      # Move barcode further down - position it lower on the label
+      available_height = height - 55  # More space for text below
+      barcode_y = height - 25 - ((available_height - barcode_height) / 2)
+
+      # Barcode text above barcode - moved further up by 10 points
+      pdf.font_size(8) do
+        pdf.text_box item.barcode,
+                     at: [5, barcode_y + 15],
+                     width: width - 10,
+                     height: 10,
+                     align: :center
+      end
 
       # Use Prawn's barcode annotation directly
       pdf.bounding_box([barcode_x, barcode_y], width: barcode_width, height: barcode_height) do
@@ -94,13 +93,16 @@ class BarcodePrinter
         })
       end
 
-      # Barcode text below barcode
-      pdf.font_size(8) do
-        pdf.text_box item.barcode,
-                     at: [5, barcode_y - barcode_height - 5],
-                     width: width - 10,
-                     height: 10,
-                     align: :center
+      name = item.instance_of?(Item) ? "#{item.name}  #{item.category}" : item.name
+
+      # Item/Location name in bold and much larger, moved down by 20 points
+      pdf.font_size(16) do
+        pdf.formatted_text_box([{text: name, styles: [:bold]}],
+                               at: [5, barcode_y - barcode_height - 10],
+                               width: width - 10,
+                               height: 20,
+                               overflow: :shrink_to_fit,
+                               align: :center)
       end
 
       # Date for items only at the bottom

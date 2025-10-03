@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   # Web interface routes
   root 'inventory#index'
+  get 'pricing', to: 'pages#pricing'
   resources :categories do
     collection do
       get :search

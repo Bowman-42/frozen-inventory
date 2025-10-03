@@ -45,6 +45,7 @@
                 <input type="checkbox" id="select-all" />
                 <label for="select-all">Select All</label>
               </th>
+              <th>Print Copies</th>
               <th>Item Name</th>
               <th>Category</th>
               <th>Barcode</th>
@@ -58,6 +59,13 @@
               <tr>
                 <td>
                   <%= check_box_tag "item_ids[]", item.id, false, class: "item-checkbox", id: "item_#{item.id}" %>
+                </td>
+                <td class="print-copies">
+                  <%= number_field_tag "copies[#{item.id}]", 1,
+                      min: 1, max: 20,
+                      class: "copy-quantity-input",
+                      id: "copies_#{item.id}",
+                      disabled: true %>
                 </td>
                 <td>
                   <%= link_to item.name, item_path(item.barcode), class: "item-link" %>
@@ -113,15 +121,40 @@ function initializeItemsPrintButton() {
     }
   }
 
+  function updateCopyInputs() {
+    const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
+    const allCopyInputs = document.querySelectorAll('.copy-quantity-input');
+
+    // Enable copy inputs for selected items, disable for unselected
+    allCopyInputs.forEach(function(input) {
+      const itemId = input.id.replace('copies_', '');
+      const itemCheckbox = document.getElementById(`item_${itemId}`);
+      input.disabled = !itemCheckbox || !itemCheckbox.checked;
+    });
+  }
+
   function updatePrintButton() {
     const printButton = document.getElementById('print-selected-btn');
     const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
 
     if (printButton) {
       printButton.disabled = checkedBoxes.length === 0;
-      printButton.textContent = checkedBoxes.length > 0
-        ? `🖨️ Print ${checkedBoxes.length} Barcode${checkedBoxes.length === 1 ? '' : 's'}`
-        : '🖨️ Print Selected Barcodes';
+
+      if (checkedBoxes.length > 0) {
+        // Calculate total copies to print
+        let totalCopies = 0;
+        checkedBoxes.forEach(function(checkbox) {
+          const itemId = checkbox.value;
+          const copyInput = document.getElementById(`copies_${itemId}`);
+          if (copyInput) {
+            totalCopies += parseInt(copyInput.value) || 1;
+          }
+        });
+
+        printButton.textContent = `🖨️ Print ${totalCopies} Label${totalCopies === 1 ? '' : 's'} (${checkedBoxes.length} item${checkedBoxes.length === 1 ? '' : 's'})`;
+      } else {
+        printButton.textContent = '🖨️ Print Selected Barcodes';
+      }
     }
   }
 
@@ -133,10 +166,15 @@ function initializeItemsPrintButton() {
       document.querySelectorAll('.item-checkbox').forEach(function(checkbox) {
         checkbox.checked = isChecked;
       });
+      updateCopyInputs();
       updatePrintButton();
     } else if (e.target && e.target.classList.contains('item-checkbox')) {
       // Handle individual item checkbox
       updateSelectAllState();
+      updateCopyInputs();
+      updatePrintButton();
+    } else if (e.target && e.target.classList.contains('copy-quantity-input')) {
+      // Handle copy quantity change
       updatePrintButton();
     }
   });

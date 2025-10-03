@@ -78,12 +78,23 @@ class ItemsController < ApplicationController
       return
     end
 
-    pdf = BarcodePrinter.generate_pdf(@items, type: :item)
+    # Process copy quantities
+    copy_quantities = params[:copies] || {}
+    items_with_copies = []
 
+    @items.each do |item|
+      copies = copy_quantities[item.id.to_s].to_i
+      copies = 1 if copies < 1  # Default to 1 copy if invalid
+      copies.times { items_with_copies << item }
+    end
+
+    pdf = BarcodePrinter.generate_pdf(items_with_copies, type: :item)
+
+    total_labels = items_with_copies.count
     send_data pdf,
-              filename: "item_barcodes_#{Date.current.strftime('%Y%m%d')}.pdf",
+              filename: "item_barcodes_#{total_labels}_labels_#{Date.current.strftime('%Y%m%d')}.pdf",
               type: 'application/pdf',
-              disposition: 'inline'  # Changed from 'attachment' to 'inline'
+              disposition: 'inline'
   end
 
   private

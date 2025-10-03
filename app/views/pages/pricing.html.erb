@@ -1,0 +1,100 @@
+<div class="breadcrumb">
+  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %>
+</div>
+
+<div class="page-header">
+  <h1>Pricing Plans</h1>
+  <p>Choose the plan that fits your needs</p>
+</div>
+
+<div class="pricing-container">
+  <!-- Language Selector -->
+  <div class="language-selector">
+    <label for="language-select" class="language-label">Language:</label>
+    <%= form_with url: pricing_path, method: :get, local: true, class: "language-form" do |f| %>
+      <%= f.select :lang, options_from_collection_for_select(@languages.to_a, :first, :last, @selected_language),
+          { prompt: nil },
+          {
+            id: "language-select",
+            class: "language-select",
+            onchange: "this.form.submit();"
+          } %>
+    <% end %>
+  </div>
+
+  <!-- Selected Language Pricing -->
+  <% current_data = @pricing_data[@selected_language] %>
+  <div class="pricing-single">
+    <div class="pricing-card">
+      <h2><%= current_data[:title] %></h2>
+      <div class="pricing-table-container">
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th><%= current_data[:header][:plan] %></th>
+              <th><%= current_data[:header][:price] %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% current_data[:plans].each do |plan| %>
+              <tr>
+                <td class="plan-name"><%= plan[:name] %></td>
+                <td class="plan-price"><%= plan[:price] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Languages Toggle -->
+  <div class="show-all-toggle">
+    <%= link_to "Show All Languages", "#", class: "btn btn-secondary", onclick: "toggleAllLanguages(); return false;", id: "toggle-all-btn" %>
+  </div>
+
+  <!-- All Languages Grid (Hidden by Default) -->
+  <div class="pricing-grid" id="all-languages" style="display: none;">
+    <% @pricing_data.each do |lang_code, data| %>
+      <div class="pricing-card">
+        <h2><%= data[:title] %></h2>
+        <div class="pricing-table-container">
+          <table class="pricing-table">
+            <thead>
+              <tr>
+                <th><%= data[:header][:plan] %></th>
+                <th><%= data[:header][:price] %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% data[:plans].each do |plan| %>
+                <tr>
+                  <td class="plan-name"><%= plan[:name] %></td>
+                  <td class="plan-price"><%= plan[:price] %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+function toggleAllLanguages() {
+  const allLanguages = document.getElementById('all-languages');
+  const singleLanguage = document.querySelector('.pricing-single');
+  const toggleBtn = document.getElementById('toggle-all-btn');
+
+  if (allLanguages.style.display === 'none') {
+    allLanguages.style.display = 'grid';
+    singleLanguage.style.display = 'none';
+    toggleBtn.textContent = 'Show Selected Language Only';
+  } else {
+    allLanguages.style.display = 'none';
+    singleLanguage.style.display = 'block';
+    toggleBtn.textContent = 'Show All Languages';
+  }
+}
+</script>

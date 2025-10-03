@@ -11,6 +11,7 @@
     <%= link_to "📋 All Items", items_path, class: "btn btn-secondary" %>
     <%= link_to "🏢 All Fridges", locations_path, class: "btn btn-secondary" %>
     <%= link_to "🏷️ Categories", categories_path, class: "btn btn-secondary" %>
+    <%= link_to "💰 Pricing", pricing_path, class: "btn btn-secondary" %>
   </div>
 
   <%= form_with url: inventory_search_path, method: :get, local: true, class: "search-form" do |f| %>
