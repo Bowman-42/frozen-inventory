@@ -35,7 +35,7 @@ class LocationsController < ApplicationController
     @location = Location.new(location_params)
 
     if @location.save
-      redirect_to location_path(@location.barcode), notice: 'Fridge was successfully created.'
+      redirect_to location_path(@location.barcode), notice: "#{InventoryConfig.location_term} was successfully created."
     else
       render :new, status: :unprocessable_entity
     end

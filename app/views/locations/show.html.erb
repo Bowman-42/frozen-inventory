@@ -10,11 +10,11 @@
   <% end %>
   <p class="total-items">Total: <%= pluralize(@location.total_items, 'item') %></p>
 
-  <% if @oldest_inventory_item %>
+  <% if @oldest_inventory_item && aging_enabled? %>
     <% days_stored = (Date.current - @oldest_inventory_item.added_at.to_date).to_i %>
     <p class="oldest-item-info">
       Oldest item:
-      <span class="storage-duration-badge <%= 'warning' if days_stored > 120 %> <%= 'danger' if days_stored > 180 %>">
+      <span class="storage-duration-badge <%= aging_css_class(days_stored) %>">
         <%= pluralize(days_stored, 'day') %> ago
       </span>
       (<%= link_to @oldest_inventory_item.item.name, item_path(@oldest_inventory_item.item.barcode), class: "item-link" %>)
@@ -41,11 +41,13 @@
             <span class="unit">units</span>
           </div>
           <div class="timestamp">
-            <% days_stored = (Date.current - inventory_item.added_at.to_date).to_i %>
-            <span class="storage-duration-badge <%= 'warning' if days_stored > 120 %> <%= 'danger' if days_stored > 180 %>">
-              <%= pluralize(days_stored, 'day') %>
-            </span>
-            <br>
+            <% if aging_enabled? %>
+              <% days_stored = (Date.current - inventory_item.added_at.to_date).to_i %>
+              <span class="storage-duration-badge <%= aging_css_class(days_stored) %>">
+                <%= pluralize(days_stored, 'day') %>
+              </span>
+              <br>
+            <% end %>
             <small>Added <%= time_ago_in_words(inventory_item.added_at) %> ago</small>
           </div>
         </div>
@@ -53,7 +55,7 @@
     </div>
   <% else %>
     <div class="empty-state">
-      <h3>This fridge is empty</h3>
+      <h3>This <%= location_term.downcase %> is empty</h3>
       <p>No items have been added to this location yet.</p>
     </div>
   <% end %>

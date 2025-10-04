@@ -65,7 +65,7 @@
                 <% if item.locations.any? %>
                   <%= item.locations.map(&:name).join(", ") %>
                 <% else %>
-                  <span class="no-locations">Not in any fridge</span>
+                  <span class="no-locations">Not in any <%= location_term.downcase %></span>
                 <% end %>
               </td>
               <td class="actions">

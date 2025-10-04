@@ -20,17 +20,19 @@
       </div>
     <% end %>
 
-    <div class="stat-card">
-      <h3>Items > 120 Days</h3>
-      <p class="stat-value warning"><%= @total_old_items %></p>
-      <p class="stat-label">Items stored over 4 months</p>
-    </div>
+    <% if aging_enabled? %>
+      <div class="stat-card">
+        <h3>Items > <%= aging_threshold(:warning) %> Days</h3>
+        <p class="stat-value warning"><%= @total_old_items %></p>
+        <p class="stat-label"><%= aging_label(aging_threshold(:warning) + 1) %></p>
+      </div>
 
-    <div class="stat-card">
-      <h3>Items > 180 Days</h3>
-      <p class="stat-value danger"><%= @very_old_items %></p>
-      <p class="stat-label">Items stored over 6 months</p>
-    </div>
+      <div class="stat-card">
+        <h3>Items > <%= aging_threshold(:danger) %> Days</h3>
+        <p class="stat-value danger"><%= @very_old_items %></p>
+        <p class="stat-label"><%= aging_label(aging_threshold(:danger) + 1) %></p>
+      </div>
+    <% end %>
 
     <div class="stat-card">
       <h3>Total Items</h3>

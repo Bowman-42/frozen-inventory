@@ -3,16 +3,19 @@
 <% end %>
 
 <div class="header">
-  <h1>Frozen Inventory System</h1>
+  <h1><%= app_title %></h1>
 
   <div class="action-buttons">
-    <%= link_to "➕ New Fridge", new_location_path, class: "btn btn-success" %>
+    <%= link_to "➕ New #{location_term}", new_location_path, class: "btn btn-success" %>
     <%= link_to "📦 New Item", new_item_path, class: "btn btn-success" %>
     <%= link_to "📋 All Items", items_path, class: "btn btn-secondary" %>
-    <%= link_to "🏢 All Fridges", locations_path, class: "btn btn-secondary" %>
+    <%= link_to "#{location_emoji} All #{location_term(plural: true)}", locations_path, class: "btn btn-secondary" %>
     <%= link_to "🏷️ Categories", categories_path, class: "btn btn-secondary" %>
-    <%= link_to "🕒 Oldest Items", inventory_oldest_path, class: "btn btn-secondary" %>
+    <% if aging_enabled? %>
+      <%= link_to "🕒 Oldest Items", inventory_oldest_path, class: "btn btn-secondary" %>
+    <% end %>
     <%= link_to "💰 Pricing", pricing_path, class: "btn btn-secondary" %>
+    <%= link_to "⚙️ Settings", settings_path, class: "btn btn-secondary" %>
   </div>
 
   <%= form_with url: inventory_search_path, method: :get, local: true, class: "search-form" do |f| %>
@@ -23,7 +26,7 @@
 
 <div class="dashboard">
   <div class="locations-section">
-    <h2>Fridges</h2>
+    <h2><%= location_term(plural: true) %></h2>
     <div class="locations-grid">
       <% @locations.each do |location| %>
         <div class="location-card">
@@ -35,7 +38,7 @@
       <% end %>
 
       <% if @locations.empty? %>
-        <p class="empty-state">No fridges configured yet.</p>
+        <p class="empty-state">No <%= location_term(plural: true).downcase %> configured yet.</p>
       <% end %>
     </div>
   </div>

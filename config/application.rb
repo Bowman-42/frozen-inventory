@@ -6,6 +6,9 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Load inventory configuration
+require_relative "inventory_config"
+
 module FrozenInventory
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

@@ -7,16 +7,16 @@
 </div>
 
 <div class="page-header">
-  <h1>All Fridges</h1>
-  <p>Browse all fridges and freezers in the system</p>
+  <h1>All <%= location_term(plural: true) %></h1>
+  <p>Browse all <%= location_term(plural: true).downcase %> in the system</p>
 
   <div class="action-buttons">
-    <%= link_to "➕ New Fridge", new_location_path, class: "btn btn-success" %>
+    <%= link_to "➕ New #{location_term}", new_location_path, class: "btn btn-success" %>
     <button type="button" id="print-selected-btn" class="btn btn-primary" disabled>🖨️ Print Selected Barcodes</button>
   </div>
 
   <%= form_with url: search_locations_path, method: :get, local: true, class: "search-form" do |f| %>
-    <%= f.text_field :q, placeholder: "Search fridges by name, barcode, or description...", value: params[:q], class: "search-input" %>
+    <%= f.text_field :q, placeholder: "Search #{location_term(plural: true).downcase} by name, barcode, or description...", value: params[:q], class: "search-input" %>
     <%= f.submit "Search", class: "btn btn-primary" %>
     <% if params[:q].present? %>
       <%= link_to "Clear", locations_path, class: "btn btn-secondary" %>
@@ -35,7 +35,7 @@
                 <input type="checkbox" id="select-all" />
                 <label for="select-all">Select All</label>
               </th>
-              <th>Fridge Name</th>
+              <th><%= location_term %> Name</th>
               <th>Barcode</th>
               <th>Total Items</th>
               <th>Recent Items</th>
@@ -72,9 +72,9 @@
     <% end %>
   <% else %>
     <div class="empty-state">
-      <h3>No fridges found</h3>
-      <p>No fridges have been added to the system yet.</p>
-      <%= link_to "Create your first fridge", new_location_path, class: "btn btn-success" %>
+      <h3>No <%= location_term(plural: true).downcase %> found</h3>
+      <p>No <%= location_term(plural: true).downcase %> have been added to the system yet.</p>
+      <%= link_to "Create your first #{location_term.downcase}", new_location_path, class: "btn btn-success" %>
     </div>
   <% end %>
 </div>
