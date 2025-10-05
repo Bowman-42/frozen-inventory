@@ -3,7 +3,7 @@
 <% end %>
 
 <div class="breadcrumb">
-  <%= link_to "← Back to Categories", categories_path, class: "back-link" %>
+  <%= link_to t('navigation.back_to', resource: t('categories.title')), categories_path, class: "back-link" %>
 </div>
 
 <div class="page-header">
@@ -13,9 +13,9 @@
   <% end %>
 
   <div class="action-buttons">
-    <%= link_to "✏️ Edit Category", edit_category_path(@category), class: "btn btn-secondary" %>
-    <%= link_to "🗑️ Delete Category", category_path(@category), method: :delete,
-        confirm: "Are you sure? This will remove the category from all #{pluralize(@category.items.count, 'item')}.",
+    <%= link_to "✏️ #{t('navigation.edit', resource: t('categories.title').singularize)}", edit_category_path(@category), class: "btn btn-secondary" %>
+    <%= link_to "🗑️ #{t('navigation.delete', resource: t('categories.title').singularize)}", category_path(@category), method: :delete,
+        confirm: "#{t('common.confirm')} #{t('categories.delete_warning', count: @category.items.count)}",
         class: "btn btn-danger" %>
   </div>
 </div>
@@ -23,31 +23,31 @@
 <div class="category-stats">
   <div class="stat-card">
     <h3><%= @category.items.count %></h3>
-    <p>Total Items</p>
+    <p><%= t('categories.total_items') %></p>
   </div>
   <div class="stat-card">
     <h3><%= @category.items.joins(:inventory_items).sum(:quantity) %></h3>
-    <p>Total Quantity in Stock</p>
+    <p><%= t('categories.total_quantity_in_stock') %></p>
   </div>
   <div class="stat-card">
     <h3><%= @category.items.joins(:inventory_items).select(:location_id).distinct.count %></h3>
-    <p>Locations</p>
+    <p><%= t('items.locations') %></p>
   </div>
 </div>
 
 <div class="items-in-category">
-  <h2>Items in this Category</h2>
+  <h2><%= t('categories.items_in_category') %></h2>
 
   <% if @items.any? %>
     <div class="items-table">
       <table>
         <thead>
           <tr>
-            <th>Item Name</th>
-            <th>Barcode</th>
-            <th>Total Quantity</th>
-            <th>Locations</th>
-            <th>Actions</th>
+            <th><%= t('items.item_name') %></th>
+            <th><%= t('items.barcode') %></th>
+            <th><%= t('items.total_quantity') %></th>
+            <th><%= t('items.locations') %></th>
+            <th><%= t('common.actions') %></th>
           </tr>
         </thead>
         <tbody>
@@ -65,11 +65,11 @@
                 <% if item.locations.any? %>
                   <%= item.locations.map(&:name).join(", ") %>
                 <% else %>
-                  <span class="no-locations">Not in any <%= location_term.downcase %></span>
+                  <span class="no-locations"><%= t('dashboard.not_in_any', location: location_term.downcase) %></span>
                 <% end %>
               </td>
               <td class="actions">
-                <%= link_to "View", item_path(item.barcode), class: "btn btn-sm btn-primary" %>
+                <%= link_to t('navigation.view'), item_path(item.barcode), class: "btn btn-sm btn-primary" %>
               </td>
             </tr>
           <% end %>
@@ -78,9 +78,9 @@
     </div>
   <% else %>
     <div class="empty-state">
-      <h3>No items in this category</h3>
-      <p>No items have been assigned to this category yet.</p>
-      <%= link_to "Browse all items", items_path, class: "btn btn-primary" %>
+      <h3><%= t('categories.no_items_in_category') %></h3>
+      <p><%= t('categories.no_items_in_category_message') %></p>
+      <%= link_to t('categories.browse_all_items'), items_path, class: "btn btn-primary" %>
     </div>
   <% end %>
 </div>

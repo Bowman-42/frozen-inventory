@@ -3,22 +3,22 @@
 <% end %>
 
 <div class="breadcrumb">
-  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %>
+  <%= link_to t('navigation.back_to_dashboard'), root_path, class: "back-link" %>
 </div>
 
 <div class="page-header">
-  <h1>All Categories</h1>
-  <p>Browse and manage item categories</p>
+  <h1><%= t('categories.all_categories') %></h1>
+  <p><%= t('categories.browse_all_categories') %></p>
 
   <div class="action-buttons">
-    <%= link_to "➕ New Category", new_category_path, class: "btn btn-success" %>
+    <%= link_to "➕ #{t('categories.new_category')}", new_category_path, class: "btn btn-success" %>
   </div>
 
   <%= form_with url: search_categories_path, method: :get, local: true, class: "search-form" do |f| %>
-    <%= f.text_field :q, placeholder: "Search categories by name or description...", value: params[:q], class: "search-input" %>
-    <%= f.submit "Search", class: "btn btn-primary" %>
+    <%= f.text_field :q, placeholder: t('categories.search_placeholder'), value: params[:q], class: "search-input" %>
+    <%= f.submit t('navigation.search'), class: "btn btn-primary" %>
     <% if params[:q].present? %>
-      <%= link_to "Clear", categories_path, class: "btn btn-secondary" %>
+      <%= link_to t('navigation.clear'), categories_path, class: "btn btn-secondary" %>
     <% end %>
   <% end %>
 </div>
@@ -29,10 +29,10 @@
       <table>
         <thead>
           <tr>
-            <th>Category Name</th>
-            <th>Description</th>
-            <th>Items Count</th>
-            <th>Actions</th>
+            <th><%= t('categories.category_name') %></th>
+            <th><%= t('common.description') %></th>
+            <th><%= t('categories.items_count') %></th>
+            <th><%= t('common.actions') %></th>
           </tr>
         </thead>
         <tbody>
@@ -48,10 +48,10 @@
                 <%= pluralize(category.items.count, 'item') %>
               </td>
               <td class="actions">
-                <%= link_to "View", category_path(category), class: "btn btn-sm btn-primary" %>
-                <%= link_to "Edit", edit_category_path(category), class: "btn btn-sm btn-secondary" %>
-                <%= link_to "Delete", category_path(category), method: :delete,
-                    confirm: "Are you sure? This will remove the category from all #{pluralize(category.items.count, 'item')}.",
+                <%= link_to t('navigation.view'), category_path(category), class: "btn btn-sm btn-primary" %>
+                <%= link_to t('navigation.edit', resource: ''), edit_category_path(category), class: "btn btn-sm btn-secondary" %>
+                <%= link_to t('navigation.delete', resource: ''), category_path(category), method: :delete,
+                    confirm: "#{t('common.confirm')} #{t('categories.delete_warning', count: category.items.count)}",
                     class: "btn btn-sm btn-danger" %>
               </td>
             </tr>
@@ -61,9 +61,9 @@
     </div>
   <% else %>
     <div class="empty-state">
-      <h3>No categories found</h3>
-      <p>No categories have been created yet.</p>
-      <%= link_to "Create your first category", new_category_path, class: "btn btn-success" %>
+      <h3><%= t('categories.no_categories') %></h3>
+      <p><%= t('categories.no_categories_message') %></p>
+      <%= link_to t('categories.create_first'), new_category_path, class: "btn btn-success" %>
     </div>
   <% end %>
 </div>

@@ -7,6 +7,7 @@ namespace :config do
     puts "Location Terms: #{InventoryConfig.config.location_singular} / #{InventoryConfig.config.location_plural}"
     puts "Location Emoji: #{InventoryConfig.config.location_emoji}"
     puts "Item Context: #{InventoryConfig.config.item_context}"
+    puts "Language: #{InventoryConfig.config.locale}"
     puts "Aging Enabled: #{InventoryConfig.config.aging_enabled}"
     if InventoryConfig.config.aging_enabled
       puts "Warning Threshold: #{InventoryConfig.config.aging_warning_days} days"

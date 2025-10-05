@@ -3,23 +3,23 @@
 <% end %>
 
 <div class="breadcrumb">
-  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %>
+  <%= link_to t('navigation.back_to_dashboard'), root_path, class: "back-link" %>
 </div>
 
 <div class="page-header">
-  <h1>All <%= location_term(plural: true) %></h1>
-  <p>Browse all <%= location_term(plural: true).downcase %> in the system</p>
+  <h1><%= t('navigation.all', resource: location_term(plural: true)) %></h1>
+  <p><%= t('locations.browse_all', locations: location_term(plural: true).downcase) %></p>
 
   <div class="action-buttons">
-    <%= link_to "➕ New #{location_term}", new_location_path, class: "btn btn-success" %>
-    <button type="button" id="print-selected-btn" class="btn btn-primary" disabled>🖨️ Print Selected Barcodes</button>
+    <%= link_to "➕ #{t('navigation.new', resource: location_term)}", new_location_path, class: "btn btn-success" %>
+    <button type="button" id="print-selected-btn" class="btn btn-primary" disabled>🖨️ <%= t('items.print_selected') %></button>
   </div>
 
   <%= form_with url: search_locations_path, method: :get, local: true, class: "search-form" do |f| %>
-    <%= f.text_field :q, placeholder: "Search #{location_term(plural: true).downcase} by name, barcode, or description...", value: params[:q], class: "search-input" %>
-    <%= f.submit "Search", class: "btn btn-primary" %>
+    <%= f.text_field :q, placeholder: t('locations.search_placeholder', locations: location_term(plural: true).downcase), value: params[:q], class: "search-input" %>
+    <%= f.submit t('navigation.search'), class: "btn btn-primary" %>
     <% if params[:q].present? %>
-      <%= link_to "Clear", locations_path, class: "btn btn-secondary" %>
+      <%= link_to t('navigation.clear'), locations_path, class: "btn btn-secondary" %>
     <% end %>
   <% end %>
 </div>
@@ -33,12 +33,12 @@
             <tr>
               <th>
                 <input type="checkbox" id="select-all" />
-                <label for="select-all">Select All</label>
+                <label for="select-all"><%= t('navigation.select_all') %></label>
               </th>
-              <th><%= location_term %> Name</th>
-              <th>Barcode</th>
-              <th>Total Items</th>
-              <th>Recent Items</th>
+              <th><%= location_term %> <%= t('common.name') %></th>
+              <th><%= t('items.barcode') %></th>
+              <th><%= t('locations.total_items') %></th>
+              <th><%= t('locations.recent_items') %></th>
             </tr>
           </thead>
           <tbody>
@@ -61,7 +61,7 @@
                       <small class="item-preview"><%= inv_item.item.name %> (<%= inv_item.quantity %>)</small>
                     <% end %>
                   <% else %>
-                    <span class="no-items">Empty</span>
+                    <span class="no-items"><%= t('locations.empty') %></span>
                   <% end %>
                 </td>
               </tr>
@@ -72,9 +72,9 @@
     <% end %>
   <% else %>
     <div class="empty-state">
-      <h3>No <%= location_term(plural: true).downcase %> found</h3>
-      <p>No <%= location_term(plural: true).downcase %> have been added to the system yet.</p>
-      <%= link_to "Create your first #{location_term.downcase}", new_location_path, class: "btn btn-success" %>
+      <h3><%= t('locations.no_locations', locations: location_term(plural: true).downcase) %></h3>
+      <p><%= t('locations.no_locations_message', locations: location_term(plural: true).downcase) %></p>
+      <%= link_to t('locations.create_first', location: location_term.downcase), new_location_path, class: "btn btn-success" %>
     </div>
   <% end %>
 </div>
@@ -98,9 +98,10 @@ function initializeLocationsPrintButton() {
 
     if (printButton) {
       printButton.disabled = checkedBoxes.length === 0;
+      const barcodeText = checkedBoxes.length === 1 ? '<%= j t('items.barcode') %>' : '<%= j t('items.barcodes') %>';
       printButton.textContent = checkedBoxes.length > 0
-        ? `🖨️ Print ${checkedBoxes.length} Barcode${checkedBoxes.length === 1 ? '' : 's'}`
-        : '🖨️ Print Selected Barcodes';
+        ? `🖨️ <%= j t('items.print') %> ${checkedBoxes.length} ${barcodeText}`
+        : '🖨️ <%= j t('items.print_selected') %>';
     }
   }
 

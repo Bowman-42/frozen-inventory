@@ -6,6 +6,12 @@ class SettingsController < ApplicationController
     @current_preset = InventoryConfig.current_preset
     @presets = InventoryConfig::PRESETS
     @current_config = InventoryConfig.config
+    @available_locales = {
+      'en' => 'English',
+      'es' => 'Español',
+      'fr' => 'Français',
+      'de' => 'Deutsch'
+    }
   end
 
   def update
@@ -30,6 +36,7 @@ class SettingsController < ApplicationController
         errors << "Location Plural cannot be blank" if config_params[:location_plural].blank?
         errors << "Location Emoji cannot be blank" if config_params[:location_emoji].blank?
         errors << "Item Context cannot be blank" if config_params[:item_context].blank?
+        errors << "Invalid locale" unless ['en', 'es', 'fr', 'de'].include?(config_params[:locale])
 
         if config_params[:aging_enabled] == '1'
           warning_days = config_params[:aging_warning_days].to_i
@@ -54,6 +61,7 @@ class SettingsController < ApplicationController
         InventoryConfig.config.location_plural = config_params[:location_plural].strip
         InventoryConfig.config.location_emoji = config_params[:location_emoji].strip
         InventoryConfig.config.item_context = config_params[:item_context].strip
+        InventoryConfig.config.locale = config_params[:locale]
         InventoryConfig.config.aging_enabled = config_params[:aging_enabled] == '1'
 
         if InventoryConfig.config.aging_enabled

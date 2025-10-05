@@ -1,18 +1,18 @@
 <div class="breadcrumb">
-  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %> |
-  <%= link_to "All Items", items_path, class: "back-link" %>
+  <%= link_to t('navigation.back_to_dashboard'), root_path, class: "back-link" %> |
+  <%= link_to t('items.all_items'), items_path, class: "back-link" %>
 </div>
 
 <div class="page-header">
-  <h1>Create New Item</h1>
-  <p>Add a new item to the inventory system</p>
+  <h1><%= t('items.create_new_item') %></h1>
+  <p><%= t('items.add_new_item_desc') %></p>
 </div>
 
 <div class="form-container">
   <%= form_with model: @item, local: true, class: "item-form" do |f| %>
     <% if @item.errors.any? %>
       <div class="error-messages">
-        <h3><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h3>
+        <h3><%= pluralize(@item.errors.count, 'error') %> prohibited this item from being saved:</h3>
         <ul>
           <% @item.errors.full_messages.each do |message| %>
             <li><%= message %></li>
@@ -22,27 +22,27 @@
     <% end %>
 
     <div class="form-group">
-      <%= f.label :name, class: "form-label" %>
-      <%= f.text_field :name, class: "form-input", placeholder: "e.g., Whole Milk", required: true %>
+      <%= f.label :name, t('items.item_name'), class: "form-label" %>
+      <%= f.text_field :name, class: "form-input", placeholder: t('forms.placeholders.item_name'), required: true %>
     </div>
 
 
     <div class="form-group">
-      <%= f.label :category_id, "Category", class: "form-label" %>
+      <%= f.label :category_id, t('items.category'), class: "form-label" %>
       <%= f.collection_select :category_id, Category.ordered, :id, :name,
-          { prompt: "Select a category (optional)" },
+          { prompt: t('forms.prompts.select_category_optional') },
           { class: "form-input" } %>
-      <small class="form-hint">Categorize this item to make it easier to find</small>
+      <small class="form-hint"><%= t('forms.hints.categorize_item') %></small>
     </div>
 
     <div class="form-group">
-      <%= f.label :description, class: "form-label" %>
-      <%= f.text_area :description, class: "form-textarea", placeholder: "Optional description of the item", rows: 3 %>
+      <%= f.label :description, t('common.description'), class: "form-label" %>
+      <%= f.text_area :description, class: "form-textarea", placeholder: t('forms.placeholders.item_description'), rows: 3 %>
     </div>
 
     <div class="form-actions">
-      <%= f.submit "Create Item", class: "btn btn-primary" %>
-      <%= link_to "Cancel", items_path, class: "btn btn-secondary" %>
+      <%= f.submit t('navigation.create', resource: t('items.title').singularize), class: "btn btn-primary" %>
+      <%= link_to t('navigation.cancel'), items_path, class: "btn btn-secondary" %>
     </div>
   <% end %>
 </div>

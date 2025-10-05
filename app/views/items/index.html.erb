@@ -3,31 +3,31 @@
 <% end %>
 
 <div class="breadcrumb">
-  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %>
+  <%= link_to t('navigation.back_to_dashboard'), root_path, class: "back-link" %>
 </div>
 
 <div class="page-header">
-  <h1>All Items</h1>
-  <p>Browse all items in the inventory system</p>
+  <h1><%= t('items.all_items') %></h1>
+  <p><%= t('items.browse_all_items_desc') %></p>
 
   <div class="action-buttons">
-    <%= link_to "📦 New Item", new_item_path, class: "btn btn-success" %>
-    <button type="button" id="print-selected-btn" class="btn btn-primary" disabled>🖨️ Print Selected Barcodes</button>
+    <%= link_to "📦 #{t('items.new_item')}", new_item_path, class: "btn btn-success" %>
+    <button type="button" id="print-selected-btn" class="btn btn-primary" disabled>🖨️ <%= t('items.print_selected') %></button>
   </div>
 
   <div class="filters-section">
     <%= form_with url: search_items_path, method: :get, local: true, class: "search-form" do |f| %>
-      <%= f.text_field :q, placeholder: "Search items by name, barcode, or description...", value: params[:q], class: "search-input" %>
-      <%= f.submit "Search", class: "btn btn-primary" %>
+      <%= f.text_field :q, placeholder: t('items.search_placeholder'), value: params[:q], class: "search-input" %>
+      <%= f.submit t('navigation.search'), class: "btn btn-primary" %>
       <% if params[:q].present? %>
-        <%= link_to "Clear", items_path, class: "btn btn-secondary" %>
+        <%= link_to t('navigation.clear'), items_path, class: "btn btn-secondary" %>
       <% end %>
     <% end %>
 
     <div class="category-filter">
       <%= form_with url: items_path, method: :get, local: true, class: "filter-form" do |f| %>
         <%= f.collection_select :category_id, Category.ordered, :id, :name,
-            { prompt: "All Categories", selected: params[:category_id] },
+            { prompt: t('categories.all_categories'), selected: params[:category_id] },
             { class: "filter-select", onchange: "this.form.submit();" } %>
       <% end %>
     </div>
@@ -43,12 +43,12 @@
             <tr>
               <th>
                 <input type="checkbox" id="select-all" />
-                <label for="select-all">Select All</label>
+                <label for="select-all"><%= t('navigation.select_all') %></label>
               </th>
-              <th>Print Copies</th>
+              <th><%= t('items.print_copies') %></th>
               <th class="sortable">
                 <%= link_to items_path(sort: 'name', direction: (@sort_column == 'name' && @sort_direction == 'asc') ? 'desc' : 'asc', category_id: params[:category_id], q: params[:q]), class: "sort-link" do %>
-                  Item Name
+                  <%= t('items.item_name') %>
                   <% if @sort_column == 'name' %>
                     <span class="sort-indicator <%= @sort_direction %>">
                       <%= @sort_direction == 'asc' ? '▲' : '▼' %>
@@ -58,7 +58,7 @@
               </th>
               <th class="sortable">
                 <%= link_to items_path(sort: 'category', direction: (@sort_column == 'category' && @sort_direction == 'asc') ? 'desc' : 'asc', category_id: params[:category_id], q: params[:q]), class: "sort-link" do %>
-                  Category
+                  <%= t('items.category') %>
                   <% if @sort_column == 'category' %>
                     <span class="sort-indicator <%= @sort_direction %>">
                       <%= @sort_direction == 'asc' ? '▲' : '▼' %>
@@ -68,7 +68,7 @@
               </th>
               <th class="sortable">
                 <%= link_to items_path(sort: 'quantity', direction: (@sort_column == 'quantity' && @sort_direction == 'asc') ? 'desc' : 'asc', category_id: params[:category_id], q: params[:q]), class: "sort-link" do %>
-                  Total Quantity
+                  <%= t('items.total_quantity') %>
                   <% if @sort_column == 'quantity' %>
                     <span class="sort-indicator <%= @sort_direction %>">
                       <%= @sort_direction == 'asc' ? '▲' : '▼' %>
@@ -76,9 +76,9 @@
                   <% end %>
                 <% end %>
               </th>
-              <th>Oldest Storage</th>
-              <th>Locations</th>
-              <th>Actions</th>
+              <th><%= t('items.oldest_storage') %></th>
+              <th><%= t('items.locations') %></th>
+              <th><%= t('common.actions') %></th>
             </tr>
           </thead>
           <tbody>
@@ -190,9 +190,11 @@ function initializeItemsPrintButton() {
           }
         });
 
-        printButton.textContent = `🖨️ Print ${totalCopies} Label${totalCopies === 1 ? '' : 's'} (${checkedBoxes.length} item${checkedBoxes.length === 1 ? '' : 's'})`;
+        const labelText = totalCopies === 1 ? '<%= j t('items.label') %>' : '<%= j t('items.labels') %>';
+        const itemText = checkedBoxes.length === 1 ? '<%= j t('items.item') %>' : '<%= j t('items.items') %>';
+        printButton.textContent = `🖨️ <%= j t('items.print') %> ${totalCopies} ${labelText} (${checkedBoxes.length} ${itemText})`;
       } else {
-        printButton.textContent = '🖨️ Print Selected Barcodes';
+        printButton.textContent = '🖨️ <%= j t('items.print_selected') %>';
       }
     }
   }

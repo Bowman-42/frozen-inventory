@@ -28,4 +28,278 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  # Rails built-in translations
+  datetime:
+    distance_in_words:
+      half_a_minute: "half a minute"
+      less_than_x_seconds:
+        one: "less than a second"
+        other: "less than %{count} seconds"
+      x_seconds:
+        one: "a second"
+        other: "%{count} seconds"
+      less_than_x_minutes:
+        one: "less than a minute"
+        other: "less than %{count} minutes"
+      x_minutes:
+        one: "a minute"
+        other: "%{count} minutes"
+      about_x_hours:
+        one: "about an hour"
+        other: "about %{count} hours"
+      x_days:
+        one: "a day"
+        other: "%{count} days"
+      about_x_months:
+        one: "about a month"
+        other: "about %{count} months"
+      x_months:
+        one: "a month"
+        other: "%{count} months"
+      about_x_years:
+        one: "about a year"
+        other: "about %{count} years"
+      over_x_years:
+        one: "over a year"
+        other: "over %{count} years"
+      almost_x_years:
+        one: "almost a year"
+        other: "almost %{count} years"
+
+  # Navigation and common actions
+  navigation:
+    back_to_dashboard: "← Back to Dashboard"
+    back_to: "← Back to %{resource}"
+    all: "All %{resource}"
+    new: "New %{resource}"
+    create: "Create %{resource}"
+    edit: "Edit %{resource}"
+    delete: "Delete %{resource}"
+    view: "View"
+    cancel: "Cancel"
+    search: "Search"
+    clear: "Clear"
+    apply: "Apply"
+    save: "Save"
+    reset: "Reset"
+    print: "Print"
+    select_all: "Select All"
+
+  # Dashboard
+  dashboard:
+    title: "Dashboard"
+    recent_items: "Recent Inventory Items"
+    no_items: "No inventory items found."
+    no_locations: "No %{locations} configured yet."
+    empty_location: "This %{location} is empty"
+    not_stored: "Not stored anywhere"
+    not_in_any: "Not in any %{location}"
+    quantity: "Quantity"
+    added: "Added"
+
+  # Items
+  items:
+    title: "Items"
+    new_item: "New Item"
+    create_new_item: "Create New Item"
+    add_new_item_desc: "Add a new item to the inventory system"
+    update_item_info: "Update item information"
+    update_item: "Update Item"
+    all_items: "All Items"
+    browse_all_items_desc: "Browse all items in the inventory system"
+    search_placeholder: "Search items by name, barcode, or description..."
+    no_items: "No items found"
+    no_items_message: "No items have been added to the system yet."
+    item_name: "Item Name"
+    description: "Description"
+    category: "Category"
+    total_quantity: "Total Quantity"
+    locations: "Locations"
+    actions: "Actions"
+    barcode: "Barcode"
+    uncategorized: "Uncategorized"
+    oldest_storage: "Oldest Storage"
+    print_copies: "Print Copies"
+    print_selected: "Print Selected Barcodes"
+    print: "Print"
+    label: "Label"
+    labels: "Labels"
+    item: "Item"
+    items: "Items"
+    barcodes: "Barcodes"
+    stored_in: "Stored In"
+    added_ago: "Added %{time} ago"
+    not_stored_message: "This item is not currently stored in any %{location}."
+
+  # Categories
+  categories:
+    title: "Categories"
+    new_category: "New Category"
+    all_categories: "All Categories"
+    browse_all_categories: "Browse and manage item categories"
+    search_placeholder: "Search categories by name or description..."
+    no_categories: "No categories found"
+    no_categories_message: "No categories have been created yet."
+    create_first: "Create your first category"
+    create_new_category: "Create a new item category"
+    update_category_info: "Update category information"
+    update_category: "Update Category"
+    delete_warning: "This will remove the category from all %{count} items."
+    category_name: "Category Name"
+    items_count: "Items"
+    total_items: "Total Items"
+    total_quantity_in_stock: "Total Quantity in Stock"
+    no_items_in_category: "No items in this category"
+    no_items_in_category_message: "No items have been assigned to this category yet."
+    browse_all_items: "Browse all items"
+
+  # Locations
+  locations:
+    title: "Locations"
+    browse_all: "Browse all %{locations} in the system"
+    search_placeholder: "Search %{locations} by name, barcode, or description..."
+    total_items: "Total Items"
+    recent_items: "Recent Items"
+    contents: "Contents"
+    empty: "Empty"
+    oldest_item: "Oldest item"
+    no_locations: "No %{locations} found"
+    no_locations_message: "No %{locations} have been added to the system yet."
+    no_items_in_location: "No items have been added to this location yet."
+    create_first: "Create your first %{location}"
+
+  # Settings
+  settings:
+    title: "System Configuration"
+    subtitle: "Configure terminology and features for your inventory system"
+    current_config: "Current Configuration"
+    industry_presets: "Industry Presets"
+    presets_subtitle: "Choose a preset that matches your industry or use case:"
+    custom_config: "Custom Configuration"
+    custom_subtitle: "Create your own custom configuration by setting each value individually:"
+    apply_preset: "Apply %{preset}"
+    active: "✓ Active"
+    apply_custom: "Apply Custom Configuration"
+    reset_to_current: "Reset to Current"
+    current_preset: "Current Preset"
+    language: "Language"
+    aging: "Aging"
+    warning_short: "Warning"
+    danger_short: "Danger"
+    app_title: "App Title"
+    location_term: "Location Term"
+    location_emoji: "Location Emoji"
+    aging_enabled: "Aging Enabled"
+    enable_aging: "Enable Aging Tracking"
+    aging_help: "Track how long items have been stored and show aging indicators"
+    warning_threshold: "Warning Threshold (Days)"
+    danger_threshold: "Danger Threshold (Days)"
+    fresh_label: "Fresh Label"
+    warning_label: "Warning Label"
+    danger_label: "Danger Label"
+    basic_settings: "Basic Settings"
+    aging_settings: "Aging Settings"
+    location_singular: "Location Term (Singular)"
+    location_plural: "Location Term (Plural)"
+    item_context: "Item Context"
+    preset_confirm: "This will change your system terminology and settings. Continue?"
+    custom_confirm: "This will override your current settings with the custom values above. Continue?"
+    reset_confirm: "Reset all custom fields to current configuration values?"
+    custom: "Custom"
+    presets:
+      frozen_food: "Frozen Food"
+      warehouse: "Warehouse"
+      retail: "Retail"
+      laboratory: "Laboratory"
+
+  # Aging
+  aging:
+    oldest_items: "Oldest Stored Items"
+    oldest_subtitle: "Items that have been stored the longest - consider using these first"
+    oldest_item: "Oldest Item"
+    items_over: "Items > %{days} Days"
+    total_items: "Total Items"
+    all_inventory_items: "All inventory items"
+    storage_duration: "Storage Duration"
+    added_date: "Added Date"
+    no_items_stored: "No inventory items are currently stored."
+    fresh_label: "fresh"
+    warning_label: "getting old"
+    danger_label: "very old"
+    days_ago: "%{count} day ago"
+    days_ago_plural: "%{count} days ago"
+
+  # Forms
+  forms:
+    optional: "optional"
+    prompts:
+      select_category_optional: "Select a category (optional)"
+    hints:
+      categorize_item: "Categorize this item to make it easier to find"
+      barcode_readonly: "Barcode cannot be changed"
+    placeholders:
+      app_title: "e.g., My Inventory System"
+      location_singular: "e.g., Fridge, Warehouse, Store"
+      location_plural: "e.g., Fridges, Warehouses, Stores"
+      location_emoji: "e.g., 🏢, 🏭, 🏪"
+      item_context: "e.g., frozen, warehouse, retail"
+      fresh_label: "e.g., fresh, new, recent"
+      warning_label: "e.g., getting old, aging, older"
+      danger_label: "e.g., very old, expired, stale"
+      location_name: "e.g., Main Kitchen %{location}"
+      location_description: "Optional description of the %{location} location"
+      item_name: "Enter item name"
+      item_description: "Enter item description"
+      category_name: "e.g., Frozen Foods, Dairy Products, Beverages"
+      category_description: "Brief description of this category..."
+      search_items: "Search items or locations..."
+
+  # Messages
+  messages:
+    success:
+      preset_applied: "Configuration updated to %{preset} preset."
+      custom_applied: "Custom configuration applied successfully."
+      item_created: "Item was successfully created."
+      item_updated: "Item was successfully updated."
+      location_created: "%{location} was successfully created."
+      category_created: "Category was successfully created."
+      category_updated: "Category was successfully updated."
+
+    errors:
+      preset_invalid: "Invalid preset selected."
+      custom_invalid: "Error applying custom configuration: %{error}"
+      validation_errors: "Validation errors: %{errors}"
+      no_config: "No configuration specified."
+      no_selections: "No %{resource} selected for printing."
+
+  # Time
+  time:
+    ago: "%{time} ago"
+    days:
+      one: "day"
+      other: "days"
+    units: "units"
+
+  # Pages
+  pages:
+    pricing: "Pricing"
+    pricing_plans: "Pricing Plans"
+    choose_plan: "Choose the plan that fits your needs"
+    show_all_languages: "Show All Languages"
+    show_selected_language_only: "Show Selected Language Only"
+
+  # Common terms
+  common:
+    yes: "Yes"
+    no: "No"
+    enabled: "Enabled"
+    disabled: "Disabled"
+    active: "Active"
+    inactive: "Inactive"
+    name: "Name"
+    description: "Description"
+    actions: "Actions"
+    confirm: "Are you sure?"
+    error:
+      one: "error"
+      other: "errors"

@@ -1,0 +1,276 @@
+de:
+  # Rails built-in translations
+  datetime:
+    distance_in_words:
+      half_a_minute: "eine halbe Minute"
+      less_than_x_seconds:
+        one: "weniger als eine Sekunde"
+        other: "weniger als %{count} Sekunden"
+      x_seconds:
+        one: "eine Sekunde"
+        other: "%{count} Sekunden"
+      less_than_x_minutes:
+        one: "weniger als eine Minute"
+        other: "weniger als %{count} Minuten"
+      x_minutes:
+        one: "eine Minute"
+        other: "%{count} Minuten"
+      about_x_hours:
+        one: "etwa eine Stunde"
+        other: "etwa %{count} Stunden"
+      x_days:
+        one: "ein Tag"
+        other: "%{count} Tage"
+      about_x_months:
+        one: "etwa ein Monat"
+        other: "etwa %{count} Monate"
+      x_months:
+        one: "ein Monat"
+        other: "%{count} Monate"
+      about_x_years:
+        one: "etwa ein Jahr"
+        other: "etwa %{count} Jahre"
+      over_x_years:
+        one: "mehr als ein Jahr"
+        other: "mehr als %{count} Jahre"
+      almost_x_years:
+        one: "fast ein Jahr"
+        other: "fast %{count} Jahre"
+
+  # Navigation und gemeinsame Aktionen
+  navigation:
+    back_to_dashboard: "← Zurück zum Dashboard"
+    back_to: "← Zurück zu %{resource}"
+    all: "Alle %{resource}"
+    new: "Neues %{resource}"
+    create: "%{resource} erstellen"
+    edit: "%{resource} bearbeiten"
+    delete: "%{resource} löschen"
+    view: "Anzeigen"
+    cancel: "Abbrechen"
+    search: "Suchen"
+    clear: "Löschen"
+    apply: "Anwenden"
+    save: "Speichern"
+    reset: "Zurücksetzen"
+    print: "Drucken"
+    select_all: "Alle Auswählen"
+
+  # Dashboard
+  dashboard:
+    title: "Dashboard"
+    recent_items: "Neueste Inventar-Artikel"
+    no_items: "Keine Inventar-Artikel gefunden."
+    no_locations: "Noch keine %{locations} konfiguriert."
+    empty_location: "Dieser %{location} ist leer"
+    not_stored: "Nirgendwo gelagert"
+    not_in_any: "In keinem %{location}"
+    quantity: "Menge"
+    added: "Hinzugefügt"
+
+  # Artikel
+  items:
+    title: "Artikel"
+    new_item: "Neuer Artikel"
+    create_new_item: "Neuen Artikel Erstellen"
+    add_new_item_desc: "Einen neuen Artikel zum Inventarsystem hinzufügen"
+    update_item_info: "Artikel-Informationen aktualisieren"
+    update_item: "Artikel Aktualisieren"
+    all_items: "Alle Artikel"
+    browse_all_items_desc: "Alle Artikel im Inventarsystem durchsuchen"
+    search_placeholder: "Artikel nach Name, Barcode oder Beschreibung suchen..."
+    no_items: "Keine Artikel gefunden"
+    no_items_message: "Noch keine Artikel zum System hinzugefügt."
+    item_name: "Artikel-Name"
+    description: "Beschreibung"
+    category: "Kategorie"
+    total_quantity: "Gesamtmenge"
+    locations: "Standorte"
+    actions: "Aktionen"
+    barcode: "Barcode"
+    uncategorized: "Unkategorisiert"
+    oldest_storage: "Älteste Lagerung"
+    print_copies: "Kopien drucken"
+    print_selected: "Ausgewählte Barcodes drucken"
+    print: "Drucken"
+    label: "Etikett"
+    labels: "Etiketten"
+    item: "Artikel"
+    items: "Artikel"
+    barcodes: "Barcodes"
+    stored_in: "Gelagert In"
+    added_ago: "Vor %{time} hinzugefügt"
+    not_stored_message: "Dieser Artikel ist derzeit in keinem %{location} gelagert."
+
+  # Kategorien
+  categories:
+    title: "Kategorien"
+    new_category: "Neue Kategorie"
+    all_categories: "Alle Kategorien"
+    browse_all_categories: "Artikel-Kategorien durchsuchen und verwalten"
+    search_placeholder: "Kategorien nach Name oder Beschreibung suchen..."
+    no_categories: "Keine Kategorien gefunden"
+    no_categories_message: "Noch keine Kategorien erstellt."
+    create_first: "Erstellen Sie Ihre erste Kategorie"
+    create_new_category: "Eine neue Artikel-Kategorie erstellen"
+    update_category_info: "Kategorie-Informationen aktualisieren"
+    update_category: "Kategorie Aktualisieren"
+    delete_warning: "Dies entfernt die Kategorie von allen %{count} Artikeln."
+    category_name: "Kategorie-Name"
+    items_count: "Artikel"
+    total_items: "Artikel insgesamt"
+    total_quantity_in_stock: "Gesamtmenge auf Lager"
+    no_items_in_category: "Keine Artikel in dieser Kategorie"
+    no_items_in_category_message: "Noch keine Artikel dieser Kategorie zugewiesen."
+    browse_all_items: "Alle Artikel durchsuchen"
+
+  # Standorte
+  locations:
+    title: "Standorte"
+    browse_all: "Alle %{locations} im System durchsuchen"
+    search_placeholder: "%{locations} nach Name, Barcode oder Beschreibung suchen..."
+    total_items: "Artikel insgesamt"
+    recent_items: "Neueste Artikel"
+    contents: "Inhalt"
+    empty: "Leer"
+    oldest_item: "Ältester Artikel"
+    no_locations: "Keine %{locations} gefunden"
+    no_locations_message: "Noch keine %{locations} zum System hinzugefügt."
+    no_items_in_location: "Noch keine Artikel zu diesem Standort hinzugefügt."
+    create_first: "Erstellen Sie Ihren ersten %{location}"
+
+  # Einstellungen
+  settings:
+    title: "System-Konfiguration"
+    subtitle: "Terminologie und Funktionen für Ihr Inventar-System konfigurieren"
+    current_config: "Aktuelle Konfiguration"
+    industry_presets: "Branchen-Voreinstellungen"
+    presets_subtitle: "Wählen Sie eine Voreinstellung, die zu Ihrer Branche oder Ihrem Anwendungsfall passt:"
+    custom_config: "Benutzerdefinierte Konfiguration"
+    custom_subtitle: "Erstellen Sie Ihre eigene benutzerdefinierte Konfiguration, indem Sie jeden Wert einzeln festlegen:"
+    apply_preset: "%{preset} anwenden"
+    active: "✓ Aktiv"
+    apply_custom: "Benutzerdefinierte Konfiguration anwenden"
+    reset_to_current: "Auf aktuell zurücksetzen"
+    current_preset: "Aktuelle Voreinstellung"
+    language: "Sprache"
+    aging: "Alterung"
+    warning_short: "Warnung"
+    danger_short: "Gefahr"
+    app_title: "App-Titel"
+    location_term: "Standort-Begriff"
+    location_emoji: "Standort-Emoji"
+    aging_enabled: "Alterung aktiviert"
+    enable_aging: "Alterungs-Verfolgung aktivieren"
+    aging_help: "Verfolgen, wie lange Artikel gelagert wurden und Alterungs-Indikatoren anzeigen"
+    warning_threshold: "Warn-Schwellenwert (Tage)"
+    danger_threshold: "Gefahren-Schwellenwert (Tage)"
+    fresh_label: "Frisch-Label"
+    warning_label: "Warn-Label"
+    danger_label: "Gefahren-Label"
+    basic_settings: "Grundeinstellungen"
+    aging_settings: "Alterungs-Einstellungen"
+    location_singular: "Standort-Begriff (Singular)"
+    location_plural: "Standort-Begriff (Plural)"
+    item_context: "Artikel-Kontext"
+    preset_confirm: "Dies wird die Terminologie und Einstellungen Ihres Systems ändern. Fortfahren?"
+    custom_confirm: "Dies überschreibt Ihre aktuellen Einstellungen mit den benutzerdefinierten Werten oben. Fortfahren?"
+    reset_confirm: "Alle benutzerdefinierten Felder auf aktuelle Konfigurationswerte zurücksetzen?"
+    custom: "Benutzerdefiniert"
+    presets:
+      frozen_food: "Tiefkühlkost"
+      warehouse: "Lagerhaus"
+      retail: "Einzelhandel"
+      laboratory: "Labor"
+
+  # Alterung
+  aging:
+    oldest_items: "Älteste gelagerte Artikel"
+    oldest_subtitle: "Artikel, die am längsten gelagert wurden - erwägen Sie, diese zuerst zu verwenden"
+    oldest_item: "Ältester Artikel"
+    items_over: "Artikel > %{days} Tage"
+    total_items: "Artikel insgesamt"
+    all_inventory_items: "Alle Inventar-Artikel"
+    storage_duration: "Lagerungsdauer"
+    added_date: "Hinzugefügt am"
+    no_items_stored: "Derzeit sind keine Inventar-Artikel gelagert."
+    fresh_label: "frisch"
+    warning_label: "wird alt"
+    danger_label: "sehr alt"
+    days_ago: "vor %{count} Tag"
+    days_ago_plural: "vor %{count} Tagen"
+
+  # Formulare
+  forms:
+    optional: "optional"
+    prompts:
+      select_category_optional: "Eine Kategorie auswählen (optional)"
+    hints:
+      categorize_item: "Kategorisieren Sie diesen Artikel, um ihn leichter zu finden"
+      barcode_readonly: "Barcode kann nicht geändert werden"
+    placeholders:
+      app_title: "z.B. Mein Inventar-System"
+      location_singular: "z.B. Kühlschrank, Lager, Geschäft"
+      location_plural: "z.B. Kühlschränke, Lager, Geschäfte"
+      location_emoji: "z.B. 🏢, 🏭, 🏪"
+      item_context: "z.B. gefroren, Lager, Einzelhandel"
+      fresh_label: "z.B. frisch, neu, aktuell"
+      warning_label: "z.B. wird alt, alternd, älter"
+      danger_label: "z.B. sehr alt, abgelaufen, verdorben"
+      location_name: "z.B. Hauptküchen-%{location}"
+      location_description: "Optionale Beschreibung des %{location}-Standorts"
+      item_name: "Artikel-Name eingeben"
+      item_description: "Artikel-Beschreibung eingeben"
+      category_name: "z.B. Tiefkühlkost, Milchprodukte, Getränke"
+      category_description: "Kurze Beschreibung dieser Kategorie..."
+      search_items: "Artikel oder Standorte suchen..."
+
+  # Nachrichten
+  messages:
+    success:
+      preset_applied: "Konfiguration auf %{preset}-Voreinstellung aktualisiert."
+      custom_applied: "Benutzerdefinierte Konfiguration erfolgreich angewendet."
+      item_created: "Artikel wurde erfolgreich erstellt."
+      item_updated: "Artikel wurde erfolgreich aktualisiert."
+      location_created: "%{location} wurde erfolgreich erstellt."
+      category_created: "Kategorie wurde erfolgreich erstellt."
+      category_updated: "Kategorie wurde erfolgreich aktualisiert."
+
+    errors:
+      preset_invalid: "Ungültige Voreinstellung ausgewählt."
+      custom_invalid: "Fehler beim Anwenden der benutzerdefinierten Konfiguration: %{error}"
+      validation_errors: "Validierungsfehler: %{errors}"
+      no_config: "Keine Konfiguration angegeben."
+      no_selections: "Keine %{resource} zum Drucken ausgewählt."
+
+  # Zeit
+  time:
+    ago: "vor %{time}"
+    days:
+      one: "Tag"
+      other: "Tagen"
+    units: "Einheiten"
+
+  # Seiten
+  pages:
+    pricing: "Preise"
+    pricing_plans: "Preispläne"
+    choose_plan: "Wählen Sie den Plan, der zu Ihren Bedürfnissen passt"
+    show_all_languages: "Alle Sprachen Anzeigen"
+    show_selected_language_only: "Nur Ausgewählte Sprache Anzeigen"
+
+  # Allgemeine Begriffe
+  common:
+    yes: "Ja"
+    no: "Nein"
+    enabled: "Aktiviert"
+    disabled: "Deaktiviert"
+    active: "Aktiv"
+    inactive: "Inaktiv"
+    name: "Name"
+    description: "Beschreibung"
+    actions: "Aktionen"
+    confirm: "Sind Sie sicher?"
+    error:
+      one: "Fehler"
+      other: "Fehler"

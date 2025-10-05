@@ -1,18 +1,18 @@
 <div class="breadcrumb">
-  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %>
+  <%= link_to t('navigation.back_to_dashboard'), root_path, class: "back-link" %>
 </div>
 
 <div class="page-header">
-  <h1>🕒 Oldest Stored Items</h1>
-  <p>Items that have been stored the longest - consider using these first</p>
+  <h1>🕒 <%= t('aging.oldest_items') %></h1>
+  <p><%= t('aging.oldest_subtitle') %></p>
 </div>
 
 <div class="oldest-items-stats">
   <div class="stats-grid">
     <% if @oldest_item %>
       <div class="stat-card">
-        <h3>Oldest Item</h3>
-        <p class="stat-value"><%= time_ago_in_words(@oldest_item.added_at) %> ago</p>
+        <h3><%= t('aging.oldest_item') %></h3>
+        <p class="stat-value"><%= t('time.ago', time: time_ago_in_words(@oldest_item.added_at)) %></p>
         <p class="stat-label">
           <%= link_to @oldest_item.item.name, item_path(@oldest_item.item.barcode), class: "item-link" %>
           in <%= link_to @oldest_item.location.name, location_path(@oldest_item.location.barcode), class: "location-link" %>
@@ -22,22 +22,22 @@
 
     <% if aging_enabled? %>
       <div class="stat-card">
-        <h3>Items > <%= aging_threshold(:warning) %> Days</h3>
+        <h3><%= t('aging.items_over', days: aging_threshold(:warning)) %></h3>
         <p class="stat-value warning"><%= @total_old_items %></p>
         <p class="stat-label"><%= aging_label(aging_threshold(:warning) + 1) %></p>
       </div>
 
       <div class="stat-card">
-        <h3>Items > <%= aging_threshold(:danger) %> Days</h3>
+        <h3><%= t('aging.items_over', days: aging_threshold(:danger)) %></h3>
         <p class="stat-value danger"><%= @very_old_items %></p>
         <p class="stat-label"><%= aging_label(aging_threshold(:danger) + 1) %></p>
       </div>
     <% end %>
 
     <div class="stat-card">
-      <h3>Total Items</h3>
+      <h3><%= t('aging.total_items') %></h3>
       <p class="stat-value"><%= @oldest_inventory_items.total_count %></p>
-      <p class="stat-label">All inventory items</p>
+      <p class="stat-label"><%= t('aging.all_inventory_items') %></p>
     </div>
   </div>
 </div>
@@ -48,12 +48,12 @@
       <table>
         <thead>
           <tr>
-            <th>Storage Duration</th>
-            <th>Item Name</th>
-            <th>Category</th>
-            <th>Location</th>
-            <th>Quantity</th>
-            <th>Added Date</th>
+            <th><%= t('aging.storage_duration') %></th>
+            <th><%= t('items.item_name') %></th>
+            <th><%= t('items.category') %></th>
+            <th><%= location_term %></th>
+            <th><%= t('dashboard.quantity') %></th>
+            <th><%= t('aging.added_date') %></th>
           </tr>
         </thead>
         <tbody>
@@ -62,7 +62,7 @@
             <tr class="<%= 'very-old' if days_stored > 180 %>">
               <td class="storage-duration">
                 <span class="duration-badge <%= 'warning' if days_stored > 120 %> <%= 'danger' if days_stored > 180 %>">
-                  <%= pluralize(days_stored, 'day') %>
+                  <%= days_stored %> <%= days_stored == 1 ? t('time.days.one') : t('time.days.other') %>
                 </span>
               </td>
               <td>
@@ -75,7 +75,7 @@
                 <% if inventory_item.item.category %>
                   <%= link_to inventory_item.item.category.name, category_path(inventory_item.item.category), class: "category-link" %>
                 <% else %>
-                  <span class="no-category">Uncategorized</span>
+                  <span class="no-category"><%= t('items.uncategorized') %></span>
                 <% end %>
               </td>
               <td>
@@ -85,7 +85,7 @@
               <td class="quantity"><%= inventory_item.quantity %></td>
               <td class="added-date">
                 <%= inventory_item.added_at.strftime("%Y-%m-%d %H:%M") %>
-                <br><small class="time-ago"><%= time_ago_in_words(inventory_item.added_at) %> ago</small>
+                <br><small class="time-ago"><%= t('time.ago', time: time_ago_in_words(inventory_item.added_at)) %></small>
               </td>
             </tr>
           <% end %>
@@ -96,8 +96,8 @@
     <%= paginate @oldest_inventory_items %>
   <% else %>
     <div class="empty-state">
-      <h3>No items found</h3>
-      <p>No inventory items are currently stored.</p>
+      <h3><%= t('items.no_items') %></h3>
+      <p><%= t('aging.no_items_stored') %></p>
     </div>
   <% end %>
 </div>

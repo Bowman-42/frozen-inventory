@@ -6,21 +6,21 @@
   <h1><%= app_title %></h1>
 
   <div class="action-buttons">
-    <%= link_to "➕ New #{location_term}", new_location_path, class: "btn btn-success" %>
-    <%= link_to "📦 New Item", new_item_path, class: "btn btn-success" %>
-    <%= link_to "📋 All Items", items_path, class: "btn btn-secondary" %>
-    <%= link_to "#{location_emoji} All #{location_term(plural: true)}", locations_path, class: "btn btn-secondary" %>
-    <%= link_to "🏷️ Categories", categories_path, class: "btn btn-secondary" %>
+    <%= link_to "➕ #{t('navigation.new', resource: location_term)}", new_location_path, class: "btn btn-success" %>
+    <%= link_to "📦 #{t('items.new_item')}", new_item_path, class: "btn btn-success" %>
+    <%= link_to "📋 #{t('items.all_items')}", items_path, class: "btn btn-secondary" %>
+    <%= link_to "#{location_emoji} #{t('navigation.all', resource: location_term(plural: true))}", locations_path, class: "btn btn-secondary" %>
+    <%= link_to "🏷️ #{t('categories.title')}", categories_path, class: "btn btn-secondary" %>
     <% if aging_enabled? %>
-      <%= link_to "🕒 Oldest Items", inventory_oldest_path, class: "btn btn-secondary" %>
+      <%= link_to "🕒 #{t('aging.oldest_items')}", inventory_oldest_path, class: "btn btn-secondary" %>
     <% end %>
-    <%= link_to "💰 Pricing", pricing_path, class: "btn btn-secondary" %>
-    <%= link_to "⚙️ Settings", settings_path, class: "btn btn-secondary" %>
+    <%= link_to "💰 #{t('pages.pricing')}", pricing_path, class: "btn btn-secondary" %>
+    <%= link_to "⚙️ #{t('settings.title')}", settings_path, class: "btn btn-secondary" %>
   </div>
 
   <%= form_with url: inventory_search_path, method: :get, local: true, class: "search-form" do |f| %>
-    <%= f.text_field :q, placeholder: "Search items or locations...", value: params[:q], class: "search-input" %>
-    <%= f.submit "Search", class: "btn btn-primary" %>
+    <%= f.text_field :q, placeholder: t('forms.placeholders.search_items'), value: params[:q], class: "search-input" %>
+    <%= f.submit t('navigation.search'), class: "btn btn-primary" %>
   <% end %>
 </div>
 
@@ -31,28 +31,28 @@
       <% @locations.each do |location| %>
         <div class="location-card">
           <h3><%= link_to location.name, location_path(location.barcode), class: "location-link" %></h3>
-          <p class="barcode">Barcode: <%= location.barcode %></p>
+          <p class="barcode"><%= t('items.barcode') %>: <%= location.barcode %></p>
           <p class="description"><%= location.description %></p>
           <p class="item-count"><%= pluralize(location.total_items, 'item') %></p>
         </div>
       <% end %>
 
       <% if @locations.empty? %>
-        <p class="empty-state">No <%= location_term(plural: true).downcase %> configured yet.</p>
+        <p class="empty-state"><%= t('dashboard.no_locations', locations: location_term(plural: true).downcase) %></p>
       <% end %>
     </div>
   </div>
 
   <div class="inventory-section">
-    <h2>Recent Inventory Items</h2>
+    <h2><%= t('dashboard.recent_items') %></h2>
     <div class="inventory-table">
       <table>
         <thead>
           <tr>
-            <th>Item</th>
-            <th>Location</th>
-            <th>Quantity</th>
-            <th>Added</th>
+            <th><%= t('items.title').singularize %></th>
+            <th><%= location_term %></th>
+            <th><%= t('dashboard.quantity') %></th>
+            <th><%= t('dashboard.added') %></th>
           </tr>
         </thead>
         <tbody>
@@ -67,7 +67,7 @@
                 <br><small class="barcode"><%= inventory_item.location.barcode %></small>
               </td>
               <td class="quantity"><%= inventory_item.quantity %></td>
-              <td class="timestamp"><%= time_ago_in_words(inventory_item.added_at) %> ago</td>
+              <td class="timestamp"><%= t('time.ago', time: time_ago_in_words(inventory_item.added_at)) %></td>
             </tr>
           <% end %>
         </tbody>
@@ -78,7 +78,7 @@
       <% end %>
 
       <% if @inventory_items.empty? %>
-        <p class="empty-state">No inventory items found.</p>
+        <p class="empty-state"><%= t('dashboard.no_items') %></p>
       <% end %>
     </div>
   </div>

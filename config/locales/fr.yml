@@ -1,0 +1,276 @@
+fr:
+  # Rails built-in translations
+  datetime:
+    distance_in_words:
+      half_a_minute: "une demi-minute"
+      less_than_x_seconds:
+        one: "moins d'une seconde"
+        other: "moins de %{count} secondes"
+      x_seconds:
+        one: "une seconde"
+        other: "%{count} secondes"
+      less_than_x_minutes:
+        one: "moins d'une minute"
+        other: "moins de %{count} minutes"
+      x_minutes:
+        one: "une minute"
+        other: "%{count} minutes"
+      about_x_hours:
+        one: "environ une heure"
+        other: "environ %{count} heures"
+      x_days:
+        one: "un jour"
+        other: "%{count} jours"
+      about_x_months:
+        one: "environ un mois"
+        other: "environ %{count} mois"
+      x_months:
+        one: "un mois"
+        other: "%{count} mois"
+      about_x_years:
+        one: "environ un an"
+        other: "environ %{count} ans"
+      over_x_years:
+        one: "plus d'un an"
+        other: "plus de %{count} ans"
+      almost_x_years:
+        one: "presque un an"
+        other: "presque %{count} ans"
+
+  # Navigation et actions communes
+  navigation:
+    back_to_dashboard: "← Retour au Tableau de Bord"
+    back_to: "← Retour aux %{resource}"
+    all: "Tous les %{resource}"
+    new: "Nouveau %{resource}"
+    create: "Créer %{resource}"
+    edit: "Modifier %{resource}"
+    delete: "Supprimer %{resource}"
+    view: "Voir"
+    cancel: "Annuler"
+    search: "Rechercher"
+    clear: "Effacer"
+    apply: "Appliquer"
+    save: "Enregistrer"
+    reset: "Réinitialiser"
+    print: "Imprimer"
+    select_all: "Tout Sélectionner"
+
+  # Tableau de bord
+  dashboard:
+    title: "Tableau de Bord"
+    recent_items: "Articles d'Inventaire Récents"
+    no_items: "Aucun article d'inventaire trouvé."
+    no_locations: "Aucun %{locations} configuré pour le moment."
+    empty_location: "Ce %{location} est vide"
+    not_stored: "Pas stocké quelque part"
+    not_in_any: "Dans aucun %{location}"
+    quantity: "Quantité"
+    added: "Ajouté"
+
+  # Articles
+  items:
+    title: "Articles"
+    new_item: "Nouvel Article"
+    create_new_item: "Créer un Nouvel Article"
+    add_new_item_desc: "Ajouter un nouvel article au système d'inventaire"
+    update_item_info: "Mettre à jour les informations de l'article"
+    update_item: "Mettre à Jour l'Article"
+    all_items: "Tous les Articles"
+    browse_all_items_desc: "Parcourir tous les articles dans le système d'inventaire"
+    search_placeholder: "Rechercher articles par nom, code-barres ou description..."
+    no_items: "Aucun article trouvé"
+    no_items_message: "Aucun article n'a été ajouté au système pour le moment."
+    item_name: "Nom de l'Article"
+    description: "Description"
+    category: "Catégorie"
+    total_quantity: "Quantité Totale"
+    locations: "Emplacements"
+    actions: "Actions"
+    barcode: "Code-barres"
+    uncategorized: "Non catégorisé"
+    oldest_storage: "Stockage le Plus Ancien"
+    print_copies: "Copies à Imprimer"
+    print_selected: "Imprimer les Codes Sélectionnés"
+    print: "Imprimer"
+    label: "Étiquette"
+    labels: "Étiquettes"
+    item: "Article"
+    items: "Articles"
+    barcodes: "Codes-barres"
+    stored_in: "Stocké Dans"
+    added_ago: "Ajouté il y a %{time}"
+    not_stored_message: "Cet article n'est actuellement stocké dans aucun %{location}."
+
+  # Catégories
+  categories:
+    title: "Catégories"
+    new_category: "Nouvelle Catégorie"
+    all_categories: "Toutes les Catégories"
+    browse_all_categories: "Parcourir et gérer les catégories d'articles"
+    search_placeholder: "Rechercher catégories par nom ou description..."
+    no_categories: "Aucune catégorie trouvée"
+    no_categories_message: "Aucune catégorie n'a été créée pour le moment."
+    create_first: "Créez votre première catégorie"
+    create_new_category: "Créer une nouvelle catégorie d'articles"
+    update_category_info: "Mettre à jour les informations de catégorie"
+    update_category: "Mettre à Jour la Catégorie"
+    delete_warning: "Ceci supprimera la catégorie de tous les %{count} articles."
+    category_name: "Nom de la Catégorie"
+    items_count: "Articles"
+    total_items: "Total d'Articles"
+    total_quantity_in_stock: "Quantité Totale en Stock"
+    no_items_in_category: "Aucun article dans cette catégorie"
+    no_items_in_category_message: "Aucun article n'a été assigné à cette catégorie pour le moment."
+    browse_all_items: "Parcourir tous les articles"
+
+  # Emplacements
+  locations:
+    title: "Emplacements"
+    browse_all: "Parcourir tous les %{locations} dans le système"
+    search_placeholder: "Rechercher %{locations} par nom, code-barres ou description..."
+    total_items: "Total d'Articles"
+    recent_items: "Articles Récents"
+    contents: "Contenu"
+    empty: "Vide"
+    oldest_item: "Article le plus ancien"
+    no_locations: "Aucun %{locations} trouvé"
+    no_locations_message: "Aucun %{locations} n'a été ajouté au système pour le moment."
+    no_items_in_location: "Aucun article n'a été ajouté à cet emplacement pour le moment."
+    create_first: "Créez votre premier %{location}"
+
+  # Configuration
+  settings:
+    title: "Configuration du Système"
+    subtitle: "Configurer la terminologie et les fonctionnalités de votre système d'inventaire"
+    current_config: "Configuration Actuelle"
+    industry_presets: "Préréglages d'Industrie"
+    presets_subtitle: "Choisissez un préréglage qui correspond à votre industrie ou cas d'usage :"
+    custom_config: "Configuration Personnalisée"
+    custom_subtitle: "Créez votre propre configuration personnalisée en définissant chaque valeur individuellement :"
+    apply_preset: "Appliquer %{preset}"
+    active: "✓ Actif"
+    apply_custom: "Appliquer la Configuration Personnalisée"
+    reset_to_current: "Réinitialiser à l'Actuel"
+    current_preset: "Préréglage Actuel"
+    language: "Langue"
+    aging: "Vieillissement"
+    warning_short: "Avertissement"
+    danger_short: "Danger"
+    app_title: "Titre de l'Application"
+    location_term: "Terme d'Emplacement"
+    location_emoji: "Emoji d'Emplacement"
+    aging_enabled: "Vieillissement Activé"
+    enable_aging: "Activer le Suivi du Vieillissement"
+    aging_help: "Suivre combien de temps les articles ont été stockés et afficher les indicateurs de vieillissement"
+    warning_threshold: "Seuil d'Avertissement (Jours)"
+    danger_threshold: "Seuil de Danger (Jours)"
+    fresh_label: "Étiquette Frais"
+    warning_label: "Étiquette d'Avertissement"
+    danger_label: "Étiquette de Danger"
+    basic_settings: "Paramètres de Base"
+    aging_settings: "Paramètres de Vieillissement"
+    location_singular: "Terme d'Emplacement (Singulier)"
+    location_plural: "Terme d'Emplacement (Pluriel)"
+    item_context: "Contexte de l'Article"
+    preset_confirm: "Ceci changera la terminologie et les paramètres de votre système. Continuer ?"
+    custom_confirm: "Ceci remplacera vos paramètres actuels par les valeurs personnalisées ci-dessus. Continuer ?"
+    reset_confirm: "Réinitialiser tous les champs personnalisés aux valeurs de configuration actuelles ?"
+    custom: "Personnalisé"
+    presets:
+      frozen_food: "Aliments Congelés"
+      warehouse: "Entrepôt"
+      retail: "Commerce de Détail"
+      laboratory: "Laboratoire"
+
+  # Vieillissement
+  aging:
+    oldest_items: "Articles Stockés les Plus Anciens"
+    oldest_subtitle: "Articles qui ont été stockés le plus longtemps - considérez utiliser ceux-ci en premier"
+    oldest_item: "Article le Plus Ancien"
+    items_over: "Articles > %{days} Jours"
+    total_items: "Total d'Articles"
+    all_inventory_items: "Tous les articles d'inventaire"
+    storage_duration: "Durée de Stockage"
+    added_date: "Date d'Ajout"
+    no_items_stored: "Aucun article d'inventaire n'est actuellement stocké."
+    fresh_label: "frais"
+    warning_label: "vieillissant"
+    danger_label: "très vieux"
+    days_ago: "il y a %{count} jour"
+    days_ago_plural: "il y a %{count} jours"
+
+  # Formulaires
+  forms:
+    optional: "optionnel"
+    prompts:
+      select_category_optional: "Sélectionner une catégorie (optionnel)"
+    hints:
+      categorize_item: "Catégorisez cet article pour le rendre plus facile à trouver"
+      barcode_readonly: "Le code-barres ne peut pas être modifié"
+    placeholders:
+      app_title: "ex., Mon Système d'Inventaire"
+      location_singular: "ex., Réfrigérateur, Entrepôt, Magasin"
+      location_plural: "ex., Réfrigérateurs, Entrepôts, Magasins"
+      location_emoji: "ex., 🏢, 🏭, 🏪"
+      item_context: "ex., congelé, entrepôt, commercial"
+      fresh_label: "ex., frais, nouveau, récent"
+      warning_label: "ex., vieillissant, ancien, se détériorant"
+      danger_label: "ex., très ancien, expiré, périmé"
+      location_name: "ex., %{location} Principal de Cuisine"
+      location_description: "Description optionnelle de l'emplacement du %{location}"
+      item_name: "Entrez le nom de l'article"
+      item_description: "Entrez la description de l'article"
+      category_name: "ex., Aliments Congelés, Produits Laitiers, Boissons"
+      category_description: "Brève description de cette catégorie..."
+      search_items: "Rechercher articles ou emplacements..."
+
+  # Messages
+  messages:
+    success:
+      preset_applied: "Configuration mise à jour vers le préréglage %{preset}."
+      custom_applied: "Configuration personnalisée appliquée avec succès."
+      item_created: "L'article a été créé avec succès."
+      item_updated: "L'article a été mis à jour avec succès."
+      location_created: "%{location} a été créé avec succès."
+      category_created: "La catégorie a été créée avec succès."
+      category_updated: "La catégorie a été mise à jour avec succès."
+
+    errors:
+      preset_invalid: "Préréglage sélectionné invalide."
+      custom_invalid: "Erreur lors de l'application de la configuration personnalisée : %{error}"
+      validation_errors: "Erreurs de validation : %{errors}"
+      no_config: "Aucune configuration spécifiée."
+      no_selections: "Aucun %{resource} sélectionné pour l'impression."
+
+  # Temps
+  time:
+    ago: "il y a %{time}"
+    days:
+      one: "jour"
+      other: "jours"
+    units: "unités"
+
+  # Pages
+  pages:
+    pricing: "Tarification"
+    pricing_plans: "Plans de Tarification"
+    choose_plan: "Choisissez le plan qui correspond à vos besoins"
+    show_all_languages: "Afficher Toutes les Langues"
+    show_selected_language_only: "Afficher Uniquement la Langue Sélectionnée"
+
+  # Termes communs
+  common:
+    yes: "Oui"
+    no: "Non"
+    enabled: "Activé"
+    disabled: "Désactivé"
+    active: "Actif"
+    inactive: "Inactif"
+    name: "Nom"
+    description: "Description"
+    actions: "Actions"
+    confirm: "Êtes-vous sûr ?"
+    error:
+      one: "erreur"
+      other: "erreurs"

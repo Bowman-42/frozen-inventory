@@ -1,7 +1,7 @@
 ---
-app_title: Noret Freezers
-location_singular: Fridge
-location_plural: Fridges
+app_title: Frozen Inventory System
+location_singular: Truhe
+location_plural: Truhen
 location_emoji: "\U0001F3E2"
 item_context: frozen
 aging_enabled: true

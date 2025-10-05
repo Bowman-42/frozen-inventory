@@ -1,17 +1,17 @@
 <div class="breadcrumb">
-  <%= link_to "← Back to Category", category_path(@category), class: "back-link" %>
+  <%= link_to t('navigation.back_to', resource: t('categories.title').singularize), category_path(@category), class: "back-link" %>
 </div>
 
 <div class="page-header">
-  <h1>Edit Category</h1>
-  <p>Update category information</p>
+  <h1><%= t('navigation.edit', resource: t('categories.title').singularize) %></h1>
+  <p><%= t('categories.update_category_info') %></p>
 </div>
 
 <div class="form-container">
   <%= form_with model: @category, local: true, class: "category-form" do |f| %>
     <% if @category.errors.any? %>
       <div class="error-messages">
-        <h4><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h4>
+        <h4><%= pluralize(@category.errors.count, 'error') %> prohibited this category from being saved:</h4>
         <ul>
           <% @category.errors.full_messages.each do |message| %>
             <li><%= message %></li>
@@ -21,18 +21,18 @@
     <% end %>
 
     <div class="form-group">
-      <%= f.label :name, "Category Name" %>
-      <%= f.text_field :name, placeholder: "e.g., Frozen Foods, Dairy Products, Beverages", class: "form-control", required: true %>
+      <%= f.label :name, t('categories.category_name') %>
+      <%= f.text_field :name, placeholder: t('forms.placeholders.category_name'), class: "form-control", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.label :description, "Description (optional)" %>
-      <%= f.text_area :description, placeholder: "Brief description of this category...", rows: 3, class: "form-control" %>
+      <%= f.label :description, "#{t('common.description')} (#{t('forms.optional')})" %>
+      <%= f.text_area :description, placeholder: t('forms.placeholders.category_description'), rows: 3, class: "form-control" %>
     </div>
 
     <div class="form-actions">
-      <%= f.submit "Update Category", class: "btn btn-primary" %>
-      <%= link_to "Cancel", category_path(@category), class: "btn btn-secondary" %>
+      <%= f.submit t('categories.update_category'), class: "btn btn-primary" %>
+      <%= link_to t('navigation.cancel'), category_path(@category), class: "btn btn-secondary" %>
     </div>
   <% end %>
 </div>

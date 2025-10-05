@@ -11,6 +11,7 @@ class InventoryConfig
   config_accessor :location_emoji, default: '🏢'
   config_accessor :item_context, default: 'frozen'
   config_accessor :app_title, default: 'Frozen Inventory System'
+  config_accessor :locale, default: 'en'
 
   # Feature toggles
   config_accessor :aging_enabled, default: true
@@ -30,6 +31,7 @@ class InventoryConfig
       location_emoji: '🏢',
       item_context: 'frozen',
       app_title: 'Frozen Inventory System',
+      locale: 'en',
       aging_enabled: true,
       aging_warning_days: 120,
       aging_danger_days: 180,
@@ -43,6 +45,7 @@ class InventoryConfig
       location_emoji: '🏭',
       item_context: 'warehouse',
       app_title: 'Warehouse Management System',
+      locale: 'en',
       aging_enabled: false,
       aging_warning_days: 365,
       aging_danger_days: 730,
@@ -56,6 +59,7 @@ class InventoryConfig
       location_emoji: '🏪',
       item_context: 'retail',
       app_title: 'Retail Inventory System',
+      locale: 'en',
       aging_enabled: false,
       aging_warning_days: 180,
       aging_danger_days: 365,
@@ -69,6 +73,7 @@ class InventoryConfig
       location_emoji: '🧪',
       item_context: 'laboratory',
       app_title: 'Laboratory Inventory System',
+      locale: 'en',
       aging_enabled: true,
       aging_warning_days: 30,
       aging_danger_days: 90,
@@ -98,6 +103,7 @@ class InventoryConfig
       'location_plural' => config.location_plural,
       'location_emoji' => config.location_emoji,
       'item_context' => config.item_context,
+      'locale' => config.locale,
       'aging_enabled' => config.aging_enabled,
       'aging_warning_days' => config.aging_warning_days,
       'aging_danger_days' => config.aging_danger_days,
@@ -159,9 +165,9 @@ class InventoryConfig
   end
 
   def self.aging_label(days)
-    return config.aging_fresh_label if days <= aging_threshold(:warning)
-    return config.aging_warning_label if days <= aging_threshold(:danger)
-    config.aging_danger_label
+    return I18n.t('aging.fresh_label') if days <= aging_threshold(:warning)
+    return I18n.t('aging.warning_label') if days <= aging_threshold(:danger)
+    I18n.t('aging.danger_label')
   end
 
   def self.app_title

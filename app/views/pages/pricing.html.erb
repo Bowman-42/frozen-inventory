@@ -1,16 +1,16 @@
 <div class="breadcrumb">
-  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %>
+  <%= link_to t('navigation.back_to_dashboard'), root_path, class: "back-link" %>
 </div>
 
 <div class="page-header">
-  <h1>Pricing Plans</h1>
-  <p>Choose the plan that fits your needs</p>
+  <h1><%= t('pages.pricing_plans') %></h1>
+  <p><%= t('pages.choose_plan') %></p>
 </div>
 
 <div class="pricing-container">
   <!-- Language Selector -->
   <div class="language-selector">
-    <label for="language-select" class="language-label">Language:</label>
+    <label for="language-select" class="language-label"><%= t('settings.language') %>:</label>
     <%= form_with url: pricing_path, method: :get, local: true, class: "language-form" do |f| %>
       <%= f.select :lang, options_from_collection_for_select(@languages.to_a, :first, :last, @selected_language),
           { prompt: nil },
@@ -50,7 +50,7 @@
 
   <!-- All Languages Toggle -->
   <div class="show-all-toggle">
-    <%= link_to "Show All Languages", "#", class: "btn btn-secondary", onclick: "toggleAllLanguages(); return false;", id: "toggle-all-btn" %>
+    <%= link_to t('pages.show_all_languages'), "#", class: "btn btn-secondary", onclick: "toggleAllLanguages(); return false;", id: "toggle-all-btn" %>
   </div>
 
   <!-- All Languages Grid (Hidden by Default) -->
@@ -90,11 +90,11 @@ function toggleAllLanguages() {
   if (allLanguages.style.display === 'none') {
     allLanguages.style.display = 'grid';
     singleLanguage.style.display = 'none';
-    toggleBtn.textContent = 'Show Selected Language Only';
+    toggleBtn.textContent = '<%= j t('pages.show_selected_language_only') %>';
   } else {
     allLanguages.style.display = 'none';
     singleLanguage.style.display = 'block';
-    toggleBtn.textContent = 'Show All Languages';
+    toggleBtn.textContent = '<%= j t('pages.show_all_languages') %>';
   }
 }
 </script>

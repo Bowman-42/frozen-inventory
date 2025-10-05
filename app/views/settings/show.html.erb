@@ -7,75 +7,78 @@
 <% end %>
 
 <div class="breadcrumb">
-  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %>
+  <%= link_to t('navigation.back_to_dashboard'), root_path, class: "back-link" %>
 </div>
 
 <div class="page-header">
-  <h1>⚙️ System Configuration</h1>
-  <p>Configure terminology and features for your inventory system</p>
+  <h1>⚙️ <%= t('settings.title') %></h1>
+  <p><%= t('settings.subtitle') %></p>
 </div>
 
 <div class="settings-container">
   <div class="current-config">
-    <h2>Current Configuration</h2>
+    <h2><%= t('settings.current_config') %></h2>
     <div class="config-summary">
       <div class="config-item">
-        <strong>App Title:</strong> <%= @current_config.app_title %>
+        <strong><%= t('settings.app_title') %>:</strong> <%= @current_config.app_title %>
       </div>
       <div class="config-item">
-        <strong>Location Term:</strong> <%= location_term %> / <%= location_term(plural: true) %>
+        <strong><%= t('settings.location_term') %>:</strong> <%= location_term %> / <%= location_term(plural: true) %>
       </div>
       <div class="config-item">
-        <strong>Location Emoji:</strong> <%= location_emoji %>
+        <strong><%= t('settings.location_emoji') %>:</strong> <%= location_emoji %>
       </div>
       <div class="config-item">
-        <strong>Aging Enabled:</strong> <%= aging_enabled? ? 'Yes' : 'No' %>
+        <strong><%= t('settings.language') %>:</strong> <%= @available_locales[@current_config.locale] %>
+      </div>
+      <div class="config-item">
+        <strong><%= t('settings.aging_enabled') %>:</strong> <%= aging_enabled? ? t('common.yes') : t('common.no') %>
       </div>
       <% if aging_enabled? %>
         <div class="config-item">
-          <strong>Warning Threshold:</strong> <%= aging_threshold(:warning) %> days
+          <strong><%= t('settings.warning_threshold') %>:</strong> <%= aging_threshold(:warning) %> <%= t('time.days') %>
         </div>
         <div class="config-item">
-          <strong>Danger Threshold:</strong> <%= aging_threshold(:danger) %> days
+          <strong><%= t('settings.danger_threshold') %>:</strong> <%= aging_threshold(:danger) %> <%= t('time.days') %>
         </div>
       <% end %>
       <div class="config-item">
-        <strong>Current Preset:</strong>
+        <strong><%= t('settings.current_preset') %>:</strong>
         <span class="preset-badge <%= @current_preset == :custom ? 'custom' : 'preset' %>">
-          <%= @current_preset.to_s.humanize %>
+          <%= @current_preset == :custom ? t('settings.custom') : t("settings.presets.#{@current_preset}") %>
         </span>
       </div>
     </div>
   </div>
 
   <div class="preset-selection">
-    <h2>Industry Presets</h2>
-    <p>Choose a preset that matches your industry or use case:</p>
+    <h2><%= t('settings.industry_presets') %></h2>
+    <p><%= t('settings.presets_subtitle') %></p>
 
     <%= form_with url: settings_path, method: :patch, local: true, class: "preset-form" do |f| %>
       <div class="presets-grid">
         <% @presets.each do |preset_name, preset_config| %>
           <div class="preset-card <%= 'active' if @current_preset == preset_name %>">
             <div class="preset-header">
-              <h3><%= preset_config[:location_emoji] %> <%= preset_name.to_s.humanize %></h3>
+              <h3><%= preset_config[:location_emoji] %> <%= t("settings.presets.#{preset_name}") %></h3>
               <div class="preset-details">
-                <strong>App Title:</strong> <%= preset_config[:app_title] %><br>
-                <strong>Locations:</strong> <%= preset_config[:location_singular] %> / <%= preset_config[:location_plural] %><br>
-                <strong>Aging:</strong> <%= preset_config[:aging_enabled] ? 'Enabled' : 'Disabled' %>
+                <strong><%= t('settings.app_title') %>:</strong> <%= preset_config[:app_title] %><br>
+                <strong><%= t('items.locations') %>:</strong> <%= preset_config[:location_singular] %> / <%= preset_config[:location_plural] %><br>
+                <strong><%= t('settings.aging') %>:</strong> <%= preset_config[:aging_enabled] ? t('common.enabled') : t('common.disabled') %>
                 <% if preset_config[:aging_enabled] %>
-                  (Warning: <%= preset_config[:aging_warning_days] %>d, Danger: <%= preset_config[:aging_danger_days] %>d)
+                  (<%= t('settings.warning_short') %>: <%= preset_config[:aging_warning_days] %>d, <%= t('settings.danger_short') %>: <%= preset_config[:aging_danger_days] %>d)
                 <% end %>
               </div>
             </div>
             <div class="preset-actions">
               <% if @current_preset == preset_name %>
-                <button type="button" class="btn btn-success" disabled>✓ Active</button>
+                <button type="button" class="btn btn-success" disabled><%= t('settings.active') %></button>
               <% else %>
-                <%= f.submit "Apply #{preset_name.to_s.humanize}",
+                <%= f.submit t('settings.apply_preset', preset: t("settings.presets.#{preset_name}")),
                     name: 'preset',
                     value: preset_name,
                     class: "btn btn-primary",
-                    confirm: "This will change your system terminology and settings. Continue?" %>
+                    confirm: t('settings.preset_confirm') %>
               <% end %>
             </div>
           </div>
@@ -85,96 +88,102 @@
   </div>
 
   <div class="custom-configuration">
-    <h2>Custom Configuration</h2>
-    <p>Create your own custom configuration by setting each value individually:</p>
+    <h2><%= t('settings.custom_config') %></h2>
+    <p><%= t('settings.custom_subtitle') %></p>
 
     <%= form_with url: settings_path, method: :patch, local: true, class: "custom-config-form" do |f| %>
       <div class="custom-config-grid">
 
         <div class="config-section">
-          <h3>Basic Settings</h3>
+          <h3><%= t('settings.basic_settings') %></h3>
 
           <div class="form-group">
-            <%= label_tag 'custom_config[app_title]', 'App Title', class: 'form-label' %>
+            <%= label_tag 'custom_config[app_title]', t('settings.app_title'), class: 'form-label' %>
             <%= text_field_tag 'custom_config[app_title]', @current_config.app_title,
-                class: 'form-input', placeholder: 'e.g., My Inventory System' %>
+                class: 'form-input', placeholder: t('forms.placeholders.app_title') %>
           </div>
 
           <div class="form-group">
-            <%= label_tag 'custom_config[location_singular]', 'Location Term (Singular)', class: 'form-label' %>
+            <%= label_tag 'custom_config[location_singular]', t('settings.location_singular'), class: 'form-label' %>
             <%= text_field_tag 'custom_config[location_singular]', @current_config.location_singular,
-                class: 'form-input', placeholder: 'e.g., Fridge, Warehouse, Store' %>
+                class: 'form-input', placeholder: t('forms.placeholders.location_singular') %>
           </div>
 
           <div class="form-group">
-            <%= label_tag 'custom_config[location_plural]', 'Location Term (Plural)', class: 'form-label' %>
+            <%= label_tag 'custom_config[location_plural]', t('settings.location_plural'), class: 'form-label' %>
             <%= text_field_tag 'custom_config[location_plural]', @current_config.location_plural,
-                class: 'form-input', placeholder: 'e.g., Fridges, Warehouses, Stores' %>
+                class: 'form-input', placeholder: t('forms.placeholders.location_plural') %>
           </div>
 
           <div class="form-group">
-            <%= label_tag 'custom_config[location_emoji]', 'Location Emoji', class: 'form-label' %>
+            <%= label_tag 'custom_config[location_emoji]', t('settings.location_emoji'), class: 'form-label' %>
             <%= text_field_tag 'custom_config[location_emoji]', @current_config.location_emoji,
-                class: 'form-input emoji-input', placeholder: 'e.g., 🏢, 🏭, 🏪' %>
+                class: 'form-input emoji-input', placeholder: t('forms.placeholders.location_emoji') %>
           </div>
 
           <div class="form-group">
-            <%= label_tag 'custom_config[item_context]', 'Item Context', class: 'form-label' %>
+            <%= label_tag 'custom_config[item_context]', t('settings.item_context'), class: 'form-label' %>
             <%= text_field_tag 'custom_config[item_context]', @current_config.item_context,
-                class: 'form-input', placeholder: 'e.g., frozen, warehouse, retail' %>
+                class: 'form-input', placeholder: t('forms.placeholders.item_context') %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag 'custom_config[locale]', t('settings.language'), class: 'form-label' %>
+            <%= select_tag 'custom_config[locale]', options_for_select(@available_locales.map {|k,v| [v,k]}, @current_config.locale),
+                class: 'form-input' %>
           </div>
         </div>
 
         <div class="config-section">
-          <h3>Aging Settings</h3>
+          <h3><%= t('settings.aging_settings') %></h3>
 
           <div class="form-group">
             <div class="checkbox-wrapper">
               <%= check_box_tag 'custom_config[aging_enabled]', '1', @current_config.aging_enabled,
                   id: 'aging_enabled', class: 'form-checkbox' %>
-              <%= label_tag 'aging_enabled', 'Enable Aging Tracking', class: 'checkbox-label' %>
+              <%= label_tag 'aging_enabled', t('settings.enable_aging'), class: 'checkbox-label' %>
             </div>
-            <small class="help-text">Track how long items have been stored and show aging indicators</small>
+            <small class="help-text"><%= t('settings.aging_help') %></small>
           </div>
 
           <div id="aging-options" style="<%= 'display: none;' unless @current_config.aging_enabled %>">
             <div class="form-group">
-              <%= label_tag 'custom_config[aging_warning_days]', 'Warning Threshold (Days)', class: 'form-label' %>
+              <%= label_tag 'custom_config[aging_warning_days]', t('settings.warning_threshold'), class: 'form-label' %>
               <%= number_field_tag 'custom_config[aging_warning_days]', @current_config.aging_warning_days,
                   class: 'form-input', min: 1, max: 9999 %>
             </div>
 
             <div class="form-group">
-              <%= label_tag 'custom_config[aging_danger_days]', 'Danger Threshold (Days)', class: 'form-label' %>
+              <%= label_tag 'custom_config[aging_danger_days]', t('settings.danger_threshold'), class: 'form-label' %>
               <%= number_field_tag 'custom_config[aging_danger_days]', @current_config.aging_danger_days,
                   class: 'form-input', min: 1, max: 9999 %>
             </div>
 
             <div class="form-group">
-              <%= label_tag 'custom_config[aging_fresh_label]', 'Fresh Label', class: 'form-label' %>
+              <%= label_tag 'custom_config[aging_fresh_label]', t('settings.fresh_label'), class: 'form-label' %>
               <%= text_field_tag 'custom_config[aging_fresh_label]', @current_config.aging_fresh_label,
-                  class: 'form-input', placeholder: 'e.g., fresh, new, recent' %>
+                  class: 'form-input', placeholder: t('forms.placeholders.fresh_label') %>
             </div>
 
             <div class="form-group">
-              <%= label_tag 'custom_config[aging_warning_label]', 'Warning Label', class: 'form-label' %>
+              <%= label_tag 'custom_config[aging_warning_label]', t('settings.warning_label'), class: 'form-label' %>
               <%= text_field_tag 'custom_config[aging_warning_label]', @current_config.aging_warning_label,
-                  class: 'form-input', placeholder: 'e.g., getting old, aging, older' %>
+                  class: 'form-input', placeholder: t('forms.placeholders.warning_label') %>
             </div>
 
             <div class="form-group">
-              <%= label_tag 'custom_config[aging_danger_label]', 'Danger Label', class: 'form-label' %>
+              <%= label_tag 'custom_config[aging_danger_label]', t('settings.danger_label'), class: 'form-label' %>
               <%= text_field_tag 'custom_config[aging_danger_label]', @current_config.aging_danger_label,
-                  class: 'form-input', placeholder: 'e.g., very old, expired, stale' %>
+                  class: 'form-input', placeholder: t('forms.placeholders.danger_label') %>
             </div>
           </div>
         </div>
       </div>
 
       <div class="custom-config-actions">
-        <%= f.submit "Apply Custom Configuration", class: "btn btn-primary",
-            confirm: "This will override your current settings with the custom values above. Continue?" %>
-        <button type="button" id="reset-to-current" class="btn btn-secondary">Reset to Current</button>
+        <%= f.submit t('settings.apply_custom'), class: "btn btn-primary",
+            confirm: t('settings.custom_confirm') %>
+        <button type="button" id="reset-to-current" class="btn btn-secondary"><%= t('settings.reset_to_current') %></button>
       </div>
     <% end %>
   </div>
@@ -388,6 +397,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('input[name="custom_config[location_plural]"]').value = '<%= j @current_config.location_plural %>';
       document.querySelector('input[name="custom_config[location_emoji]"]').value = '<%= j @current_config.location_emoji %>';
       document.querySelector('input[name="custom_config[item_context]"]').value = '<%= j @current_config.item_context %>';
+      document.querySelector('select[name="custom_config[locale]"]').value = '<%= @current_config.locale %>';
       document.querySelector('input[name="custom_config[aging_enabled]"]').checked = <%= @current_config.aging_enabled %>;
       document.querySelector('input[name="custom_config[aging_warning_days]"]').value = '<%= @current_config.aging_warning_days %>';
       document.querySelector('input[name="custom_config[aging_danger_days]"]').value = '<%= @current_config.aging_danger_days %>';

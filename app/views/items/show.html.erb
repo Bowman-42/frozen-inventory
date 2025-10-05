@@ -1,31 +1,31 @@
 <div class="breadcrumb">
-  <%= link_to "← Back to Dashboard", root_path, class: "back-link" %> |
-  <%= link_to "All Items", items_path, class: "back-link" %>
+  <%= link_to t('navigation.back_to_dashboard'), root_path, class: "back-link" %> |
+  <%= link_to t('items.all_items'), items_path, class: "back-link" %>
 </div>
 
 <div class="item-header">
   <div class="header-content">
     <h1><%= @item.name %></h1>
-    <%= link_to "Edit Item", edit_item_path(@item.barcode), class: "btn btn-secondary" %>
+    <%= link_to t('navigation.edit', resource: t('items.title').singularize), edit_item_path(@item.barcode), class: "btn btn-secondary" %>
   </div>
   <div class="item-details">
-    <p class="barcode">Barcode: <%= @item.barcode %></p>
+    <p class="barcode"><%= t('items.barcode') %>: <%= @item.barcode %></p>
     <% if @item.category %>
-      <p class="category">Category: <%= link_to @item.category.name, category_path(@item.category), class: "category-link" %></p>
+      <p class="category"><%= t('items.category') %>: <%= link_to @item.category.name, category_path(@item.category), class: "category-link" %></p>
     <% else %>
-      <p class="category">Category: <span class="no-category">Uncategorized</span></p>
+      <p class="category"><%= t('items.category') %>: <span class="no-category"><%= t('items.uncategorized') %></span></p>
     <% end %>
     <% if @item.description.present? %>
       <p class="description"><%= @item.description %></p>
     <% end %>
-    <p class="total-quantity">Total Quantity: <%= @item.total_quantity %></p>
+    <p class="total-quantity"><%= t('items.total_quantity') %>: <%= @item.total_quantity %></p>
 
     <% if @oldest_inventory_item && aging_enabled? %>
       <% days_stored = (Date.current - @oldest_inventory_item.added_at.to_date).to_i %>
       <p class="oldest-storage-info">
-        Oldest storage:
+        <%= t('items.oldest_storage') %>:
         <span class="storage-duration-badge <%= aging_css_class(days_stored) %>">
-          <%= pluralize(days_stored, 'day') %> ago<%= format_storage_info(days_stored) %>
+          <%= t('time.ago', time: "#{days_stored} #{days_stored == 1 ? t('time.days.one') : t('time.days.other')}") %><%= format_storage_info(days_stored) %>
         </span>
         in <%= link_to @oldest_inventory_item.location.name, location_path(@oldest_inventory_item.location.barcode), class: "location-link" %>
       </p>
@@ -34,7 +34,7 @@
 </div>
 
 <div class="item-locations">
-  <h2>Stored In</h2>
+  <h2><%= t('items.stored_in') %></h2>
 
   <% if @inventory_items.any? %>
     <div class="locations-list">
@@ -42,32 +42,32 @@
         <div class="location-entry">
           <div class="location-info">
             <h3><%= link_to inventory_item.location.name, location_path(inventory_item.location.barcode), class: "location-link" %></h3>
-            <p class="barcode">Barcode: <%= inventory_item.location.barcode %></p>
+            <p class="barcode"><%= t('items.barcode') %>: <%= inventory_item.location.barcode %></p>
             <% if inventory_item.location.description.present? %>
               <p class="description"><%= inventory_item.location.description %></p>
             <% end %>
           </div>
           <div class="quantity-info">
             <span class="quantity"><%= inventory_item.quantity %></span>
-            <span class="unit">units</span>
+            <span class="unit"><%= t('time.units') %></span>
           </div>
           <div class="timestamp">
             <% if aging_enabled? %>
               <% days_stored = (Date.current - inventory_item.added_at.to_date).to_i %>
               <span class="storage-duration-badge <%= aging_css_class(days_stored) %>">
-                <%= pluralize(days_stored, 'day') %>
+                <%= days_stored %> <%= days_stored == 1 ? t('time.days.one') : t('time.days.other') %>
               </span>
               <br>
             <% end %>
-            <small>Added <%= time_ago_in_words(inventory_item.added_at) %> ago</small>
+            <small><%= t('items.added_ago', time: time_ago_in_words(inventory_item.added_at)) %></small>
           </div>
         </div>
       <% end %>
     </div>
   <% else %>
     <div class="empty-state">
-      <h3>Not stored anywhere</h3>
-      <p>This item is not currently stored in any <%= location_term.downcase %>.</p>
+      <h3><%= t('dashboard.not_stored') %></h3>
+      <p><%= t('items.not_stored_message', location: location_term.downcase) %></p>
     </div>
   <% end %>
 </div>
