@@ -1,4 +1,5 @@
 require_relative '../services/barcode_printer'
+require 'ostruct'
 
 class ItemsController < ApplicationController
   def index
@@ -124,24 +125,44 @@ class ItemsController < ApplicationController
 
     # Process copy quantities
     copy_quantities = params[:copies] || {}
-    items_with_copies = []
+    items_to_print = []
 
     @items.each do |item|
       copies = copy_quantities[item.id.to_s].to_i
-      copies = 1 if copies < 1  # Default to 1 copy if invalid
-      copies.times { items_with_copies << item }
+      copies = 1 if copies < 1
+
+      copies.times do
+        # After migration: generate individual barcodes for printing
+        items_to_print << generate_individual_barcode_for_printing(item)
+      end
     end
 
-    pdf = BarcodePrinter.generate_pdf(items_with_copies, type: :item)
+    pdf = BarcodePrinter.generate_pdf(items_to_print, type: :item)
 
-    total_labels = items_with_copies.count
     send_data pdf,
-              filename: "item_barcodes_#{total_labels}_labels_#{Date.current.strftime('%Y%m%d')}.pdf",
+              filename: "item_barcodes_#{Date.current.strftime('%Y%m%d')}.pdf",
               type: 'application/pdf',
               disposition: 'inline'
   end
 
   private
+
+  def generate_individual_barcode_for_printing(item)
+    # Generate individual barcode for printing (not for inventory)
+    sequence = ItemIdCounter.next_for_item(item)
+    individual_barcode = "#{item.barcode}-#{sequence.to_s.rjust(5, '0')}"
+
+    # Format name with category like the BarcodePrinter expects for Item instances
+    formatted_name = item.category&.name ? "#{item.name}  #{item.category.name}" : item.name
+
+    # Create print-ready object (not database record)
+    OpenStruct.new(
+      barcode: individual_barcode,
+      name: formatted_name,
+      category: item.category&.name,
+      description: item.description
+    )
+  end
 
   def item_params
     params.require(:item).permit(:name, :description, :category_id)

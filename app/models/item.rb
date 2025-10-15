@@ -2,6 +2,9 @@ class Item < ApplicationRecord
   belongs_to :category, optional: true
   has_many :inventory_items, dependent: :destroy
   has_many :locations, through: :inventory_items
+  has_many :individual_inventory_items, dependent: :destroy
+  has_many :item_id_counters, dependent: :destroy
+  has_many :reusable_barcodes, dependent: :destroy
 
   validates :name, presence: true
   validates :barcode, presence: true, uniqueness: true

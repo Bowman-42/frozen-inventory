@@ -4,6 +4,7 @@ location_singular: Truhe
 location_plural: Truhen
 location_emoji: "\U0001F3E2"
 item_context: frozen
+locale: de
 aging_enabled: true
 aging_warning_days: 120
 aging_danger_days: 180
