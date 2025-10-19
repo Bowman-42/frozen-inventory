@@ -80,7 +80,8 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find_by!(barcode: params[:barcode])
+    @item = find_item_by_barcode(params[:barcode])
+    raise ActiveRecord::RecordNotFound, "Item not found" unless @item
     @inventory_items = @item.inventory_items.includes(:location).order(:created_at)
 
     # Find the oldest storage location for this item
@@ -102,11 +103,13 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    @item = Item.find_by!(barcode: params[:barcode])
+    @item = find_item_by_barcode(params[:barcode])
+    raise ActiveRecord::RecordNotFound, "Item not found" unless @item
   end
 
   def update
-    @item = Item.find_by!(barcode: params[:barcode])
+    @item = find_item_by_barcode(params[:barcode])
+    raise ActiveRecord::RecordNotFound, "Item not found" unless @item
 
     if @item.update(item_params)
       redirect_to item_path(@item.barcode), notice: 'Item was successfully updated.'

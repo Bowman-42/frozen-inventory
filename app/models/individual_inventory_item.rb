@@ -8,7 +8,9 @@ class IndividualInventoryItem < ApplicationRecord
   validates :added_at, presence: true
 
   before_validation :assign_barcode_and_sequence, on: :create
+  after_create :update_item_total_quantity
   after_destroy :release_barcode
+  after_destroy :update_item_total_quantity
 
   scope :oldest_first, -> { order(:added_at) }
   scope :newest_first, -> { order(added_at: :desc) }
@@ -38,5 +40,11 @@ private
 
   def release_barcode
     reusable_barcode&.release!
+  end
+
+  def update_item_total_quantity
+    return unless item
+    total = item.inventory_items.sum { |inv_item| inv_item.individual_inventory_items.count }
+    item.update_column(:total_quantity, total)
   end
 end

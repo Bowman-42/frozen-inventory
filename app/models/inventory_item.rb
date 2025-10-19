@@ -23,11 +23,12 @@ class InventoryItem < ApplicationRecord
   }
 
   # Individual item management methods
-  def add_individual_item!
+  def add_individual_item!(added_at: nil)
     individual_item = IndividualInventoryItem.create!(
       location: location,
       item: item,
-      inventory_item: self
+      inventory_item: self,
+      added_at: added_at
     )
 
     # Update aggregated quantity and added_at
@@ -56,6 +57,7 @@ class InventoryItem < ApplicationRecord
       individual_barcode: individual_item.individual_barcode,
       sequence_number: individual_item.sequence_number,
       added_at: individual_item.added_at,
+      original_added_at: individual_item.added_at,
       storage_days: individual_item.storage_days
     }
 

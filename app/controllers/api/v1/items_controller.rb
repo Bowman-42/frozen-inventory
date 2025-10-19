@@ -1,6 +1,7 @@
 class Api::V1::ItemsController < Api::V1::BaseController
   def show
-    item = Item.find_by!(barcode: params[:barcode])
+    item = find_item_by_barcode(params[:barcode])
+    raise ActiveRecord::RecordNotFound, "Item not found" unless item
 
     item_data = {
       id: item.id,

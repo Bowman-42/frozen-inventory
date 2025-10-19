@@ -8,7 +8,7 @@ class Location < ApplicationRecord
   before_validation :generate_barcode, on: :create
 
   def total_items
-    inventory_items.sum(:quantity)
+    inventory_items.sum { |ii| ii.individual_inventory_items.count }
   end
 
   private
