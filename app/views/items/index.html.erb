@@ -13,6 +13,7 @@
   <div class="action-buttons">
     <%= link_to "📦 #{t('items.new_item')}", new_item_path, class: "btn btn-success" %>
     <button type="button" id="print-selected-btn" class="btn btn-primary" disabled>🖨️ <%= t('items.print_selected') %></button>
+    <button type="button" id="clear-selection-btn" class="btn btn-secondary" disabled>✕ Clear Selection</button>
   </div>
 
   <div class="filters-section">
@@ -147,12 +148,68 @@
   <% end %>
 </div>
 
+<!-- Print Options Modal -->
+<div id="print-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Print Label Options</h3>
+      <span class="modal-close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="print-summary">
+        <p id="modal-print-summary">Ready to print labels</p>
+      </div>
+
+      <div class="sheet-type-selector">
+        <label class="sheet-type-option">
+          <input type="radio" name="modal_sheet_type" value="fresh" checked class="sheet-type-radio">
+          <span class="radio-label">Fresh/Flipped Sheet</span>
+          <small class="help-text">Use for new sheets or after flipping used sheets</small>
+        </label>
+        <label class="sheet-type-option">
+          <input type="radio" name="modal_sheet_type" value="partial" class="sheet-type-radio">
+          <span class="radio-label">Partial Sheet - Choose Positions</span>
+          <small class="help-text">Select specific positions on partially used sheets</small>
+        </label>
+      </div>
+
+      <div class="position-selector" style="display: none;" id="modal-position-selector">
+        <div class="position-selector-header">
+          <h4>Select Label Positions (2×7 grid)</h4>
+          <div class="position-info">
+            <span id="modal-position-counter">0 positions selected</span>
+            <span id="modal-label-counter">• 0 labels to print</span>
+          </div>
+        </div>
+
+        <div class="label-position-grid">
+          <% (1..14).each do |position| %>
+            <label class="position-checkbox <%= position <= 7 ? 'left-column' : 'right-column' %>">
+              <input type="checkbox" name="modal_label_positions[]" value="<%= position %>" class="modal-position-input" id="modal_position_<%= position %>">
+              <span class="position-number"><%= position %></span>
+            </label>
+          <% end %>
+        </div>
+
+        <div class="quick-presets">
+          <button type="button" class="preset-btn" onclick="selectModalPositions([1,2,3,4,5,6])">First 6</button>
+          <button type="button" class="preset-btn" onclick="selectModalPositions([9,10,11,12,13,14])">Last 6</button>
+          <button type="button" class="preset-btn" onclick="selectModalPositions([1,2,3,4,5,6,9,10])">Skip Middle (8)</button>
+          <button type="button" class="preset-btn" onclick="clearAllModalPositions()">Clear All</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary modal-cancel">Cancel</button>
+      <button type="button" class="btn btn-primary modal-print">🖨️ Print Labels</button>
+    </div>
+  </div>
+</div>
+
 <!-- Floating Selection Counter -->
 <div id="floating-selection-counter" class="floating-selection-status" style="display: none;">
   <div class="selection-info">
     <span id="floating-selection-text">0 items selected</span>
-    <button id="floating-print-btn" class="btn btn-primary btn-sm">🖨️ Print</button>
-    <button id="floating-clear-btn" class="btn btn-secondary btn-sm">✕</button>
   </div>
 </div>
 
@@ -204,9 +261,287 @@
   // Also initialize on Turbo navigation
   document.addEventListener('turbo:load', initializeWithPrintCheck);
   document.addEventListener('turbo:render', initializeWithPrintCheck);
+
+
+  // Global functions for modal preset buttons
+  window.selectModalPositions = function(positions) {
+    if (window.itemSelectionManager) {
+      window.itemSelectionManager.selectModalPositions(positions);
+    }
+  };
+
+  window.clearAllModalPositions = function() {
+    // Clear all modal checkboxes
+    document.querySelectorAll('.modal-position-input').forEach(cb => cb.checked = false);
+    const positionCounter = document.getElementById('modal-position-counter');
+    if (positionCounter) positionCounter.textContent = '0 positions selected';
+  };
 </script>
 
 <style>
+/* Modal Styles */
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 5% auto;
+  padding: 0;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #212529;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.modal-close {
+  color: #6c757d;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #495057;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.print-summary {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.print-summary p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #495057;
+}
+
+/* Print Options */
+.print-options {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.print-options h3 {
+  margin: 0 0 15px 0;
+  color: #495057;
+  font-size: 18px;
+}
+
+.sheet-type-selector {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.sheet-type-option {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+}
+
+.sheet-type-option:hover {
+  border-color: #007bff;
+  background: #f0f8ff;
+}
+
+.sheet-type-option input[type="radio"]:checked + .radio-label {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.sheet-type-option input[type="radio"]:checked {
+  border-color: #007bff;
+}
+
+.sheet-type-option .radio-label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.sheet-type-option .help-text {
+  color: #6c757d;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.position-selector {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.position-selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.position-selector-header h4 {
+  margin: 0;
+  color: #495057;
+}
+
+.position-info {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.label-position-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+  max-width: 300px;
+}
+
+.position-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 40px;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  background: white;
+}
+
+.position-checkbox:hover {
+  border-color: #007bff;
+  background: #f0f8ff;
+}
+
+.position-checkbox .position-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.position-checkbox .position-input:checked + .position-number {
+  background: #007bff;
+  color: white;
+}
+
+.position-checkbox .position-input:checked {
+  background: #007bff;
+}
+
+.position-checkbox.left-column {
+  order: calc(var(--position) * 2 - 1);
+}
+
+.position-checkbox.right-column {
+  order: calc((var(--position) - 7) * 2);
+}
+
+.position-number {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 4px;
+  background: #f8f9fa;
+  color: #495057;
+  transition: all 0.2s;
+}
+
+.quick-presets {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.preset-btn {
+  padding: 8px 16px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.2s;
+}
+
+.preset-btn:hover {
+  background: #5a6268;
+}
+
+.preset-btn:active {
+  background: #495057;
+}
+
 .filters-section {
   display: flex;
   gap: 20px;
@@ -257,53 +592,17 @@
   right: 20px;
   background: #007bff;
   color: white;
-  padding: 15px 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  padding: 12px 16px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   z-index: 1000;
-  max-width: 300px;
+  max-width: 250px;
   animation: slideInUp 0.3s ease-out;
 }
 
 .selection-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
   font-size: 14px;
-  flex-wrap: wrap;
-}
-
-#floating-selection-text {
-  flex: 1;
-  min-width: 120px;
-}
-
-.floating-selection-status .btn {
-  font-size: 12px;
-  padding: 4px 8px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.floating-selection-status .btn-primary {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-}
-
-.floating-selection-status .btn-primary:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.floating-selection-status .btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  font-weight: bold;
-}
-
-.floating-selection-status .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
+  text-align: center;
 }
 
 @keyframes slideInUp {

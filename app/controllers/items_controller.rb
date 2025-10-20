@@ -143,7 +143,20 @@ class ItemsController < ApplicationController
       end
     end
 
-    pdf = BarcodePrinter.generate_pdf(items_to_print, type: :item)
+    if params[:sheet_type] == 'partial' && params[:label_positions].present?
+      positions = params[:label_positions].map(&:to_i).sort
+
+      # Validate positions match item count
+      if positions.length != items_to_print.length
+        redirect_to items_path, alert: "Selected #{positions.length} positions but have #{items_to_print.length} labels to print."
+        return
+      end
+
+      pdf = BarcodePrinter.generate_pdf(items_to_print, type: :item, positions: positions)
+    else
+      # Standard sequential printing
+      pdf = BarcodePrinter.generate_pdf(items_to_print, type: :item)
+    end
 
     # Store print success in session for JavaScript to detect
     session[:print_success] = true

@@ -14,15 +14,20 @@ class BarcodePrinter
   A4_WIDTH = 210 # mm
   A4_HEIGHT = 297 # mm
 
-  def self.generate_pdf(items, type: :item)
-    new.generate_pdf(items, type: type)
+  def self.generate_pdf(items, type: :item, positions: nil)
+    new.generate_pdf(items, type: type, positions: positions)
   end
 
-  def generate_pdf(items, type: :item)
+  def generate_pdf(items, type: :item, positions: nil)
     Prawn::Document.new(page_size: 'A4', margin: [0, 0, 0, 0]) do |pdf|
-      items.each_slice(LABELS_PER_PAGE) do |page_items|
-        generate_page(pdf, page_items, type)
-        pdf.start_new_page unless page_items == items.last(LABELS_PER_PAGE)
+      if positions
+        generate_positioned_page(pdf, items, type, positions)
+      else
+        # Original sequential logic for fresh sheets
+        items.each_slice(LABELS_PER_PAGE) do |page_items|
+          generate_page(pdf, page_items, type)
+          pdf.start_new_page unless page_items == items.last(LABELS_PER_PAGE)
+        end
       end
     end.render
   end
@@ -46,6 +51,29 @@ class BarcodePrinter
       y = pdf.bounds.height - (row * label_height_pts)  # Start from very top
 
       generate_label(pdf, item, x, y, label_width_pts, label_height_pts, type)
+    end
+  end
+
+  def generate_positioned_page(pdf, items, type, positions)
+    position_map = positions.zip(items).to_h
+
+    # Calculate positions for 14 labels (2x7 grid) starting from absolute top
+    label_width_pts = mm_to_pts(LABEL_WIDTH)
+    label_height_pts = mm_to_pts(LABEL_HEIGHT)
+
+    # Center labels horizontally on page
+    margin_x = (pdf.bounds.width - (LABELS_PER_ROW * label_width_pts)) / 2
+
+    (1..LABELS_PER_PAGE).each do |pos|
+      next unless position_map[pos]
+
+      row = (pos - 1) / LABELS_PER_ROW
+      col = (pos - 1) % LABELS_PER_ROW
+
+      x = margin_x + (col * label_width_pts)
+      y = pdf.bounds.height - (row * label_height_pts)
+
+      generate_label(pdf, position_map[pos], x, y, label_width_pts, label_height_pts, type)
     end
   end
 

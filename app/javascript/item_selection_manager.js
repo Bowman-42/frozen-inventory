@@ -170,21 +170,134 @@ class ItemSelectionManager {
 
   updatePrintButton() {
     const printButton = document.getElementById('print-selected-btn');
-    if (!printButton) return;
+    const clearButton = document.getElementById('clear-selection-btn');
 
     const count = this.selectedItems.length;
 
     if (count > 0) {
-      printButton.disabled = false;
-      const totalCopies = Object.values(this.copyQuantities).reduce((sum, qty) => sum + qty, 0);
-      printButton.textContent = `🖨️ Print ${totalCopies} label${totalCopies !== 1 ? 's' : ''} (${count} item${count !== 1 ? 's' : ''})`;
+      if (printButton) {
+        printButton.disabled = false;
+        const totalCopies = Object.values(this.copyQuantities).reduce((sum, qty) => sum + qty, 0);
+        printButton.textContent = `🖨️ Print ${totalCopies} label${totalCopies !== 1 ? 's' : ''} (${count} item${count !== 1 ? 's' : ''})`;
+      }
+      if (clearButton) {
+        clearButton.disabled = false;
+      }
     } else {
-      printButton.disabled = true;
-      printButton.textContent = '🖨️ Print Selected';
+      if (printButton) {
+        printButton.disabled = true;
+        printButton.textContent = '🖨️ Print Selected';
+      }
+      if (clearButton) {
+        clearButton.disabled = true;
+      }
     }
   }
 
-  submitPrintForm() {
+  openPrintModal() {
+    const modal = document.getElementById('print-modal');
+    const summary = document.getElementById('modal-print-summary');
+
+    if (!modal || !summary) return;
+
+    // Update summary
+    const count = this.selectedItems.length;
+    const totalCopies = Object.values(this.copyQuantities).reduce((sum, qty) => sum + qty, 0);
+    summary.textContent = `Ready to print ${totalCopies} label${totalCopies !== 1 ? 's' : ''} (${count} item${count !== 1 ? 's' : ''})`;
+
+    // Reset modal to fresh sheet
+    const freshRadio = document.querySelector('input[name="modal_sheet_type"][value="fresh"]');
+    if (freshRadio) freshRadio.checked = true;
+
+    // Hide position selector
+    const positionSelector = document.getElementById('modal-position-selector');
+    if (positionSelector) positionSelector.style.display = 'none';
+
+    // Clear any selected positions
+    document.querySelectorAll('.modal-position-input').forEach(cb => cb.checked = false);
+
+    // Show modal
+    modal.style.display = 'block';
+
+    this.initializeModalEventListeners();
+  }
+
+  initializeModalEventListeners() {
+    const modal = document.getElementById('print-modal');
+
+    // Close modal handlers
+    const closeBtn = modal.querySelector('.modal-close');
+    const cancelBtn = modal.querySelector('.modal-cancel');
+
+    closeBtn.onclick = () => this.closePrintModal();
+    cancelBtn.onclick = () => this.closePrintModal();
+
+    // Close on outside click
+    modal.onclick = (e) => {
+      if (e.target === modal) this.closePrintModal();
+    };
+
+    // Sheet type radio handlers
+    const sheetTypeRadios = modal.querySelectorAll('input[name="modal_sheet_type"]');
+    sheetTypeRadios.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        const positionSelector = document.getElementById('modal-position-selector');
+        if (e.target.value === 'partial') {
+          positionSelector.style.display = 'block';
+          this.updateModalPositionCounter();
+          this.autoSelectOptimalModalPositions();
+        } else {
+          positionSelector.style.display = 'none';
+        }
+      });
+    });
+
+    // Position checkbox handlers
+    const positionInputs = modal.querySelectorAll('.modal-position-input');
+    positionInputs.forEach(input => {
+      input.addEventListener('change', () => this.updateModalPositionCounter());
+    });
+
+    // Print button handler
+    const printBtn = modal.querySelector('.modal-print');
+    printBtn.onclick = () => this.submitPrintFormFromModal();
+  }
+
+  closePrintModal() {
+    const modal = document.getElementById('print-modal');
+    if (modal) modal.style.display = 'none';
+  }
+
+  updateModalPositionCounter() {
+    const selectedPositions = document.querySelectorAll('.modal-position-input:checked').length;
+    const counter = document.getElementById('modal-position-counter');
+    if (counter) counter.textContent = `${selectedPositions} positions selected`;
+  }
+
+  autoSelectOptimalModalPositions() {
+    const totalCopies = Object.values(this.copyQuantities).reduce((sum, qty) => sum + qty, 0);
+
+    if (totalCopies <= 6) {
+      this.selectModalPositions([1,2,3,4,5,6].slice(0, totalCopies));
+    } else if (totalCopies <= 8) {
+      this.selectModalPositions([9,10,11,12,13,14].slice(0, totalCopies));
+    }
+  }
+
+  selectModalPositions(positions) {
+    // Clear all checkboxes
+    document.querySelectorAll('.modal-position-input').forEach(cb => cb.checked = false);
+
+    // Check specified positions
+    positions.forEach(pos => {
+      const checkbox = document.getElementById(`modal_position_${pos}`);
+      if (checkbox) checkbox.checked = true;
+    });
+
+    this.updateModalPositionCounter();
+  }
+
+  submitPrintFormFromModal() {
     const form = document.getElementById('barcode-print-form');
     if (!form) return;
 
@@ -208,6 +321,29 @@ class ItemSelectionManager {
       form.appendChild(copyInput);
     });
 
+    // Add sheet type and positions from modal
+    const sheetType = document.querySelector('input[name="modal_sheet_type"]:checked')?.value || 'fresh';
+    const sheetTypeInput = document.createElement('input');
+    sheetTypeInput.type = 'hidden';
+    sheetTypeInput.name = 'sheet_type';
+    sheetTypeInput.value = sheetType;
+    sheetTypeInput.className = 'persistent-selection-input';
+    form.appendChild(sheetTypeInput);
+
+    if (sheetType === 'partial') {
+      const selectedPositions = Array.from(document.querySelectorAll('.modal-position-input:checked'))
+                                     .map(cb => cb.value);
+      selectedPositions.forEach(position => {
+        const positionInput = document.createElement('input');
+        positionInput.type = 'hidden';
+        positionInput.name = 'label_positions[]';
+        positionInput.value = position;
+        positionInput.className = 'persistent-selection-input';
+        form.appendChild(positionInput);
+      });
+    }
+
+    this.closePrintModal();
     form.submit();
   }
 
@@ -228,15 +364,12 @@ class ItemSelectionManager {
       }
     });
 
-    // Handle print button click
+    // Handle print and clear button clicks
     document.addEventListener('click', (e) => {
       if (e.target.id === 'print-selected-btn') {
         e.preventDefault();
-        this.submitPrintForm();
-      } else if (e.target.id === 'floating-print-btn') {
-        e.preventDefault();
-        this.submitPrintForm();
-      } else if (e.target.id === 'floating-clear-btn') {
+        this.openPrintModal();
+      } else if (e.target.id === 'clear-selection-btn') {
         e.preventDefault();
         this.clearSelection();
       }
