@@ -62,7 +62,8 @@ class Api::V1::InventoryController < Api::V1::BaseController
   end
 
   def remove_item
-    individual_barcode = params[:individual_barcode]
+    # Accept both parameter names for backward compatibility
+    individual_barcode = params[:individual_barcode] || params[:item_barcode]
 
     return render_error('Individual barcode is required') if individual_barcode.blank?
 
@@ -127,7 +128,8 @@ class Api::V1::InventoryController < Api::V1::BaseController
 
   def move_item
     to_location_barcode = params[:to_location_barcode]
-    individual_barcode = params[:individual_barcode]
+    # Accept both parameter names for backward compatibility
+    individual_barcode = params[:individual_barcode] || params[:item_barcode]
 
     return render_error('To location barcode is required') if to_location_barcode.blank?
     return render_error('Individual barcode is required') if individual_barcode.blank?

@@ -147,100 +147,63 @@
   <% end %>
 </div>
 
-<script>
-function initializeItemsPrintButton() {
-  function updateSelectAllState() {
-    const selectAllCheckbox = document.getElementById('select-all');
-    const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
-    const allItemCheckboxes = document.querySelectorAll('.item-checkbox');
+<!-- Floating Selection Counter -->
+<div id="floating-selection-counter" class="floating-selection-status" style="display: none;">
+  <div class="selection-info">
+    <span id="floating-selection-text">0 items selected</span>
+    <button id="floating-print-btn" class="btn btn-primary btn-sm">🖨️ Print</button>
+    <button id="floating-clear-btn" class="btn btn-secondary btn-sm">✕</button>
+  </div>
+</div>
 
-    if (selectAllCheckbox && allItemCheckboxes.length > 0) {
-      selectAllCheckbox.checked = checkedBoxes.length === allItemCheckboxes.length;
-      selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < allItemCheckboxes.length;
-    }
+<script type="module">
+  import { initializeItemSelection } from "item_selection_manager";
+
+  function initializeWithPrintCheck() {
+    initializeItemSelection();
+
+    // Clear selection if printing was successful
+    <% if @print_success %>
+      // Small delay to ensure the manager is initialized
+      setTimeout(() => {
+        if (window.itemSelectionManager) {
+          window.itemSelectionManager.clearSelection();
+
+          // Show success message
+          const successMessage = document.createElement('div');
+          successMessage.className = 'alert alert-success';
+          successMessage.style.position = 'fixed';
+          successMessage.style.top = '20px';
+          successMessage.style.right = '20px';
+          successMessage.style.zIndex = '1001';
+          successMessage.style.padding = '10px 15px';
+          successMessage.style.borderRadius = '4px';
+          successMessage.style.backgroundColor = '#d4edda';
+          successMessage.style.color = '#155724';
+          successMessage.style.border = '1px solid #c3e6cb';
+          successMessage.textContent = 'Labels printed successfully! Selection cleared.';
+
+          document.body.appendChild(successMessage);
+
+          // Remove message after 3 seconds
+          setTimeout(() => {
+            successMessage.remove();
+          }, 3000);
+        }
+      }, 100);
+    <% end %>
   }
 
-  function updateCopyInputs() {
-    const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
-    const allCopyInputs = document.querySelectorAll('.copy-quantity-input');
-
-    // Enable copy inputs for selected items, disable for unselected
-    allCopyInputs.forEach(function(input) {
-      const itemId = input.id.replace('copies_', '');
-      const itemCheckbox = document.getElementById(`item_${itemId}`);
-      input.disabled = !itemCheckbox || !itemCheckbox.checked;
-    });
+  // Initialize immediately if DOM is already loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeWithPrintCheck);
+  } else {
+    initializeWithPrintCheck();
   }
 
-  function updatePrintButton() {
-    const printButton = document.getElementById('print-selected-btn');
-    const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
-
-    if (printButton) {
-      printButton.disabled = checkedBoxes.length === 0;
-
-      if (checkedBoxes.length > 0) {
-        // Calculate total copies to print
-        let totalCopies = 0;
-        checkedBoxes.forEach(function(checkbox) {
-          const itemId = checkbox.value;
-          const copyInput = document.getElementById(`copies_${itemId}`);
-          if (copyInput) {
-            totalCopies += parseInt(copyInput.value) || 1;
-          }
-        });
-
-        const labelText = totalCopies === 1 ? '<%= j t('items.label') %>' : '<%= j t('items.labels') %>';
-        const itemText = checkedBoxes.length === 1 ? '<%= j t('items.item') %>' : '<%= j t('items.items') %>';
-        printButton.textContent = `🖨️ <%= j t('items.print') %> ${totalCopies} ${labelText} (${checkedBoxes.length} ${itemText})`;
-      } else {
-        printButton.textContent = '🖨️ <%= j t('items.print_selected') %>';
-      }
-    }
-  }
-
-  // Use event delegation for dynamic content
-  document.addEventListener('change', function(e) {
-    if (e.target && e.target.id === 'select-all') {
-      // Handle select all checkbox
-      const isChecked = e.target.checked;
-      document.querySelectorAll('.item-checkbox').forEach(function(checkbox) {
-        checkbox.checked = isChecked;
-      });
-      updateCopyInputs();
-      updatePrintButton();
-    } else if (e.target && e.target.classList.contains('item-checkbox')) {
-      // Handle individual item checkbox
-      updateSelectAllState();
-      updateCopyInputs();
-      updatePrintButton();
-    } else if (e.target && e.target.classList.contains('copy-quantity-input')) {
-      // Handle copy quantity change
-      updatePrintButton();
-    }
-  });
-
-  // Handle print button click
-  document.addEventListener('click', function(e) {
-    if (e.target && e.target.id === 'print-selected-btn') {
-      const form = document.getElementById('barcode-print-form');
-      if (form) {
-        form.submit();
-      }
-    }
-  });
-
-  // Initialize button state after a short delay to ensure DOM is ready
-  setTimeout(function() {
-    updateSelectAllState();
-    updatePrintButton();
-  }, 50);
-}
-
-// Initialize on both DOMContentLoaded and Turbo events
-document.addEventListener('DOMContentLoaded', initializeItemsPrintButton);
-document.addEventListener('turbo:load', initializeItemsPrintButton);
-document.addEventListener('turbo:render', initializeItemsPrintButton);
+  // Also initialize on Turbo navigation
+  document.addEventListener('turbo:load', initializeWithPrintCheck);
+  document.addEventListener('turbo:render', initializeWithPrintCheck);
 </script>
 
 <style>
@@ -285,5 +248,91 @@ document.addEventListener('turbo:render', initializeItemsPrintButton);
   color: #6c757d;
   font-style: italic;
   font-size: 0.9em;
+}
+
+/* Floating Selection Counter */
+.floating-selection-status {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #007bff;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 1000;
+  max-width: 300px;
+  animation: slideInUp 0.3s ease-out;
+}
+
+.selection-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  flex-wrap: wrap;
+}
+
+#floating-selection-text {
+  flex: 1;
+  min-width: 120px;
+}
+
+.floating-selection-status .btn {
+  font-size: 12px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.floating-selection-status .btn-primary {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.floating-selection-status .btn-primary:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.floating-selection-status .btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-weight: bold;
+}
+
+.floating-selection-status .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .floating-selection-status {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+    padding: 12px 15px;
+  }
+
+  .selection-info {
+    font-size: 13px;
+  }
+
+  #floating-selection-text {
+    min-width: auto;
+  }
 }
 </style>

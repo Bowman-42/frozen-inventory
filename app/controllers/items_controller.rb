@@ -5,6 +5,9 @@ class ItemsController < ApplicationController
   def index
     @items = Item.includes(:inventory_items, :locations, :category)
 
+    # Check if printing was successful (to clear selection)
+    @print_success = session.delete(:print_success)
+
     # Filter by category if specified
     if params[:category_id].present?
       @items = @items.where(category_id: params[:category_id])
@@ -141,6 +144,9 @@ class ItemsController < ApplicationController
     end
 
     pdf = BarcodePrinter.generate_pdf(items_to_print, type: :item)
+
+    # Store print success in session for JavaScript to detect
+    session[:print_success] = true
 
     send_data pdf,
               filename: "item_barcodes_#{Date.current.strftime('%Y%m%d')}.pdf",
