@@ -49,6 +49,30 @@ module ApplicationHelper
     InventoryConfig.config.app_title
   end
 
+  def javascript_translations
+    {
+      items_selected: {
+        zero: t('items.items_selected.zero'),
+        one: t('items.items_selected.one'),
+        other: t('items.items_selected.other')
+      },
+      print_labels: {
+        zero: t('items.print_labels.zero'),
+        one: t('items.print_labels.one'),
+        other: t('items.print_labels.other')
+      },
+      ready_to_print: {
+        one: t('items.ready_to_print.one'),
+        other: t('items.ready_to_print.other')
+      },
+      positions_selected: {
+        zero: t('items.positions_selected.zero'),
+        one: t('items.positions_selected.one'),
+        other: t('items.positions_selected.other')
+      }
+    }.to_json.html_safe
+  end
+
   private
 
   def ensure_config_loaded

@@ -84,6 +84,11 @@ en:
     reset: "Reset"
     print: "Print"
     select_all: "Select All"
+    clear_selection: "Clear Selection"
+    first_six: "First 6"
+    last_six: "Last 6"
+    skip_middle: "Skip Middle (8)"
+    clear_all: "Clear All"
 
   # Dashboard
   dashboard:
@@ -130,6 +135,27 @@ en:
     stored_in: "Stored In"
     added_ago: "Added %{time} ago"
     not_stored_message: "This item is not currently stored in any %{location}."
+    print_label_options: "Print Label Options"
+    fresh_flipped_sheet: "Fresh/Flipped Sheet"
+    partial_sheet: "Partial Sheet - Choose Positions"
+    fresh_sheet_help: "Use for new sheets or after flipping used sheets"
+    partial_sheet_help: "Select specific positions on partially used sheets"
+    select_label_positions: "Select Label Positions (2×7 grid)"
+    items_selected:
+      zero: "0 items selected"
+      one: "1 item selected (%{copies} copy)"
+      other: "%{count} items selected (%{copies} total copies)"
+    print_labels:
+      zero: "🖨️ Print Selected"
+      one: "🖨️ Print 1 label (1 item)"
+      other: "🖨️ Print %{count} labels (%{items} items)"
+    ready_to_print:
+      one: "Ready to print 1 label (1 item)"
+      other: "Ready to print %{count} labels (%{items} items)"
+    positions_selected:
+      zero: "0 positions selected"
+      one: "1 position selected"
+      other: "%{count} positions selected"
 
   # Categories
   categories:

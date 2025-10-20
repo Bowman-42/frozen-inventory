@@ -55,6 +55,11 @@ es:
     reset: "Restablecer"
     print: "Imprimir"
     select_all: "Seleccionar Todo"
+    clear_selection: "Limpiar Selección"
+    first_six: "Primeros 6"
+    last_six: "Últimos 6"
+    skip_middle: "Saltar Medio (8)"
+    clear_all: "Limpiar Todo"
 
   # Tablero
   dashboard:
@@ -101,6 +106,27 @@ es:
     stored_in: "Almacenado En"
     added_ago: "Agregado hace %{time}"
     not_stored_message: "Este artículo no está almacenado actualmente en ninguna %{location}."
+    print_label_options: "Opciones de Impresión de Etiquetas"
+    fresh_flipped_sheet: "Hoja Nueva/Volteada"
+    partial_sheet: "Hoja Parcial - Elegir Posiciones"
+    fresh_sheet_help: "Usar para hojas nuevas o después de voltear hojas usadas"
+    partial_sheet_help: "Seleccionar posiciones específicas en hojas parcialmente usadas"
+    select_label_positions: "Seleccionar Posiciones de Etiquetas (cuadrícula 2×7)"
+    items_selected:
+      zero: "0 artículos seleccionados"
+      one: "1 artículo seleccionado (%{copies} copia)"
+      other: "%{count} artículos seleccionados (%{copies} copias totales)"
+    print_labels:
+      zero: "🖨️ Imprimir Seleccionados"
+      one: "🖨️ Imprimir 1 etiqueta (1 artículo)"
+      other: "🖨️ Imprimir %{count} etiquetas (%{items} artículos)"
+    ready_to_print:
+      one: "Listo para imprimir 1 etiqueta (1 artículo)"
+      other: "Listo para imprimir %{count} etiquetas (%{items} artículos)"
+    positions_selected:
+      zero: "0 posiciones seleccionadas"
+      one: "1 posición seleccionada"
+      other: "%{count} posiciones seleccionadas"
 
   # Categorías
   categories:

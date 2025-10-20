@@ -55,6 +55,11 @@ de:
     reset: "Zurücksetzen"
     print: "Drucken"
     select_all: "Alle Auswählen"
+    clear_selection: "Auswahl Löschen"
+    first_six: "Erste 6"
+    last_six: "Letzte 6"
+    skip_middle: "Mitte Überspringen (8)"
+    clear_all: "Alle Löschen"
 
   # Dashboard
   dashboard:
@@ -101,6 +106,27 @@ de:
     stored_in: "Gelagert In"
     added_ago: "Vor %{time} hinzugefügt"
     not_stored_message: "Dieser Artikel ist derzeit in keinem %{location} gelagert."
+    print_label_options: "Etiketten-Druckoptionen"
+    fresh_flipped_sheet: "Frisches/Umgedrehtes Blatt"
+    partial_sheet: "Teilblatt - Positionen Wählen"
+    fresh_sheet_help: "Für neue Blätter oder nach dem Umdrehen gebrauchter Blätter verwenden"
+    partial_sheet_help: "Spezifische Positionen auf teilweise verwendeten Blättern auswählen"
+    select_label_positions: "Etikett-Positionen Auswählen (2×7-Raster)"
+    items_selected:
+      zero: "0 Artikel ausgewählt"
+      one: "1 Artikel ausgewählt (%{copies} Kopie)"
+      other: "%{count} Artikel ausgewählt (%{copies} Kopien insgesamt)"
+    print_labels:
+      zero: "🖨️ Ausgewählte Drucken"
+      one: "🖨️ 1 Etikett drucken (1 Artikel)"
+      other: "🖨️ %{count} Etiketten drucken (%{items} Artikel)"
+    ready_to_print:
+      one: "Bereit, 1 Etikett zu drucken (1 Artikel)"
+      other: "Bereit, %{count} Etiketten zu drucken (%{items} Artikel)"
+    positions_selected:
+      zero: "0 Positionen ausgewählt"
+      one: "1 Position ausgewählt"
+      other: "%{count} Positionen ausgewählt"
 
   # Kategorien
   categories:

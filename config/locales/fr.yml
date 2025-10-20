@@ -55,6 +55,11 @@ fr:
     reset: "Réinitialiser"
     print: "Imprimer"
     select_all: "Tout Sélectionner"
+    clear_selection: "Effacer la Sélection"
+    first_six: "6 Premiers"
+    last_six: "6 Derniers"
+    skip_middle: "Ignorer le Milieu (8)"
+    clear_all: "Tout Effacer"
 
   # Tableau de bord
   dashboard:
@@ -101,6 +106,27 @@ fr:
     stored_in: "Stocké Dans"
     added_ago: "Ajouté il y a %{time}"
     not_stored_message: "Cet article n'est actuellement stocké dans aucun %{location}."
+    print_label_options: "Options d'Impression d'Étiquettes"
+    fresh_flipped_sheet: "Feuille Fraîche/Retournée"
+    partial_sheet: "Feuille Partielle - Choisir les Positions"
+    fresh_sheet_help: "Utiliser pour les nouvelles feuilles ou après avoir retourné les feuilles usagées"
+    partial_sheet_help: "Sélectionner des positions spécifiques sur les feuilles partiellement utilisées"
+    select_label_positions: "Sélectionner les Positions d'Étiquettes (grille 2×7)"
+    items_selected:
+      zero: "0 article sélectionné"
+      one: "1 article sélectionné (%{copies} copie)"
+      other: "%{count} articles sélectionnés (%{copies} copies totales)"
+    print_labels:
+      zero: "🖨️ Imprimer Sélectionnés"
+      one: "🖨️ Imprimer 1 étiquette (1 article)"
+      other: "🖨️ Imprimer %{count} étiquettes (%{items} articles)"
+    ready_to_print:
+      one: "Prêt à imprimer 1 étiquette (1 article)"
+      other: "Prêt à imprimer %{count} étiquettes (%{items} articles)"
+    positions_selected:
+      zero: "0 position sélectionnée"
+      one: "1 position sélectionnée"
+      other: "%{count} positions sélectionnées"
 
   # Catégories
   categories:

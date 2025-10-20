@@ -1,3 +1,32 @@
+// Translation helper function
+function t(key, params = {}) {
+  const translations = window.I18nTranslations || {};
+  let value = key.split('.').reduce((obj, k) => obj && obj[k], translations);
+
+  if (!value) return key; // fallback to key if translation not found
+
+  // Handle pluralization
+  if (typeof value === 'object' && params.count !== undefined) {
+    const count = parseInt(params.count);
+    if (count === 0 && value.zero) {
+      value = value.zero;
+    } else if (count === 1 && value.one) {
+      value = value.one;
+    } else if (value.other) {
+      value = value.other;
+    }
+  }
+
+  // Replace interpolation variables
+  if (typeof value === 'string') {
+    Object.keys(params).forEach(param => {
+      value = value.replace(new RegExp(`%{${param}}`, 'g'), params[param]);
+    });
+  }
+
+  return value;
+}
+
 // Persistent Item Selection Manager for Print Queue
 class ItemSelectionManager {
   constructor() {
@@ -158,7 +187,13 @@ class ItemSelectionManager {
         const totalCopies = Object.values(this.copyQuantities).reduce((sum, qty) => sum + qty, 0);
         const selectionText = document.getElementById('floating-selection-text');
         if (selectionText) {
-          selectionText.textContent = `${count} item${count !== 1 ? 's' : ''} selected (${totalCopies} total copies)`;
+          if (count === 0) {
+            selectionText.textContent = t('items_selected.zero');
+          } else if (count === 1) {
+            selectionText.textContent = t('items_selected.one', { copies: totalCopies });
+          } else {
+            selectionText.textContent = t('items_selected.other', { count: count, copies: totalCopies });
+          }
         }
       }
     } else {
@@ -178,7 +213,11 @@ class ItemSelectionManager {
       if (printButton) {
         printButton.disabled = false;
         const totalCopies = Object.values(this.copyQuantities).reduce((sum, qty) => sum + qty, 0);
-        printButton.textContent = `🖨️ Print ${totalCopies} label${totalCopies !== 1 ? 's' : ''} (${count} item${count !== 1 ? 's' : ''})`;
+        if (totalCopies === 1) {
+          printButton.textContent = t('print_labels.one');
+        } else {
+          printButton.textContent = t('print_labels.other', { count: totalCopies, items: count });
+        }
       }
       if (clearButton) {
         clearButton.disabled = false;
@@ -186,7 +225,7 @@ class ItemSelectionManager {
     } else {
       if (printButton) {
         printButton.disabled = true;
-        printButton.textContent = '🖨️ Print Selected';
+        printButton.textContent = t('print_labels.zero');
       }
       if (clearButton) {
         clearButton.disabled = true;
@@ -203,7 +242,11 @@ class ItemSelectionManager {
     // Update summary
     const count = this.selectedItems.length;
     const totalCopies = Object.values(this.copyQuantities).reduce((sum, qty) => sum + qty, 0);
-    summary.textContent = `Ready to print ${totalCopies} label${totalCopies !== 1 ? 's' : ''} (${count} item${count !== 1 ? 's' : ''})`;
+    if (totalCopies === 1) {
+      summary.textContent = t('ready_to_print.one');
+    } else {
+      summary.textContent = t('ready_to_print.other', { count: totalCopies, items: count });
+    }
 
     // Reset modal to fresh sheet
     const freshRadio = document.querySelector('input[name="modal_sheet_type"][value="fresh"]');
@@ -271,7 +314,15 @@ class ItemSelectionManager {
   updateModalPositionCounter() {
     const selectedPositions = document.querySelectorAll('.modal-position-input:checked').length;
     const counter = document.getElementById('modal-position-counter');
-    if (counter) counter.textContent = `${selectedPositions} positions selected`;
+    if (counter) {
+      if (selectedPositions === 0) {
+        counter.textContent = t('positions_selected.zero');
+      } else if (selectedPositions === 1) {
+        counter.textContent = t('positions_selected.one');
+      } else {
+        counter.textContent = t('positions_selected.other', { count: selectedPositions });
+      }
+    }
   }
 
   autoSelectOptimalModalPositions() {

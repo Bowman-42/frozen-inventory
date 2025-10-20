@@ -13,7 +13,7 @@
   <div class="action-buttons">
     <%= link_to "📦 #{t('items.new_item')}", new_item_path, class: "btn btn-success" %>
     <button type="button" id="print-selected-btn" class="btn btn-primary" disabled>🖨️ <%= t('items.print_selected') %></button>
-    <button type="button" id="clear-selection-btn" class="btn btn-secondary" disabled>✕ Clear Selection</button>
+    <button type="button" id="clear-selection-btn" class="btn btn-secondary" disabled>✕ <%= t('navigation.clear_selection') %></button>
   </div>
 
   <div class="filters-section">
@@ -105,7 +105,7 @@
                   <% if item.category %>
                     <%= link_to item.category.name, category_path(item.category), class: "category-link" %>
                   <% else %>
-                    <span class="no-category">Uncategorized</span>
+                    <span class="no-category"><%= t('items.uncategorized') %></span>
                   <% end %>
                 </td>
                 <td class="quantity"><%= item.total_quantity %></td>
@@ -130,7 +130,7 @@
                   <% end %>
                 </td>
                 <td class="actions">
-                  <%= link_to "Edit", edit_item_path(item.barcode), class: "btn btn-sm btn-secondary" %>
+                  <%= link_to t('navigation.edit', resource: t('items.item')), edit_item_path(item.barcode), class: "btn btn-sm btn-secondary" %>
                 </td>
               </tr>
             <% end %>
@@ -142,8 +142,8 @@
     <%= paginate @items %>
   <% else %>
     <div class="empty-state">
-      <h3>No items found</h3>
-      <p>No items have been added to the system yet.</p>
+      <h3><%= t('items.no_items') %></h3>
+      <p><%= t('items.no_items_message') %></p>
     </div>
   <% end %>
 </div>
@@ -152,7 +152,7 @@
 <div id="print-modal" class="modal" style="display: none;">
   <div class="modal-content">
     <div class="modal-header">
-      <h3>Print Label Options</h3>
+      <h3><%= t('items.print_label_options') %></h3>
       <span class="modal-close">&times;</span>
     </div>
     <div class="modal-body">
@@ -163,19 +163,19 @@
       <div class="sheet-type-selector">
         <label class="sheet-type-option">
           <input type="radio" name="modal_sheet_type" value="fresh" checked class="sheet-type-radio">
-          <span class="radio-label">Fresh/Flipped Sheet</span>
-          <small class="help-text">Use for new sheets or after flipping used sheets</small>
+          <span class="radio-label"><%= t('items.fresh_flipped_sheet') %></span>
+          <small class="help-text"><%= t('items.fresh_sheet_help') %></small>
         </label>
         <label class="sheet-type-option">
           <input type="radio" name="modal_sheet_type" value="partial" class="sheet-type-radio">
-          <span class="radio-label">Partial Sheet - Choose Positions</span>
-          <small class="help-text">Select specific positions on partially used sheets</small>
+          <span class="radio-label"><%= t('items.partial_sheet') %></span>
+          <small class="help-text"><%= t('items.partial_sheet_help') %></small>
         </label>
       </div>
 
       <div class="position-selector" style="display: none;" id="modal-position-selector">
         <div class="position-selector-header">
-          <h4>Select Label Positions (2×7 grid)</h4>
+          <h4><%= t('items.select_label_positions') %></h4>
           <div class="position-info">
             <span id="modal-position-counter">0 positions selected</span>
             <span id="modal-label-counter">• 0 labels to print</span>
@@ -192,16 +192,16 @@
         </div>
 
         <div class="quick-presets">
-          <button type="button" class="preset-btn" onclick="selectModalPositions([1,2,3,4,5,6])">First 6</button>
-          <button type="button" class="preset-btn" onclick="selectModalPositions([9,10,11,12,13,14])">Last 6</button>
-          <button type="button" class="preset-btn" onclick="selectModalPositions([1,2,3,4,5,6,9,10])">Skip Middle (8)</button>
-          <button type="button" class="preset-btn" onclick="clearAllModalPositions()">Clear All</button>
+          <button type="button" class="preset-btn" onclick="selectModalPositions([1,2,3,4,5,6])"><%= t('navigation.first_six') %></button>
+          <button type="button" class="preset-btn" onclick="selectModalPositions([9,10,11,12,13,14])"><%= t('navigation.last_six') %></button>
+          <button type="button" class="preset-btn" onclick="selectModalPositions([1,2,3,4,5,6,9,10])"><%= t('navigation.skip_middle') %></button>
+          <button type="button" class="preset-btn" onclick="clearAllModalPositions()"><%= t('navigation.clear_all') %></button>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary modal-cancel">Cancel</button>
-      <button type="button" class="btn btn-primary modal-print">🖨️ Print Labels</button>
+      <button type="button" class="btn btn-secondary modal-cancel"><%= t('navigation.cancel') %></button>
+      <button type="button" class="btn btn-primary modal-print">🖨️ <%= t('items.print_labels.zero') %></button>
     </div>
   </div>
 </div>
@@ -209,12 +209,15 @@
 <!-- Floating Selection Counter -->
 <div id="floating-selection-counter" class="floating-selection-status" style="display: none;">
   <div class="selection-info">
-    <span id="floating-selection-text">0 items selected</span>
+    <span id="floating-selection-text"><%= t('items.items_selected.zero') %></span>
   </div>
 </div>
 
 <script type="module">
   import { initializeItemSelection } from "item_selection_manager";
+
+  // Provide translations to JavaScript
+  window.I18nTranslations = <%= javascript_translations %>;
 
   function initializeWithPrintCheck() {
     initializeItemSelection();
