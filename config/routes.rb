@@ -40,6 +40,8 @@ Rails.application.routes.draw do
   get 'inventory', to: 'inventory#index'
   get 'inventory/search', to: 'inventory#search'
   get 'inventory/oldest', to: 'inventory#oldest_items'
+  get 'inventory/manual-remove', to: 'inventory#manual_remove', as: :inventory_manual_remove
+  delete 'inventory/manual-remove/:id', to: 'inventory#remove_individual', as: :inventory_remove_individual
   get 'settings', to: 'settings#show'
   patch 'settings', to: 'settings#update'
 

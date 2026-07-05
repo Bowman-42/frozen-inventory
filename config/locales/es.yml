@@ -285,6 +285,12 @@ es:
     show_all_languages: "Mostrar Todos los Idiomas"
     show_selected_language_only: "Mostrar Solo el Idioma Seleccionado"
 
+  # Valores predeterminados
+  defaults:
+    app_title: "Sistema de Inventario Congelado"
+    location_singular: "Nevera"
+    location_plural: "Neveras"
+
   # Términos comunes
   common:
     yes: "Sí"

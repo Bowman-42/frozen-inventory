@@ -28,7 +28,7 @@ module FrozenInventory
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Internationalization configuration
-    config.i18n.available_locales = [:en, :es, :fr, :de]
+    config.i18n.available_locales = [:en, :es, :fr, :de, :sv, :da, :no, :nl, :pl]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
   end

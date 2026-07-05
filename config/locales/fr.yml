@@ -285,6 +285,12 @@ fr:
     show_all_languages: "Afficher Toutes les Langues"
     show_selected_language_only: "Afficher Uniquement la Langue Sélectionnée"
 
+  # Valeurs par défaut
+  defaults:
+    app_title: "Système d'Inventaire Congelé"
+    location_singular: "Réfrigérateur"
+    location_plural: "Réfrigérateurs"
+
   # Termes communs
   common:
     yes: "Oui"

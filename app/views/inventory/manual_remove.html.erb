@@ -1,0 +1,86 @@
+<% if notice %>
+  <div class="flash-notice"><%= notice %></div>
+<% end %>
+<% if alert %>
+  <div class="flash-alert"><%= alert %></div>
+<% end %>
+
+<div class="breadcrumb">
+  <%= link_to t('navigation.back_to_dashboard'), root_path, class: "back-link" %>
+</div>
+
+<div class="header">
+  <h1><%= t('inventory.manual_remove.title') %></h1>
+  <p class="page-subtitle"><%= t('inventory.manual_remove.subtitle') %></p>
+
+  <%= form_with url: inventory_manual_remove_path, method: :get, local: true, class: "search-form" do |f| %>
+    <%= f.text_field :q, placeholder: t('inventory.manual_remove.search_placeholder'),
+        value: @query, class: "search-input", autofocus: true %>
+    <%= f.submit t('navigation.search'), class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<% if @query.present? %>
+  <div class="manual-remove-results">
+    <% if @results.any? %>
+      <h2><%= t('inventory.manual_remove.results_for', query: @query) %></h2>
+
+      <% @results.each do |item| %>
+        <div class="item-remove-group">
+          <div class="item-remove-header">
+            <h3><%= link_to item.name, item_path(item.barcode), class: "item-link" %></h3>
+            <small class="barcode"><%= item.barcode %></small>
+            <% if item.category %>
+              <span class="category-badge"><%= item.category.name %></span>
+            <% end %>
+          </div>
+
+          <table class="individual-items-table">
+            <thead>
+              <tr>
+                <th><%= t('inventory.manual_remove.individual_barcode') %></th>
+                <th><%= location_term %></th>
+                <th><%= t('dashboard.added') %></th>
+                <th><%= t('items.actions') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% item.individual_inventory_items.order(:added_at).each do |ind| %>
+                <tr>
+                  <td class="barcode"><%= ind.individual_barcode %></td>
+                  <td>
+                    <%= link_to ind.location.name, location_path(ind.location.barcode), class: "location-link" %>
+                  </td>
+                  <td class="timestamp">
+                    <% if aging_enabled? %>
+                      <% days = (Date.current - ind.added_at.to_date).to_i %>
+                      <span class="storage-duration-badge <%= aging_css_class(days) %>">
+                        <%= days %> <%= days == 1 ? t('time.days.one') : t('time.days.other') %>
+                      </span>
+                    <% else %>
+                      <%= t('time.ago', time: time_ago_in_words(ind.added_at)) %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= form_with url: inventory_remove_individual_path(ind.id), method: :delete, local: true do |f| %>
+                      <%= f.hidden_field :q, value: @query %>
+                      <%= f.submit t('inventory.manual_remove.remove_button'),
+                          class: "btn btn-danger btn-sm",
+                          data: { confirm: t('inventory.manual_remove.confirm_remove',
+                            name: item.name, barcode: ind.individual_barcode) } %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+
+    <% else %>
+      <div class="empty-state">
+        <p><%= t('inventory.manual_remove.no_results', query: @query) %></p>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -90,6 +90,19 @@ en:
     skip_middle: "Skip Middle (8)"
     clear_all: "Clear All"
 
+  # Inventory
+  inventory:
+    manual_remove:
+      title: "Manual Item Removal"
+      subtitle: "Search for an item by name to see its individual barcodes and remove them one at a time."
+      nav_button: "Manual Remove"
+      search_placeholder: "Search items by name..."
+      results_for: "Results for \"%{query}\""
+      individual_barcode: "Individual Barcode"
+      remove_button: "Remove"
+      confirm_remove: "Remove \"%{name}\" (%{barcode}) from inventory?"
+      no_results: "No inventory items found matching \"%{query}\"."
+
   # Dashboard
   dashboard:
     title: "Dashboard"
@@ -237,6 +250,24 @@ en:
       warehouse: "Warehouse"
       retail: "Retail"
       laboratory: "Laboratory"
+      warehouse_location_singular: "Warehouse"
+      warehouse_location_plural: "Warehouses"
+      warehouse_app_title: "Warehouse Management System"
+      warehouse_warning_label: "old stock"
+      warehouse_danger_label: "very old stock"
+      warehouse_fresh_label: "recent"
+      retail_location_singular: "Store"
+      retail_location_plural: "Stores"
+      retail_app_title: "Retail Inventory System"
+      retail_warning_label: "aging inventory"
+      retail_danger_label: "stale inventory"
+      retail_fresh_label: "new stock"
+      laboratory_location_singular: "Lab"
+      laboratory_location_plural: "Labs"
+      laboratory_app_title: "Laboratory Inventory System"
+      laboratory_warning_label: "expiring soon"
+      laboratory_danger_label: "expired"
+      laboratory_fresh_label: "fresh"
 
   # Aging
   aging:
@@ -285,6 +316,7 @@ en:
     success:
       preset_applied: "Configuration updated to %{preset} preset."
       custom_applied: "Custom configuration applied successfully."
+      item_removed: "Removed \"%{name}\" (%{barcode}) from inventory."
       item_created: "Item was successfully created."
       item_updated: "Item was successfully updated."
       location_created: "%{location} was successfully created."
@@ -295,6 +327,7 @@ en:
       preset_invalid: "Invalid preset selected."
       custom_invalid: "Error applying custom configuration: %{error}"
       validation_errors: "Validation errors: %{errors}"
+      item_not_found: "Item not found."
       no_config: "No configuration specified."
       no_selections: "No %{resource} selected for printing."
 
@@ -313,6 +346,12 @@ en:
     choose_plan: "Choose the plan that fits your needs"
     show_all_languages: "Show All Languages"
     show_selected_language_only: "Show Selected Language Only"
+
+  # Default values
+  defaults:
+    app_title: "Frozen Inventory System"
+    location_singular: "Fridge"
+    location_plural: "Fridges"
 
   # Common terms
   common:

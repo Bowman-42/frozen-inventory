@@ -126,7 +126,7 @@
                   <% if item.locations.any? %>
                     <%= item.locations.map(&:name).join(", ") %>
                   <% else %>
-                    <span class="no-locations">Not in any <%= location_term.downcase %></span>
+                    <span class="no-locations"><%= t('dashboard.not_in_any', location: location_term.downcase) %></span>
                   <% end %>
                 </td>
                 <td class="actions">

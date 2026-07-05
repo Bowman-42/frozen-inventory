@@ -1,0 +1,326 @@
+nl:
+  # Rails built-in translations
+  datetime:
+    distance_in_words:
+      half_a_minute: "een halve minuut"
+      less_than_x_seconds:
+        one: "minder dan een seconde"
+        other: "minder dan %{count} seconden"
+      x_seconds:
+        one: "een seconde"
+        other: "%{count} seconden"
+      less_than_x_minutes:
+        one: "minder dan een minuut"
+        other: "minder dan %{count} minuten"
+      x_minutes:
+        one: "een minuut"
+        other: "%{count} minuten"
+      about_x_hours:
+        one: "ongeveer een uur"
+        other: "ongeveer %{count} uur"
+      x_days:
+        one: "een dag"
+        other: "%{count} dagen"
+      about_x_months:
+        one: "ongeveer een maand"
+        other: "ongeveer %{count} maanden"
+      x_months:
+        one: "een maand"
+        other: "%{count} maanden"
+      about_x_years:
+        one: "ongeveer een jaar"
+        other: "ongeveer %{count} jaar"
+      over_x_years:
+        one: "meer dan een jaar"
+        other: "meer dan %{count} jaar"
+      almost_x_years:
+        one: "bijna een jaar"
+        other: "bijna %{count} jaar"
+
+  # Navigatie en algemene acties
+  navigation:
+    back_to_dashboard: "← Terug naar Dashboard"
+    back_to: "← Terug naar %{resource}"
+    all: "Alle %{resource}"
+    new: "Nieuwe %{resource}"
+    create: "Aanmaken %{resource}"
+    edit: "Bewerken %{resource}"
+    delete: "Verwijderen %{resource}"
+    view: "Bekijken"
+    cancel: "Annuleren"
+    search: "Zoeken"
+    clear: "Wissen"
+    apply: "Toepassen"
+    save: "Opslaan"
+    reset: "Resetten"
+    print: "Afdrukken"
+    select_all: "Alles selecteren"
+    clear_selection: "Selectie wissen"
+    first_six: "Eerste 6"
+    last_six: "Laatste 6"
+    skip_middle: "Midden overslaan (8)"
+    clear_all: "Alles wissen"
+
+  # Dashboard
+  dashboard:
+    title: "Dashboard"
+    recent_items: "Recente voorraadartikelen"
+    no_items: "Geen voorraadartikelen gevonden."
+    no_locations: "Nog geen %{locations} geconfigureerd."
+    empty_location: "Deze %{location} is leeg"
+    not_stored: "Nergens opgeslagen"
+    not_in_any: "Niet in een %{location}"
+    quantity: "Hoeveelheid"
+    added: "Toegevoegd"
+
+  # Artikelen
+  items:
+    title: "Artikelen"
+    new_item: "Nieuw artikel"
+    create_new_item: "Nieuw artikel aanmaken"
+    add_new_item_desc: "Voeg een nieuw artikel toe aan het voorraadsysteem"
+    update_item_info: "Artikelinformatie bijwerken"
+    update_item: "Artikel bijwerken"
+    all_items: "Alle artikelen"
+    browse_all_items_desc: "Blader door alle artikelen in het voorraadsysteem"
+    search_placeholder: "Zoek artikelen op naam, barcode of beschrijving..."
+    no_items: "Geen artikelen gevonden"
+    no_items_message: "Er zijn nog geen artikelen toegevoegd aan het systeem."
+    item_name: "Artikelnaam"
+    description: "Beschrijving"
+    category: "Categorie"
+    total_quantity: "Totale hoeveelheid"
+    locations: "Locaties"
+    actions: "Acties"
+    barcode: "Barcode"
+    uncategorized: "Ongecategoriseerd"
+    oldest_storage: "Oudste opslag"
+    print_copies: "Kopieën afdrukken"
+    print_selected: "Geselecteerde barcodes afdrukken"
+    print: "Afdrukken"
+    label: "Label"
+    labels: "Labels"
+    item: "Artikel"
+    items: "Artikelen"
+    barcodes: "Barcodes"
+    stored_in: "Opgeslagen in"
+    added_ago: "%{time} geleden toegevoegd"
+    not_stored_message: "Dit artikel is momenteel niet opgeslagen in een %{location}."
+    print_label_options: "Label afdrukopties"
+    fresh_flipped_sheet: "Nieuw/omgedraaid vel"
+    partial_sheet: "Gedeeltelijk vel - Kies posities"
+    fresh_sheet_help: "Gebruik voor nieuwe vellen of na het omdraaien van gebruikte vellen"
+    partial_sheet_help: "Selecteer specifieke posities op gedeeltelijk gebruikte vellen"
+    select_label_positions: "Selecteer labelposities (2×7 raster)"
+    items_selected:
+      zero: "0 artikelen geselecteerd"
+      one: "1 artikel geselecteerd (%{copies} kopie)"
+      other: "%{count} artikelen geselecteerd (%{copies} totale kopieën)"
+    print_labels:
+      zero: "🖨️ Geselecteerde afdrukken"
+      one: "🖨️ 1 label afdrukken (1 artikel)"
+      other: "🖨️ %{count} labels afdrukken (%{items} artikelen)"
+    ready_to_print:
+      one: "Klaar om 1 label af te drukken (1 artikel)"
+      other: "Klaar om %{count} labels af te drukken (%{items} artikelen)"
+    positions_selected:
+      zero: "0 posities geselecteerd"
+      one: "1 positie geselecteerd"
+      other: "%{count} posities geselecteerd"
+
+  # Categorieën
+  categories:
+    title: "Categorieën"
+    new_category: "Nieuwe categorie"
+    all_categories: "Alle categorieën"
+    browse_all_categories: "Blader door en beheer artikelcategorieën"
+    search_placeholder: "Zoek categorieën op naam of beschrijving..."
+    no_categories: "Geen categorieën gevonden"
+    no_categories_message: "Er zijn nog geen categorieën aangemaakt."
+    create_first: "Maak je eerste categorie aan"
+    create_new_category: "Maak een nieuwe artikelcategorie aan"
+    update_category_info: "Categorie-informatie bijwerken"
+    update_category: "Categorie bijwerken"
+    delete_warning: "Dit zal de categorie verwijderen van alle %{count} artikelen."
+    category_name: "Categorienaam"
+    items_count: "Artikelen"
+    total_items: "Totale artikelen"
+    total_quantity_in_stock: "Totale hoeveelheid op voorraad"
+    no_items_in_category: "Geen artikelen in deze categorie"
+    no_items_in_category_message: "Er zijn nog geen artikelen toegewezen aan deze categorie."
+    browse_all_items: "Blader door alle artikelen"
+
+  # Locaties
+  locations:
+    title: "Locaties"
+    browse_all: "Blader door alle %{locations} in het systeem"
+    search_placeholder: "Zoek %{locations} op naam, barcode of beschrijving..."
+    total_items: "Totale artikelen"
+    recent_items: "Recente artikelen"
+    contents: "Inhoud"
+    empty: "Leeg"
+    oldest_item: "Oudste artikel"
+    no_locations: "Geen %{locations} gevonden"
+    no_locations_message: "Er zijn nog geen %{locations} toegevoegd aan het systeem."
+    no_items_in_location: "Er zijn nog geen artikelen toegevoegd aan deze locatie."
+    create_first: "Maak je eerste %{location} aan"
+
+  # Instellingen
+  settings:
+    title: "Systeemconfiguratie"
+    subtitle: "Configureer terminologie en functies voor je voorraadsysteem"
+    current_config: "Huidige configuratie"
+    industry_presets: "Sector presets"
+    presets_subtitle: "Kies een preset die past bij je sector of gebruikssituatie:"
+    custom_config: "Aangepaste configuratie"
+    custom_subtitle: "Maak je eigen aangepaste configuratie door elke waarde individueel in te stellen:"
+    apply_preset: "Toepassen %{preset}"
+    active: "✓ Actief"
+    apply_custom: "Aangepaste configuratie toepassen"
+    reset_to_current: "Resetten naar huidige"
+    current_preset: "Huidige preset"
+    language: "Taal"
+    aging: "Veroudering"
+    warning_short: "Waarschuwing"
+    danger_short: "Gevaar"
+    app_title: "App-titel"
+    location_term: "Locatieterm"
+    location_emoji: "Locatie-emoji"
+    aging_enabled: "Veroudering ingeschakeld"
+    enable_aging: "Verouderingstracking inschakelen"
+    aging_help: "Houd bij hoe lang artikelen zijn opgeslagen en toon verouderingsindicatoren"
+    warning_threshold: "Waarschuwingsdrempel (dagen)"
+    danger_threshold: "Gevaardrempel (dagen)"
+    fresh_label: "Vers label"
+    warning_label: "Waarschuwingslabel"
+    danger_label: "Gevaarlabel"
+    basic_settings: "Basisinstellingen"
+    aging_settings: "Verouderingsinstellingen"
+    location_singular: "Locatieterm (enkelvoud)"
+    location_plural: "Locatieterm (meervoud)"
+    item_context: "Artikelcontext"
+    preset_confirm: "Dit zal je systeemterminologie en instellingen wijzigen. Doorgaan?"
+    custom_confirm: "Dit zal je huidige instellingen overschrijven met de aangepaste waarden hierboven. Doorgaan?"
+    reset_confirm: "Alle aangepaste velden resetten naar huidige configuratiewaarden?"
+    custom: "Aangepast"
+    presets:
+      frozen_food: "Diepvriesvoedsel"
+      warehouse: "Magazijn"
+      retail: "Detailhandel"
+      laboratory: "Laboratorium"
+      warehouse_location_singular: "Magazijn"
+      warehouse_location_plural: "Magazijnen"
+      warehouse_app_title: "Magazijn Beheersysteem"
+      warehouse_warning_label: "oude voorraad"
+      warehouse_danger_label: "zeer oude voorraad"
+      warehouse_fresh_label: "recent"
+      retail_location_singular: "Winkel"
+      retail_location_plural: "Winkels"
+      retail_app_title: "Detailhandel Voorraadsysteem"
+      retail_warning_label: "verouderende voorraad"
+      retail_danger_label: "oude voorraad"
+      retail_fresh_label: "nieuwe voorraad"
+      laboratory_location_singular: "Lab"
+      laboratory_location_plural: "Labs"
+      laboratory_app_title: "Laboratorium Voorraadsysteem"
+      laboratory_warning_label: "verloopt binnenkort"
+      laboratory_danger_label: "verlopen"
+      laboratory_fresh_label: "vers"
+
+  # Veroudering
+  aging:
+    oldest_items: "Oudst opgeslagen artikelen"
+    oldest_subtitle: "Artikelen die het langst zijn opgeslagen - overweeg deze eerst te gebruiken"
+    oldest_item: "Oudste artikel"
+    items_over: "Artikelen > %{days} dagen"
+    total_items: "Totale artikelen"
+    all_inventory_items: "Alle voorraadartikelen"
+    storage_duration: "Opslagduur"
+    added_date: "Toegevoegd datum"
+    no_items_stored: "Er zijn momenteel geen voorraadartikelen opgeslagen."
+    fresh_label: "vers"
+    warning_label: "wordt oud"
+    danger_label: "zeer oud"
+    days_ago: "%{count} dag geleden"
+    days_ago_plural: "%{count} dagen geleden"
+
+  # Formulieren
+  forms:
+    optional: "optioneel"
+    prompts:
+      select_category_optional: "Selecteer een categorie (optioneel)"
+    hints:
+      categorize_item: "Categoriseer dit artikel om het makkelijker te vinden"
+      barcode_readonly: "Barcode kan niet worden gewijzigd"
+    placeholders:
+      app_title: "bijv. Mijn voorraadsysteem"
+      location_singular: "bijv. Koelkast, Magazijn, Winkel"
+      location_plural: "bijv. Koelkasten, Magazijnen, Winkels"
+      location_emoji: "bijv. 🏢, 🏭, 🏪"
+      item_context: "bijv. ingevroren, magazijn, detailhandel"
+      fresh_label: "bijv. vers, nieuw, recent"
+      warning_label: "bijv. wordt oud, verouderend, ouder"
+      danger_label: "bijv. zeer oud, verlopen, oud"
+      location_name: "bijv. Hoofdkeuken %{location}"
+      location_description: "Optionele beschrijving van de %{location} locatie"
+      item_name: "Voer artikelnaam in"
+      item_description: "Voer artikelbeschrijving in"
+      category_name: "bijv. Diepvriesvoedsel, Zuivelproducten, Dranken"
+      category_description: "Korte beschrijving van deze categorie..."
+      search_items: "Zoek artikelen of locaties..."
+
+  # Berichten
+  messages:
+    success:
+      preset_applied: "Configuratie bijgewerkt naar %{preset} preset."
+      custom_applied: "Aangepaste configuratie succesvol toegepast."
+      item_created: "Artikel is succesvol aangemaakt."
+      item_updated: "Artikel is succesvol bijgewerkt."
+      location_created: "%{location} is succesvol aangemaakt."
+      category_created: "Categorie is succesvol aangemaakt."
+      category_updated: "Categorie is succesvol bijgewerkt."
+
+    errors:
+      preset_invalid: "Ongeldige preset geselecteerd."
+      custom_invalid: "Fout bij het toepassen van aangepaste configuratie: %{error}"
+      validation_errors: "Validatiefouten: %{errors}"
+      no_config: "Geen configuratie gespecificeerd."
+      no_selections: "Geen %{resource} geselecteerd voor afdrukken."
+
+  # Tijd
+  time:
+    ago: "%{time} geleden"
+    days:
+      one: "dag"
+      other: "dagen"
+    units: "eenheden"
+
+  # Pagina's
+  pages:
+    pricing: "Prijzen"
+    pricing_plans: "Prijsplannen"
+    choose_plan: "Kies het plan dat bij je behoeften past"
+    show_all_languages: "Toon alle talen"
+    show_selected_language_only: "Toon alleen geselecteerde taal"
+
+  # Standaardwaarden
+  defaults:
+    app_title: "Diepvries Voorraadsysteem"
+    location_singular: "Vriezer"
+    location_plural: "Vriezers"
+
+  # Algemene termen
+  common:
+    yes: "Ja"
+    no: "Nee"
+    enabled: "Ingeschakeld"
+    disabled: "Uitgeschakeld"
+    active: "Actief"
+    inactive: "Inactief"
+    name: "Naam"
+    description: "Beschrijving"
+    actions: "Acties"
+    confirm: "Weet je het zeker?"
+    error:
+      one: "fout"
+      other: "fouten"

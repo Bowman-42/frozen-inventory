@@ -819,3 +819,98 @@ tr:hover {
   margin-bottom: 1rem;
   border: 1px solid #c3e6cb;
 }
+
+.flash-alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border: 1px solid #f5c6cb;
+}
+
+/* Danger and warning buttons */
+.btn-danger {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+.btn-warning {
+  background-color: #f39c12;
+  color: white;
+}
+
+.btn-warning:hover {
+  background-color: #d68910;
+}
+
+/* Manual removal page */
+.page-subtitle {
+  color: #6c757d;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.manual-remove-results {
+  margin-top: 2rem;
+}
+
+.item-remove-group {
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.item-remove-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.item-remove-header h3 {
+  margin: 0;
+}
+
+.category-badge {
+  background-color: #e8f4fd;
+  color: #2980b9;
+  border: 1px solid #bee5eb;
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.individual-items-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.individual-items-table th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #e1e8ed;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.individual-items-table td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.individual-items-table tr:last-child td {
+  border-bottom: none;
+}
+
+.individual-items-table tr:hover td {
+  background-color: #fafafa;
+}

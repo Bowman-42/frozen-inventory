@@ -39,4 +39,35 @@ class InventoryController < ApplicationController
     @total_old_items = InventoryItem.where('added_at < ?', 120.days.ago).count
     @very_old_items = InventoryItem.where('added_at < ?', 180.days.ago).count
   end
+
+  def manual_remove
+    @query = params[:q]
+    if @query.present?
+      matching_items = Item.where('LOWER(name) LIKE ?', "%#{@query.downcase}%")
+      @results = matching_items
+        .includes(individual_inventory_items: [:location, :reusable_barcode])
+        .joins(:individual_inventory_items)
+        .distinct
+        .order(:name)
+    else
+      @results = Item.none
+    end
+  end
+
+  def remove_individual
+    individual_item = IndividualInventoryItem
+      .includes(:inventory_item, :item, :reusable_barcode)
+      .find(params[:id])
+
+    item_name = individual_item.item.name
+    barcode = individual_item.individual_barcode
+
+    individual_item.inventory_item.remove_individual_item!(target: individual_item)
+
+    redirect_to inventory_manual_remove_path(q: params[:q]),
+      notice: t('messages.success.item_removed', name: item_name, barcode: barcode)
+  rescue ActiveRecord::RecordNotFound
+    redirect_to inventory_manual_remove_path,
+      alert: t('messages.errors.item_not_found')
+  end
 end

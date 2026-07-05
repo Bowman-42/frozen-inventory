@@ -1,0 +1,308 @@
+da:
+  # Rails built-in translations
+  datetime:
+    distance_in_words:
+      half_a_minute: "et halvt minut"
+      less_than_x_seconds:
+        one: "mindre end et sekund"
+        other: "mindre end %{count} sekunder"
+      x_seconds:
+        one: "et sekund"
+        other: "%{count} sekunder"
+      less_than_x_minutes:
+        one: "mindre end et minut"
+        other: "mindre end %{count} minutter"
+      x_minutes:
+        one: "et minut"
+        other: "%{count} minutter"
+      about_x_hours:
+        one: "omkring en time"
+        other: "omkring %{count} timer"
+      x_days:
+        one: "en dag"
+        other: "%{count} dage"
+      about_x_months:
+        one: "omkring en måned"
+        other: "omkring %{count} måneder"
+      x_months:
+        one: "en måned"
+        other: "%{count} måneder"
+      about_x_years:
+        one: "omkring et år"
+        other: "omkring %{count} år"
+      over_x_years:
+        one: "over et år"
+        other: "over %{count} år"
+      almost_x_years:
+        one: "næsten et år"
+        other: "næsten %{count} år"
+
+  # Navigation og almindelige handlinger
+  navigation:
+    back_to_dashboard: "← Tilbage til Dashboard"
+    back_to: "← Tilbage til %{resource}"
+    all: "Alle %{resource}"
+    new: "Ny %{resource}"
+    create: "Opret %{resource}"
+    edit: "Rediger %{resource}"
+    delete: "Slet %{resource}"
+    view: "Vis"
+    cancel: "Annuller"
+    search: "Søg"
+    clear: "Ryd"
+    apply: "Anvend"
+    save: "Gem"
+    reset: "Nulstil"
+    print: "Udskriv"
+    select_all: "Vælg alle"
+    clear_selection: "Ryd valg"
+    first_six: "Første 6"
+    last_six: "Sidste 6"
+    skip_middle: "Spring midt over (8)"
+    clear_all: "Ryd alle"
+
+  # Dashboard
+  dashboard:
+    title: "Dashboard"
+    recent_items: "Seneste lagervarer"
+    no_items: "Ingen lagervarer fundet."
+    no_locations: "Ingen %{locations} konfigureret endnu."
+    empty_location: "Denne %{location} er tom"
+    not_stored: "Ikke gemt nogen steder"
+    not_in_any: "Ikke i nogen %{location}"
+    quantity: "Mængde"
+    added: "Tilføjet"
+
+  # Varer
+  items:
+    title: "Varer"
+    new_item: "Ny vare"
+    create_new_item: "Opret ny vare"
+    add_new_item_desc: "Tilføj en ny vare til lagersystemet"
+    update_item_info: "Opdater vareoplysninger"
+    update_item: "Opdater vare"
+    all_items: "Alle varer"
+    browse_all_items_desc: "Gennemse alle varer i lagersystemet"
+    search_placeholder: "Søg varer efter navn, stregkode eller beskrivelse..."
+    no_items: "Ingen varer fundet"
+    no_items_message: "Ingen varer er blevet tilføjet til systemet endnu."
+    item_name: "Varenavn"
+    description: "Beskrivelse"
+    category: "Kategori"
+    total_quantity: "Samlet mængde"
+    locations: "Placeringer"
+    actions: "Handlinger"
+    barcode: "Stregkode"
+    uncategorized: "Ukategoriseret"
+    oldest_storage: "Ældste opbevaring"
+    print_copies: "Udskriv kopier"
+    print_selected: "Udskriv valgte stregkoder"
+    print: "Udskriv"
+    label: "Etiket"
+    labels: "Etiketter"
+    item: "Vare"
+    items: "Varer"
+    barcodes: "Stregkoder"
+    stored_in: "Opbevaret i"
+    added_ago: "Tilføjet for %{time} siden"
+    not_stored_message: "Denne vare er i øjeblikket ikke opbevaret i nogen %{location}."
+    print_label_options: "Etiketudskriftsindstillinger"
+    fresh_flipped_sheet: "Frisk/vendt ark"
+    partial_sheet: "Delvist ark - Vælg positioner"
+    fresh_sheet_help: "Brug til nye ark eller efter at have vendt brugte ark"
+    partial_sheet_help: "Vælg specifikke positioner på delvist brugte ark"
+    select_label_positions: "Vælg etiketpositioner (2×7 gitter)"
+    items_selected:
+      zero: "0 varer valgt"
+      one: "1 vare valgt (%{copies} kopi)"
+      other: "%{count} varer valgt (%{copies} samlede kopier)"
+    print_labels:
+      zero: "🖨️ Udskriv valgte"
+      one: "🖨️ Udskriv 1 etiket (1 vare)"
+      other: "🖨️ Udskriv %{count} etiketter (%{items} varer)"
+    ready_to_print:
+      one: "Klar til at udskrive 1 etiket (1 vare)"
+      other: "Klar til at udskrive %{count} etiketter (%{items} varer)"
+    positions_selected:
+      zero: "0 positioner valgt"
+      one: "1 position valgt"
+      other: "%{count} positioner valgt"
+
+  # Kategorier
+  categories:
+    title: "Kategorier"
+    new_category: "Ny kategori"
+    all_categories: "Alle kategorier"
+    browse_all_categories: "Gennemse og administrer varekategorier"
+    search_placeholder: "Søg kategorier efter navn eller beskrivelse..."
+    no_categories: "Ingen kategorier fundet"
+    no_categories_message: "Ingen kategorier er blevet oprettet endnu."
+    create_first: "Opret din første kategori"
+    create_new_category: "Opret en ny varekategori"
+    update_category_info: "Opdater kategorioplysninger"
+    update_category: "Opdater kategori"
+    delete_warning: "Dette vil fjerne kategorien fra alle %{count} varer."
+    category_name: "Kategorinavn"
+    items_count: "Varer"
+    total_items: "Samlede varer"
+    total_quantity_in_stock: "Samlet mængde på lager"
+    no_items_in_category: "Ingen varer i denne kategori"
+    no_items_in_category_message: "Ingen varer er blevet tildelt denne kategori endnu."
+    browse_all_items: "Gennemse alle varer"
+
+  # Placeringer
+  locations:
+    title: "Placeringer"
+    browse_all: "Gennemse alle %{locations} i systemet"
+    search_placeholder: "Søg %{locations} efter navn, stregkode eller beskrivelse..."
+    total_items: "Samlede varer"
+    recent_items: "Seneste varer"
+    contents: "Indhold"
+    empty: "Tom"
+    oldest_item: "Ældste vare"
+    no_locations: "Ingen %{locations} fundet"
+    no_locations_message: "Ingen %{locations} er blevet tilføjet til systemet endnu."
+    no_items_in_location: "Ingen varer er blevet tilføjet til denne placering endnu."
+    create_first: "Opret din første %{location}"
+
+  # Indstillinger
+  settings:
+    title: "Systemkonfiguration"
+    subtitle: "Konfigurer terminologi og funktioner for dit lagersystem"
+    current_config: "Nuværende konfiguration"
+    industry_presets: "Brancheforudindstillinger"
+    presets_subtitle: "Vælg en forudindstilling, der matcher din branche eller brugssag:"
+    custom_config: "Brugerdefineret konfiguration"
+    custom_subtitle: "Opret din egen brugerdefinerede konfiguration ved at indstille hver værdi individuelt:"
+    apply_preset: "Anvend %{preset}"
+    active: "✓ Aktiv"
+    apply_custom: "Anvend brugerdefineret konfiguration"
+    reset_to_current: "Nulstil til nuværende"
+    current_preset: "Nuværende forudindstilling"
+    language: "Sprog"
+    aging: "Aldring"
+    warning_short: "Advarsel"
+    danger_short: "Fare"
+    app_title: "App-titel"
+    location_term: "Placeringsterm"
+    location_emoji: "Placerings-emoji"
+    aging_enabled: "Aldring aktiveret"
+    enable_aging: "Aktiver aldringssporing"
+    aging_help: "Spor hvor længe varer har været opbevaret og vis aldringsindikatorer"
+    warning_threshold: "Advarselsgrænse (dage)"
+    danger_threshold: "Faregrænse (dage)"
+    fresh_label: "Frisk etiket"
+    warning_label: "Advarselsetiket"
+    danger_label: "Fareetiket"
+    basic_settings: "Grundindstillinger"
+    aging_settings: "Aldringsindstillinger"
+    location_singular: "Placeringsterm (ental)"
+    location_plural: "Placeringsterm (flertal)"
+    item_context: "Varekontekst"
+    preset_confirm: "Dette vil ændre din systemterminologi og indstillinger. Fortsæt?"
+    custom_confirm: "Dette vil overskrive dine nuværende indstillinger med de brugerdefinerede værdier ovenfor. Fortsæt?"
+    reset_confirm: "Nulstil alle brugerdefinerede felter til nuværende konfigurationsværdier?"
+    custom: "Brugerdefineret"
+    presets:
+      frozen_food: "Frosne fødevarer"
+      warehouse: "Lager"
+      retail: "Detailhandel"
+      laboratory: "Laboratorium"
+
+  # Aldring
+  aging:
+    oldest_items: "Ældst opbevarede varer"
+    oldest_subtitle: "Varer der har været opbevaret længst - overvej at bruge disse først"
+    oldest_item: "Ældste vare"
+    items_over: "Varer > %{days} dage"
+    total_items: "Samlede varer"
+    all_inventory_items: "Alle lagervarer"
+    storage_duration: "Opbevaringsvarighed"
+    added_date: "Tilføjelsesdato"
+    no_items_stored: "Ingen lagervarer er i øjeblikket opbevaret."
+    fresh_label: "frisk"
+    warning_label: "bliver gammel"
+    danger_label: "meget gammel"
+    days_ago: "%{count} dag siden"
+    days_ago_plural: "%{count} dage siden"
+
+  # Formularer
+  forms:
+    optional: "valgfrit"
+    prompts:
+      select_category_optional: "Vælg en kategori (valgfrit)"
+    hints:
+      categorize_item: "Kategoriser denne vare for at gøre den lettere at finde"
+      barcode_readonly: "Stregkode kan ikke ændres"
+    placeholders:
+      app_title: "f.eks. Mit lagersystem"
+      location_singular: "f.eks. Køleskab, Lager, Butik"
+      location_plural: "f.eks. Køleskabe, Lagre, Butikker"
+      location_emoji: "f.eks. 🏢, 🏭, 🏪"
+      item_context: "f.eks. frossen, lager, detailhandel"
+      fresh_label: "f.eks. frisk, ny, nylig"
+      warning_label: "f.eks. bliver gammel, aldrende, ældre"
+      danger_label: "f.eks. meget gammel, udløbet, gammel"
+      location_name: "f.eks. Hovedkøkken %{location}"
+      location_description: "Valgfri beskrivelse af %{location} placeringen"
+      item_name: "Indtast varenavn"
+      item_description: "Indtast varebeskrivelse"
+      category_name: "f.eks. Frosne fødevarer, Mejeriprodukter, Drikkevarer"
+      category_description: "Kort beskrivelse af denne kategori..."
+      search_items: "Søg varer eller placeringer..."
+
+  # Meddelelser
+  messages:
+    success:
+      preset_applied: "Konfiguration opdateret til %{preset} forudindstilling."
+      custom_applied: "Brugerdefineret konfiguration anvendt med succes."
+      item_created: "Vare blev oprettet med succes."
+      item_updated: "Vare blev opdateret med succes."
+      location_created: "%{location} blev oprettet med succes."
+      category_created: "Kategori blev oprettet med succes."
+      category_updated: "Kategori blev opdateret med succes."
+
+    errors:
+      preset_invalid: "Ugyldig forudindstilling valgt."
+      custom_invalid: "Fejl ved anvendelse af brugerdefineret konfiguration: %{error}"
+      validation_errors: "Valideringsfejl: %{errors}"
+      no_config: "Ingen konfiguration specificeret."
+      no_selections: "Ingen %{resource} valgt til udskrivning."
+
+  # Tid
+  time:
+    ago: "%{time} siden"
+    days:
+      one: "dag"
+      other: "dage"
+    units: "enheder"
+
+  # Sider
+  pages:
+    pricing: "Prissætning"
+    pricing_plans: "Prisplaner"
+    choose_plan: "Vælg den plan der passer til dine behov"
+    show_all_languages: "Vis alle sprog"
+    show_selected_language_only: "Vis kun valgt sprog"
+
+  # Standardværdier
+  defaults:
+    app_title: "Frossen Lagersystem"
+    location_singular: "Fryser"
+    location_plural: "Frysere"
+
+  # Almindelige termer
+  common:
+    yes: "Ja"
+    no: "Nej"
+    enabled: "Aktiveret"
+    disabled: "Deaktiveret"
+    active: "Aktiv"
+    inactive: "Inaktiv"
+    name: "Navn"
+    description: "Beskrivelse"
+    actions: "Handlinger"
+    confirm: "Er du sikker?"
+    error:
+      one: "fejl"
+      other: "fejl"

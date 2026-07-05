@@ -15,6 +15,7 @@
       <%= link_to "🕒 #{t('aging.oldest_items')}", inventory_oldest_path, class: "btn btn-secondary" %>
     <% end %>
     <%= link_to "💰 #{t('pages.pricing')}", pricing_path, class: "btn btn-secondary" %>
+    <%= link_to "🗑️ #{t('inventory.manual_remove.nav_button')}", inventory_manual_remove_path, class: "btn btn-warning" %>
     <%= link_to "⚙️ #{t('settings.title')}", settings_path, class: "btn btn-secondary" %>
   </div>
 
@@ -59,7 +60,12 @@
           <% @inventory_items.each do |inventory_item| %>
             <tr>
               <td>
-                <%= link_to inventory_item.item.name, item_path(inventory_item.item.barcode), class: "item-link" %>
+                <%= link_to inventory_item.item.name, item_path(inventory_item.item.barcode), class: "item-link" %> -
+                <% if inventory_item.item.category %>
+                    <%= inventory_item.item.category.name %>
+                  <% else %>
+                    <%= t('items.uncategorized') %>
+                  <% end %>
                 <br><small class="barcode"><%= inventory_item.item.barcode %></small>
               </td>
               <td>

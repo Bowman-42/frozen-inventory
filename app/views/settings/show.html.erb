@@ -100,19 +100,19 @@
           <div class="form-group">
             <%= label_tag 'custom_config[app_title]', t('settings.app_title'), class: 'form-label' %>
             <%= text_field_tag 'custom_config[app_title]', @current_config.app_title,
-                class: 'form-input', placeholder: t('forms.placeholders.app_title') %>
+                class: 'form-input', placeholder: @localized_defaults[:app_title] %>
           </div>
 
           <div class="form-group">
             <%= label_tag 'custom_config[location_singular]', t('settings.location_singular'), class: 'form-label' %>
             <%= text_field_tag 'custom_config[location_singular]', @current_config.location_singular,
-                class: 'form-input', placeholder: t('forms.placeholders.location_singular') %>
+                class: 'form-input', placeholder: @localized_defaults[:location_singular] %>
           </div>
 
           <div class="form-group">
             <%= label_tag 'custom_config[location_plural]', t('settings.location_plural'), class: 'form-label' %>
             <%= text_field_tag 'custom_config[location_plural]', @current_config.location_plural,
-                class: 'form-input', placeholder: t('forms.placeholders.location_plural') %>
+                class: 'form-input', placeholder: @localized_defaults[:location_plural] %>
           </div>
 
           <div class="form-group">
@@ -162,19 +162,19 @@
             <div class="form-group">
               <%= label_tag 'custom_config[aging_fresh_label]', t('settings.fresh_label'), class: 'form-label' %>
               <%= text_field_tag 'custom_config[aging_fresh_label]', @current_config.aging_fresh_label,
-                  class: 'form-input', placeholder: t('forms.placeholders.fresh_label') %>
+                  class: 'form-input', placeholder: @localized_defaults[:aging_fresh_label] %>
             </div>
 
             <div class="form-group">
               <%= label_tag 'custom_config[aging_warning_label]', t('settings.warning_label'), class: 'form-label' %>
               <%= text_field_tag 'custom_config[aging_warning_label]', @current_config.aging_warning_label,
-                  class: 'form-input', placeholder: t('forms.placeholders.warning_label') %>
+                  class: 'form-input', placeholder: @localized_defaults[:aging_warning_label] %>
             </div>
 
             <div class="form-group">
               <%= label_tag 'custom_config[aging_danger_label]', t('settings.danger_label'), class: 'form-label' %>
               <%= text_field_tag 'custom_config[aging_danger_label]', @current_config.aging_danger_label,
-                  class: 'form-input', placeholder: t('forms.placeholders.danger_label') %>
+                  class: 'form-input', placeholder: @localized_defaults[:aging_danger_label] %>
             </div>
           </div>
         </div>
@@ -390,20 +390,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Handle reset to current button
   document.getElementById('reset-to-current').addEventListener('click', function() {
-    if (confirm('Reset all custom fields to current configuration values?')) {
-      // Reset all form fields to current config values
-      document.querySelector('input[name="custom_config[app_title]"]').value = '<%= j @current_config.app_title %>';
-      document.querySelector('input[name="custom_config[location_singular]"]').value = '<%= j @current_config.location_singular %>';
-      document.querySelector('input[name="custom_config[location_plural]"]').value = '<%= j @current_config.location_plural %>';
+    if (confirm('<%= t('settings.reset_confirm') %>')) {
+      // Reset all form fields to localized default values
+      document.querySelector('input[name="custom_config[app_title]"]').value = '<%= j @localized_defaults[:app_title] %>';
+      document.querySelector('input[name="custom_config[location_singular]"]').value = '<%= j @localized_defaults[:location_singular] %>';
+      document.querySelector('input[name="custom_config[location_plural]"]').value = '<%= j @localized_defaults[:location_plural] %>';
       document.querySelector('input[name="custom_config[location_emoji]"]').value = '<%= j @current_config.location_emoji %>';
       document.querySelector('input[name="custom_config[item_context]"]').value = '<%= j @current_config.item_context %>';
       document.querySelector('select[name="custom_config[locale]"]').value = '<%= @current_config.locale %>';
       document.querySelector('input[name="custom_config[aging_enabled]"]').checked = <%= @current_config.aging_enabled %>;
       document.querySelector('input[name="custom_config[aging_warning_days]"]').value = '<%= @current_config.aging_warning_days %>';
       document.querySelector('input[name="custom_config[aging_danger_days]"]').value = '<%= @current_config.aging_danger_days %>';
-      document.querySelector('input[name="custom_config[aging_fresh_label]"]').value = '<%= j @current_config.aging_fresh_label %>';
-      document.querySelector('input[name="custom_config[aging_warning_label]"]').value = '<%= j @current_config.aging_warning_label %>';
-      document.querySelector('input[name="custom_config[aging_danger_label]"]').value = '<%= j @current_config.aging_danger_label %>';
+      document.querySelector('input[name="custom_config[aging_fresh_label]"]').value = '<%= j @localized_defaults[:aging_fresh_label] %>';
+      document.querySelector('input[name="custom_config[aging_warning_label]"]').value = '<%= j @localized_defaults[:aging_warning_label] %>';
+      document.querySelector('input[name="custom_config[aging_danger_label]"]').value = '<%= j @localized_defaults[:aging_danger_label] %>';
 
       toggleAgingOptions();
     }

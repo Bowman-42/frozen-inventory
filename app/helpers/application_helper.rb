@@ -73,6 +73,17 @@ module ApplicationHelper
     }.to_json.html_safe
   end
 
+  def localized_defaults
+    {
+      app_title: t('defaults.app_title'),
+      location_singular: t('defaults.location_singular'),
+      location_plural: t('defaults.location_plural'),
+      aging_fresh_label: t('aging.fresh_label'),
+      aging_warning_label: t('aging.warning_label'),
+      aging_danger_label: t('aging.danger_label')
+    }
+  end
+
   private
 
   def ensure_config_loaded

@@ -1,0 +1,308 @@
+sv:
+  # Rails built-in translations
+  datetime:
+    distance_in_words:
+      half_a_minute: "en halv minut"
+      less_than_x_seconds:
+        one: "mindre än en sekund"
+        other: "mindre än %{count} sekunder"
+      x_seconds:
+        one: "en sekund"
+        other: "%{count} sekunder"
+      less_than_x_minutes:
+        one: "mindre än en minut"
+        other: "mindre än %{count} minuter"
+      x_minutes:
+        one: "en minut"
+        other: "%{count} minuter"
+      about_x_hours:
+        one: "ungefär en timme"
+        other: "ungefär %{count} timmar"
+      x_days:
+        one: "en dag"
+        other: "%{count} dagar"
+      about_x_months:
+        one: "ungefär en månad"
+        other: "ungefär %{count} månader"
+      x_months:
+        one: "en månad"
+        other: "%{count} månader"
+      about_x_years:
+        one: "ungefär ett år"
+        other: "ungefär %{count} år"
+      over_x_years:
+        one: "över ett år"
+        other: "över %{count} år"
+      almost_x_years:
+        one: "nästan ett år"
+        other: "nästan %{count} år"
+
+  # Navigation och vanliga åtgärder
+  navigation:
+    back_to_dashboard: "← Tillbaka till Översikt"
+    back_to: "← Tillbaka till %{resource}"
+    all: "Alla %{resource}"
+    new: "Ny %{resource}"
+    create: "Skapa %{resource}"
+    edit: "Redigera %{resource}"
+    delete: "Radera %{resource}"
+    view: "Visa"
+    cancel: "Avbryt"
+    search: "Sök"
+    clear: "Rensa"
+    apply: "Tillämpa"
+    save: "Spara"
+    reset: "Återställ"
+    print: "Skriv ut"
+    select_all: "Markera alla"
+    clear_selection: "Rensa markering"
+    first_six: "Första 6"
+    last_six: "Sista 6"
+    skip_middle: "Hoppa över mitten (8)"
+    clear_all: "Rensa alla"
+
+  # Översikt
+  dashboard:
+    title: "Översikt"
+    recent_items: "Senaste lagerartiklar"
+    no_items: "Inga lagerartiklar hittades."
+    no_locations: "Inga %{locations} konfigurerade än."
+    empty_location: "Denna %{location} är tom"
+    not_stored: "Inte lagrad någonstans"
+    not_in_any: "Inte i någon %{location}"
+    quantity: "Kvantitet"
+    added: "Tillagd"
+
+  # Artiklar
+  items:
+    title: "Artiklar"
+    new_item: "Ny artikel"
+    create_new_item: "Skapa ny artikel"
+    add_new_item_desc: "Lägg till en ny artikel i lagersystemet"
+    update_item_info: "Uppdatera artikelinformation"
+    update_item: "Uppdatera artikel"
+    all_items: "Alla artiklar"
+    browse_all_items_desc: "Bläddra bland alla artiklar i lagersystemet"
+    search_placeholder: "Sök artiklar efter namn, streckkod eller beskrivning..."
+    no_items: "Inga artiklar hittades"
+    no_items_message: "Inga artiklar har lagts till i systemet än."
+    item_name: "Artikelnamn"
+    description: "Beskrivning"
+    category: "Kategori"
+    total_quantity: "Total kvantitet"
+    locations: "Platser"
+    actions: "Åtgärder"
+    barcode: "Streckkod"
+    uncategorized: "Okategoriserad"
+    oldest_storage: "Äldsta lagring"
+    print_copies: "Skriv ut kopior"
+    print_selected: "Skriv ut valda streckkoder"
+    print: "Skriv ut"
+    label: "Etikett"
+    labels: "Etiketter"
+    item: "Artikel"
+    items: "Artiklar"
+    barcodes: "Streckkoder"
+    stored_in: "Lagrad i"
+    added_ago: "Tillagd för %{time} sedan"
+    not_stored_message: "Denna artikel är för närvarande inte lagrad i någon %{location}."
+    print_label_options: "Alternativ för etikettutskrift"
+    fresh_flipped_sheet: "Nytt/vänt ark"
+    partial_sheet: "Delvis ark - Välj positioner"
+    fresh_sheet_help: "Använd för nya ark eller efter att ha vänt använda ark"
+    partial_sheet_help: "Välj specifika positioner på delvis använda ark"
+    select_label_positions: "Välj etikettpositioner (2×7 rutnät)"
+    items_selected:
+      zero: "0 artiklar valda"
+      one: "1 artikel vald (%{copies} kopia)"
+      other: "%{count} artiklar valda (%{copies} totalt kopior)"
+    print_labels:
+      zero: "🖨️ Skriv ut valda"
+      one: "🖨️ Skriv ut 1 etikett (1 artikel)"
+      other: "🖨️ Skriv ut %{count} etiketter (%{items} artiklar)"
+    ready_to_print:
+      one: "Redo att skriva ut 1 etikett (1 artikel)"
+      other: "Redo att skriva ut %{count} etiketter (%{items} artiklar)"
+    positions_selected:
+      zero: "0 positioner valda"
+      one: "1 position vald"
+      other: "%{count} positioner valda"
+
+  # Kategorier
+  categories:
+    title: "Kategorier"
+    new_category: "Ny kategori"
+    all_categories: "Alla kategorier"
+    browse_all_categories: "Bläddra och hantera artikelkategorier"
+    search_placeholder: "Sök kategorier efter namn eller beskrivning..."
+    no_categories: "Inga kategorier hittades"
+    no_categories_message: "Inga kategorier har skapats än."
+    create_first: "Skapa din första kategori"
+    create_new_category: "Skapa en ny artikelkategori"
+    update_category_info: "Uppdatera kategoriinformation"
+    update_category: "Uppdatera kategori"
+    delete_warning: "Detta kommer att ta bort kategorin från alla %{count} artiklar."
+    category_name: "Kategorinamn"
+    items_count: "Artiklar"
+    total_items: "Totalt artiklar"
+    total_quantity_in_stock: "Total kvantitet i lager"
+    no_items_in_category: "Inga artiklar i denna kategori"
+    no_items_in_category_message: "Inga artiklar har tilldelats denna kategori än."
+    browse_all_items: "Bläddra bland alla artiklar"
+
+  # Platser
+  locations:
+    title: "Platser"
+    browse_all: "Bläddra bland alla %{locations} i systemet"
+    search_placeholder: "Sök %{locations} efter namn, streckkod eller beskrivning..."
+    total_items: "Totalt artiklar"
+    recent_items: "Senaste artiklar"
+    contents: "Innehåll"
+    empty: "Tom"
+    oldest_item: "Äldsta artikel"
+    no_locations: "Inga %{locations} hittades"
+    no_locations_message: "Inga %{locations} har lagts till i systemet än."
+    no_items_in_location: "Inga artiklar har lagts till på denna plats än."
+    create_first: "Skapa din första %{location}"
+
+  # Inställningar
+  settings:
+    title: "Systemkonfiguration"
+    subtitle: "Konfigurera terminologi och funktioner för ditt lagersystem"
+    current_config: "Nuvarande konfiguration"
+    industry_presets: "Branschmallar"
+    presets_subtitle: "Välj en mall som matchar din bransch eller användningsfall:"
+    custom_config: "Anpassad konfiguration"
+    custom_subtitle: "Skapa din egen anpassade konfiguration genom att ställa in varje värde individuellt:"
+    apply_preset: "Tillämpa %{preset}"
+    active: "✓ Aktiv"
+    apply_custom: "Tillämpa anpassad konfiguration"
+    reset_to_current: "Återställ till nuvarande"
+    current_preset: "Nuvarande mall"
+    language: "Språk"
+    aging: "Åldrande"
+    warning_short: "Varning"
+    danger_short: "Fara"
+    app_title: "App-titel"
+    location_term: "Platsterm"
+    location_emoji: "Plats-emoji"
+    aging_enabled: "Åldrande aktiverat"
+    enable_aging: "Aktivera åldrande spårning"
+    aging_help: "Spåra hur länge artiklar har varit lagrade och visa åldrande indikatorer"
+    warning_threshold: "Varningsgräns (dagar)"
+    danger_threshold: "Farogräns (dagar)"
+    fresh_label: "Färsk etikett"
+    warning_label: "Varningsetikett"
+    danger_label: "Faretikett"
+    basic_settings: "Grundinställningar"
+    aging_settings: "Åldrande inställningar"
+    location_singular: "Platsterm (singular)"
+    location_plural: "Platsterm (plural)"
+    item_context: "Artikelkontext"
+    preset_confirm: "Detta kommer att ändra din systemterminologi och inställningar. Fortsätt?"
+    custom_confirm: "Detta kommer att överskriva dina nuvarande inställningar med anpassade värden ovan. Fortsätt?"
+    reset_confirm: "Återställ alla anpassade fält till nuvarande konfigurationsvärden?"
+    custom: "Anpassad"
+    presets:
+      frozen_food: "Fryst mat"
+      warehouse: "Lager"
+      retail: "Detaljhandel"
+      laboratory: "Laboratorium"
+
+  # Åldrande
+  aging:
+    oldest_items: "Äldst lagrade artiklar"
+    oldest_subtitle: "Artiklar som har varit lagrade längst - överväg att använda dessa först"
+    oldest_item: "Äldsta artikel"
+    items_over: "Artiklar > %{days} dagar"
+    total_items: "Totalt artiklar"
+    all_inventory_items: "Alla lagerartiklar"
+    storage_duration: "Lagringsvaraktighet"
+    added_date: "Tillagt datum"
+    no_items_stored: "Inga lagerartiklar är för närvarande lagrade."
+    fresh_label: "färsk"
+    warning_label: "blir gammal"
+    danger_label: "mycket gammal"
+    days_ago: "%{count} dag sedan"
+    days_ago_plural: "%{count} dagar sedan"
+
+  # Formulär
+  forms:
+    optional: "valfritt"
+    prompts:
+      select_category_optional: "Välj en kategori (valfritt)"
+    hints:
+      categorize_item: "Kategorisera denna artikel för att göra den lättare att hitta"
+      barcode_readonly: "Streckkod kan inte ändras"
+    placeholders:
+      app_title: "t.ex. Mitt lagersystem"
+      location_singular: "t.ex. Kyl, Lager, Butik"
+      location_plural: "t.ex. Kylar, Lager, Butiker"
+      location_emoji: "t.ex. 🏢, 🏭, 🏪"
+      item_context: "t.ex. fryst, lager, detaljhandel"
+      fresh_label: "t.ex. färsk, ny, nyligen"
+      warning_label: "t.ex. blir gammal, åldras, äldre"
+      danger_label: "t.ex. mycket gammal, utgången, gammal"
+      location_name: "t.ex. Huvudkök %{location}"
+      location_description: "Valfri beskrivning av %{location} platsen"
+      item_name: "Ange artikelnamn"
+      item_description: "Ange artikelbeskrivning"
+      category_name: "t.ex. Fryst mat, Mejeriprodukter, Drycker"
+      category_description: "Kort beskrivning av denna kategori..."
+      search_items: "Sök artiklar eller platser..."
+
+  # Meddelanden
+  messages:
+    success:
+      preset_applied: "Konfiguration uppdaterad till %{preset} mall."
+      custom_applied: "Anpassad konfiguration tillämpades framgångsrikt."
+      item_created: "Artikel skapades framgångsrikt."
+      item_updated: "Artikel uppdaterades framgångsrikt."
+      location_created: "%{location} skapades framgångsrikt."
+      category_created: "Kategori skapades framgångsrikt."
+      category_updated: "Kategori uppdaterades framgångsrikt."
+
+    errors:
+      preset_invalid: "Ogiltig mall vald."
+      custom_invalid: "Fel vid tillämpning av anpassad konfiguration: %{error}"
+      validation_errors: "Valideringsfel: %{errors}"
+      no_config: "Ingen konfiguration specificerad."
+      no_selections: "Inga %{resource} valda för utskrift."
+
+  # Tid
+  time:
+    ago: "%{time} sedan"
+    days:
+      one: "dag"
+      other: "dagar"
+    units: "enheter"
+
+  # Sidor
+  pages:
+    pricing: "Prissättning"
+    pricing_plans: "Prisplaner"
+    choose_plan: "Välj den plan som passar dina behov"
+    show_all_languages: "Visa alla språk"
+    show_selected_language_only: "Visa endast valt språk"
+
+  # Standardvärden
+  defaults:
+    app_title: "Fryst Lagersystem"
+    location_singular: "Frys"
+    location_plural: "Frysar"
+
+  # Vanliga termer
+  common:
+    yes: "Ja"
+    no: "Nej"
+    enabled: "Aktiverad"
+    disabled: "Inaktiverad"
+    active: "Aktiv"
+    inactive: "Inaktiv"
+    name: "Namn"
+    description: "Beskrivning"
+    actions: "Åtgärder"
+    confirm: "Är du säker?"
+    error:
+      one: "fel"
+      other: "fel"

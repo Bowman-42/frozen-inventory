@@ -1,0 +1,342 @@
+pl:
+  # Rails built-in translations
+  datetime:
+    distance_in_words:
+      half_a_minute: "pół minuty"
+      less_than_x_seconds:
+        one: "mniej niż sekundę"
+        few: "mniej niż %{count} sekundy"
+        many: "mniej niż %{count} sekund"
+        other: "mniej niż %{count} sekund"
+      x_seconds:
+        one: "sekundę"
+        few: "%{count} sekundy"
+        many: "%{count} sekund"
+        other: "%{count} sekund"
+      less_than_x_minutes:
+        one: "mniej niż minutę"
+        few: "mniej niż %{count} minuty"
+        many: "mniej niż %{count} minut"
+        other: "mniej niż %{count} minut"
+      x_minutes:
+        one: "minutę"
+        few: "%{count} minuty"
+        many: "%{count} minut"
+        other: "%{count} minut"
+      about_x_hours:
+        one: "około godziny"
+        few: "około %{count} godzin"
+        many: "około %{count} godzin"
+        other: "około %{count} godzin"
+      x_days:
+        one: "dzień"
+        few: "%{count} dni"
+        many: "%{count} dni"
+        other: "%{count} dni"
+      about_x_months:
+        one: "około miesiąca"
+        few: "około %{count} miesięcy"
+        many: "około %{count} miesięcy"
+        other: "około %{count} miesięcy"
+      x_months:
+        one: "miesiąc"
+        few: "%{count} miesiące"
+        many: "%{count} miesięcy"
+        other: "%{count} miesięcy"
+      about_x_years:
+        one: "około roku"
+        few: "około %{count} lat"
+        many: "około %{count} lat"
+        other: "około %{count} lat"
+      over_x_years:
+        one: "ponad rok"
+        few: "ponad %{count} lata"
+        many: "ponad %{count} lat"
+        other: "ponad %{count} lat"
+      almost_x_years:
+        one: "prawie rok"
+        few: "prawie %{count} lata"
+        many: "prawie %{count} lat"
+        other: "prawie %{count} lat"
+
+  # Nawigacja i typowe akcje
+  navigation:
+    back_to_dashboard: "← Powrót do Dashboard"
+    back_to: "← Powrót do %{resource}"
+    all: "Wszystkie %{resource}"
+    new: "Nowy %{resource}"
+    create: "Utwórz %{resource}"
+    edit: "Edytuj %{resource}"
+    delete: "Usuń %{resource}"
+    view: "Zobacz"
+    cancel: "Anuluj"
+    search: "Szukaj"
+    clear: "Wyczyść"
+    apply: "Zastosuj"
+    save: "Zapisz"
+    reset: "Resetuj"
+    print: "Drukuj"
+    select_all: "Zaznacz wszystkie"
+    clear_selection: "Wyczyść zaznaczenie"
+    first_six: "Pierwsze 6"
+    last_six: "Ostatnie 6"
+    skip_middle: "Pomiń środek (8)"
+    clear_all: "Wyczyść wszystkie"
+
+  # Dashboard
+  dashboard:
+    title: "Dashboard"
+    recent_items: "Ostatnie pozycje inwentarza"
+    no_items: "Nie znaleziono pozycji inwentarza."
+    no_locations: "Nie skonfigurowano jeszcze %{locations}."
+    empty_location: "Ta %{location} jest pusta"
+    not_stored: "Nie przechowywane nigdzie"
+    not_in_any: "Nie w żadnej %{location}"
+    quantity: "Ilość"
+    added: "Dodano"
+
+  # Przedmioty
+  items:
+    title: "Przedmioty"
+    new_item: "Nowy przedmiot"
+    create_new_item: "Utwórz nowy przedmiot"
+    add_new_item_desc: "Dodaj nowy przedmiot do systemu inwentarza"
+    update_item_info: "Zaktualizuj informacje o przedmiocie"
+    update_item: "Zaktualizuj przedmiot"
+    all_items: "Wszystkie przedmioty"
+    browse_all_items_desc: "Przeglądaj wszystkie przedmioty w systemie inwentarza"
+    search_placeholder: "Szukaj przedmiotów po nazwie, kodzie kreskowym lub opisie..."
+    no_items: "Nie znaleziono przedmiotów"
+    no_items_message: "Nie dodano jeszcze żadnych przedmiotów do systemu."
+    item_name: "Nazwa przedmiotu"
+    description: "Opis"
+    category: "Kategoria"
+    total_quantity: "Całkowita ilość"
+    locations: "Lokalizacje"
+    actions: "Akcje"
+    barcode: "Kod kreskowy"
+    uncategorized: "Bez kategorii"
+    oldest_storage: "Najstarsze przechowywanie"
+    print_copies: "Drukuj kopie"
+    print_selected: "Drukuj wybrane kody kreskowe"
+    print: "Drukuj"
+    label: "Etykieta"
+    labels: "Etykiety"
+    item: "Przedmiot"
+    items: "Przedmioty"
+    barcodes: "Kody kreskowe"
+    stored_in: "Przechowywane w"
+    added_ago: "Dodano %{time} temu"
+    not_stored_message: "Ten przedmiot nie jest obecnie przechowywany w żadnej %{location}."
+    print_label_options: "Opcje drukowania etykiet"
+    fresh_flipped_sheet: "Świeży/przewrócony arkusz"
+    partial_sheet: "Częściowy arkusz - Wybierz pozycje"
+    fresh_sheet_help: "Użyj dla nowych arkuszy lub po przewróceniu używanych arkuszy"
+    partial_sheet_help: "Wybierz konkretne pozycje na częściowo używanych arkuszach"
+    select_label_positions: "Wybierz pozycje etykiet (siatka 2×7)"
+    items_selected:
+      zero: "0 przedmiotów zaznaczonych"
+      one: "1 przedmiot zaznaczony (%{copies} kopia)"
+      few: "%{count} przedmioty zaznaczone (%{copies} łączne kopie)"
+      many: "%{count} przedmiotów zaznaczonych (%{copies} łącznych kopii)"
+      other: "%{count} przedmiotów zaznaczonych (%{copies} łącznych kopii)"
+    print_labels:
+      zero: "🖨️ Drukuj zaznaczone"
+      one: "🖨️ Drukuj 1 etykietę (1 przedmiot)"
+      few: "🖨️ Drukuj %{count} etykiety (%{items} przedmioty)"
+      many: "🖨️ Drukuj %{count} etykiet (%{items} przedmiotów)"
+      other: "🖨️ Drukuj %{count} etykiet (%{items} przedmiotów)"
+    ready_to_print:
+      one: "Gotowe do drukowania 1 etykiety (1 przedmiot)"
+      few: "Gotowe do drukowania %{count} etykiet (%{items} przedmioty)"
+      many: "Gotowe do drukowania %{count} etykiet (%{items} przedmiotów)"
+      other: "Gotowe do drukowania %{count} etykiet (%{items} przedmiotów)"
+    positions_selected:
+      zero: "0 pozycji zaznaczonych"
+      one: "1 pozycja zaznaczona"
+      few: "%{count} pozycje zaznaczone"
+      many: "%{count} pozycji zaznaczonych"
+      other: "%{count} pozycji zaznaczonych"
+
+  # Kategorie
+  categories:
+    title: "Kategorie"
+    new_category: "Nowa kategoria"
+    all_categories: "Wszystkie kategorie"
+    browse_all_categories: "Przeglądaj i zarządzaj kategoriami przedmiotów"
+    search_placeholder: "Szukaj kategorii po nazwie lub opisie..."
+    no_categories: "Nie znaleziono kategorii"
+    no_categories_message: "Nie utworzono jeszcze żadnych kategorii."
+    create_first: "Utwórz swoją pierwszą kategorię"
+    create_new_category: "Utwórz nową kategorię przedmiotów"
+    update_category_info: "Zaktualizuj informacje o kategorii"
+    update_category: "Zaktualizuj kategorię"
+    delete_warning: "To usunie kategorię ze wszystkich %{count} przedmiotów."
+    category_name: "Nazwa kategorii"
+    items_count: "Przedmioty"
+    total_items: "Łączne przedmioty"
+    total_quantity_in_stock: "Łączna ilość w magazynie"
+    no_items_in_category: "Brak przedmiotów w tej kategorii"
+    no_items_in_category_message: "Nie przypisano jeszcze żadnych przedmiotów do tej kategorii."
+    browse_all_items: "Przeglądaj wszystkie przedmioty"
+
+  # Lokalizacje
+  locations:
+    title: "Lokalizacje"
+    browse_all: "Przeglądaj wszystkie %{locations} w systemie"
+    search_placeholder: "Szukaj %{locations} po nazwie, kodzie kreskowym lub opisie..."
+    total_items: "Łączne przedmioty"
+    recent_items: "Ostatnie przedmioty"
+    contents: "Zawartość"
+    empty: "Puste"
+    oldest_item: "Najstarszy przedmiot"
+    no_locations: "Nie znaleziono %{locations}"
+    no_locations_message: "Nie dodano jeszcze %{locations} do systemu."
+    no_items_in_location: "Nie dodano jeszcze żadnych przedmiotów do tej lokalizacji."
+    create_first: "Utwórz swoją pierwszą %{location}"
+
+  # Ustawienia
+  settings:
+    title: "Konfiguracja systemu"
+    subtitle: "Skonfiguruj terminologię i funkcje dla systemu inwentarza"
+    current_config: "Bieżąca konfiguracja"
+    industry_presets: "Szablony branżowe"
+    presets_subtitle: "Wybierz szablon, który pasuje do Twojej branży lub przypadku użycia:"
+    custom_config: "Konfiguracja niestandardowa"
+    custom_subtitle: "Utwórz własną konfigurację niestandardową, ustawiając każdą wartość indywidualnie:"
+    apply_preset: "Zastosuj %{preset}"
+    active: "✓ Aktywne"
+    apply_custom: "Zastosuj konfigurację niestandardową"
+    reset_to_current: "Resetuj do bieżącej"
+    current_preset: "Bieżący szablon"
+    language: "Język"
+    aging: "Starzenie"
+    warning_short: "Ostrzeżenie"
+    danger_short: "Niebezpieczeństwo"
+    app_title: "Tytuł aplikacji"
+    location_term: "Termin lokalizacji"
+    location_emoji: "Emoji lokalizacji"
+    aging_enabled: "Starzenie włączone"
+    enable_aging: "Włącz śledzenie starzenia"
+    aging_help: "Śledź jak długo przedmioty były przechowywane i pokazuj wskaźniki starzenia"
+    warning_threshold: "Próg ostrzeżenia (dni)"
+    danger_threshold: "Próg niebezpieczeństwa (dni)"
+    fresh_label: "Etykieta świeże"
+    warning_label: "Etykieta ostrzeżenia"
+    danger_label: "Etykieta niebezpieczeństwa"
+    basic_settings: "Ustawienia podstawowe"
+    aging_settings: "Ustawienia starzenia"
+    location_singular: "Termin lokalizacji (pojedyncza)"
+    location_plural: "Termin lokalizacji (mnoga)"
+    item_context: "Kontekst przedmiotu"
+    preset_confirm: "To zmieni terminologię i ustawienia systemu. Kontynuować?"
+    custom_confirm: "To nadpisze bieżące ustawienia niestandardowymi wartościami powyżej. Kontynuować?"
+    reset_confirm: "Zresetować wszystkie niestandardowe pola do bieżących wartości konfiguracji?"
+    custom: "Niestandardowe"
+    presets:
+      frozen_food: "Mrożona żywność"
+      warehouse: "Magazyn"
+      retail: "Handel detaliczny"
+      laboratory: "Laboratorium"
+
+  # Starzenie
+  aging:
+    oldest_items: "Najstarsze przechowywane przedmioty"
+    oldest_subtitle: "Przedmioty przechowywane najdłużej - rozważ użycie tych pierwszych"
+    oldest_item: "Najstarszy przedmiot"
+    items_over: "Przedmioty > %{days} dni"
+    total_items: "Łączne przedmioty"
+    all_inventory_items: "Wszystkie przedmioty inwentarza"
+    storage_duration: "Czas przechowywania"
+    added_date: "Data dodania"
+    no_items_stored: "Żadne przedmioty inwentarza nie są obecnie przechowywane."
+    fresh_label: "świeże"
+    warning_label: "starzeje się"
+    danger_label: "bardzo stare"
+    days_ago: "%{count} dzień temu"
+    days_ago_plural: "%{count} dni temu"
+
+  # Formularze
+  forms:
+    optional: "opcjonalne"
+    prompts:
+      select_category_optional: "Wybierz kategorię (opcjonalne)"
+    hints:
+      categorize_item: "Skategoryzuj ten przedmiot, aby łatwiej go znaleźć"
+      barcode_readonly: "Kod kreskowy nie może być zmieniony"
+    placeholders:
+      app_title: "np. Mój system inwentarza"
+      location_singular: "np. Lodówka, Magazyn, Sklep"
+      location_plural: "np. Lodówki, Magazyny, Sklepy"
+      location_emoji: "np. 🏢, 🏭, 🏪"
+      item_context: "np. mrożone, magazyn, handel detaliczny"
+      fresh_label: "np. świeże, nowe, niedawne"
+      warning_label: "np. starzeje się, starzejące, starsze"
+      danger_label: "np. bardzo stare, przeterminowane, stare"
+      location_name: "np. Główna kuchnia %{location}"
+      location_description: "Opcjonalny opis lokalizacji %{location}"
+      item_name: "Wprowadź nazwę przedmiotu"
+      item_description: "Wprowadź opis przedmiotu"
+      category_name: "np. Mrożona żywność, Produkty mleczne, Napoje"
+      category_description: "Krótki opis tej kategorii..."
+      search_items: "Szukaj przedmiotów lub lokalizacji..."
+
+  # Wiadomości
+  messages:
+    success:
+      preset_applied: "Konfiguracja zaktualizowana do szablonu %{preset}."
+      custom_applied: "Konfiguracja niestandardowa zastosowana pomyślnie."
+      item_created: "Przedmiot został utworzony pomyślnie."
+      item_updated: "Przedmiot został zaktualizowany pomyślnie."
+      location_created: "%{location} została utworzona pomyślnie."
+      category_created: "Kategoria została utworzona pomyślnie."
+      category_updated: "Kategoria została zaktualizowana pomyślnie."
+
+    errors:
+      preset_invalid: "Wybrano nieprawidłowy szablon."
+      custom_invalid: "Błąd podczas stosowania konfiguracji niestandardowej: %{error}"
+      validation_errors: "Błędy walidacji: %{errors}"
+      no_config: "Nie określono konfiguracji."
+      no_selections: "Nie wybrano %{resource} do drukowania."
+
+  # Czas
+  time:
+    ago: "%{time} temu"
+    days:
+      one: "dzień"
+      few: "dni"
+      many: "dni"
+      other: "dni"
+    units: "jednostki"
+
+  # Strony
+  pages:
+    pricing: "Cennik"
+    pricing_plans: "Plany cenowe"
+    choose_plan: "Wybierz plan, który pasuje do Twoich potrzeb"
+    show_all_languages: "Pokaż wszystkie języki"
+    show_selected_language_only: "Pokaż tylko wybrany język"
+
+  # Wartości domyślne
+  defaults:
+    app_title: "System Inwentarza Mrożonego"
+    location_singular: "Zamraźarka"
+    location_plural: "Zamrażarki"
+
+  # Wspólne terminy
+  common:
+    yes: "Tak"
+    no: "Nie"
+    enabled: "Włączone"
+    disabled: "Wyłączone"
+    active: "Aktywne"
+    inactive: "Nieaktywne"
+    name: "Nazwa"
+    description: "Opis"
+    actions: "Akcje"
+    confirm: "Czy jesteś pewny?"
+    error:
+      one: "błąd"
+      few: "błędy"
+      many: "błędów"
+      other: "błędów"

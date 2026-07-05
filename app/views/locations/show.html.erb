@@ -17,7 +17,7 @@
       <span class="storage-duration-badge <%= aging_css_class(days_stored) %>">
         <%= t('time.ago', time: "#{days_stored} #{days_stored == 1 ? t('time.days.one') : t('time.days.other')}") %>
       </span>
-      (<%= link_to @oldest_inventory_item.item.name, item_path(@oldest_inventory_item.item.barcode), class: "item-link" %>)
+      (<%= link_to @oldest_inventory_item.item.name, item_path(@oldest_inventory_item.item.barcode), class: "item-link" %> <%= @oldest_inventory_item.item.category.name %>)
     </p>
   <% end %>
 </div>
@@ -31,7 +31,11 @@
         <div class="item-card">
           <div class="item-info">
             <h3><%= link_to inventory_item.item.name, item_path(inventory_item.item.barcode), class: "item-link" %></h3>
-            <p class="barcode"><%= t('items.barcode') %>: <%= inventory_item.item.barcode %></p>
+            <% if inventory_item.item.category %>
+              <p class="category"><%= inventory_item.item.category.name %></p>
+            <% else %>
+              <p class="category"><span class="no-category"><%= t('items.uncategorized') %></span></p>
+            <% end %>
             <% if inventory_item.item.description.present? %>
               <p class="description"><%= inventory_item.item.description %></p>
             <% end %>

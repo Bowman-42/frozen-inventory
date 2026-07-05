@@ -285,6 +285,12 @@ de:
     show_all_languages: "Alle Sprachen Anzeigen"
     show_selected_language_only: "Nur Ausgewählte Sprache Anzeigen"
 
+  # Standardwerte
+  defaults:
+    app_title: "Tiefkühl-Inventarsystem"
+    location_singular: "Kühlschrank"
+    location_plural: "Kühlschränke"
+
   # Allgemeine Begriffe
   common:
     yes: "Ja"
