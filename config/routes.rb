@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       post 'add-item', to: 'inventory#add_item'
       post 'remove-item', to: 'inventory#remove_item'
       post 'move-item', to: 'inventory#move_item'
+      get 'labels/:barcode', to: 'labels#show'
+      post 'relabel', to: 'labels#relabel'
     end
   end
 

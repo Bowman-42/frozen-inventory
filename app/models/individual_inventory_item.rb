@@ -24,6 +24,34 @@ class IndividualInventoryItem < ApplicationRecord
     reusable_barcode.barcode
   end
 
+  def self.sequence_for(barcode)
+    # Legacy items get sequence 1, others take it from the barcode format "ITEM-00001"
+    barcode.legacy_barcode? ? 1 : barcode.barcode.split('-').last.to_i
+  end
+
+  # Store this item under the barcode printed on its label, keeping location and added_at.
+  # If another item currently holds that barcode, the two swap barcodes.
+  def relabel!(label_barcode)
+    return if reusable_barcode_id == label_barcode.id
+
+    transaction do
+      old_barcode = reusable_barcode
+      other = label_barcode.individual_inventory_item
+
+      # Park the other item's sequence number so the two can swap without hitting the unique index
+      other&.update_columns(sequence_number: -other.sequence_number)
+
+      update!(reusable_barcode: label_barcode, sequence_number: self.class.sequence_for(label_barcode))
+      label_barcode.claim!
+
+      if other
+        other.update!(reusable_barcode: old_barcode, sequence_number: self.class.sequence_for(old_barcode))
+      else
+        old_barcode.release!
+      end
+    end
+  end
+
 private
 
   def assign_barcode_and_sequence
@@ -33,13 +61,7 @@ private
     else
       self.reusable_barcode = ReusableBarcode.get_available_for_item(item)
     end
-    # Extract sequence number from the barcode or use counter
-    if reusable_barcode.legacy_barcode?
-      self.sequence_number = 1  # Legacy items get sequence 1
-    else
-      # Extract sequence from barcode format "ITEM-00001"
-      self.sequence_number = reusable_barcode.barcode.split('-').last.to_i
-    end
+    self.sequence_number = self.class.sequence_for(reusable_barcode)
     self.added_at ||= Time.current
   end
 
