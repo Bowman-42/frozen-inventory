@@ -13,18 +13,26 @@ class Api::V1::InventoryController < Api::V1::BaseController
     item = find_item_by_barcode(item_barcode)
     return render_error('Item not found') unless item
 
+    # A printed individual label (ITEM-00001) is stored under exactly that barcode,
+    # so the same label can later be scanned to remove or move it
+    label_barcode = ReusableBarcode.find_by(barcode: item_barcode, item: item)
+    label_barcode = nil if label_barcode&.legacy_barcode?
+    if label_barcode&.individual_inventory_item
+      return render_error('This barcode is already in inventory')
+    end
+
     inventory_item = InventoryItem.find_by(location: location, item: item)
 
     ActiveRecord::Base.transaction do
       if inventory_item
-        individual_item = inventory_item.add_individual_item!
+        individual_item = inventory_item.add_individual_item!(reusable_barcode: label_barcode)
       else
         inventory_item = InventoryItem.create!(
           location: location,
           item: item,
           added_at: Time.current
         )
-        individual_item = inventory_item.add_individual_item!
+        individual_item = inventory_item.add_individual_item!(reusable_barcode: label_barcode)
       end
 
       # Enhanced response with individual item info
@@ -147,6 +155,8 @@ class Api::V1::InventoryController < Api::V1::BaseController
     from_location = individual_item.location
     item = individual_item.item
     from_inventory_item = individual_item.inventory_item
+    # The item keeps its label barcode when it changes location
+    moved_barcode = individual_item.reusable_barcode
 
     ActiveRecord::Base.transaction do
       # Remove the specific individual item from source location (preserving storage time info)
@@ -158,7 +168,7 @@ class Api::V1::InventoryController < Api::V1::BaseController
 
       if to_inventory_item
         # Add individual item to existing inventory item with preserved timestamp
-        individual_item = to_inventory_item.add_individual_item!(added_at: original_added_at)
+        individual_item = to_inventory_item.add_individual_item!(added_at: original_added_at, reusable_barcode: moved_barcode)
       else
         # Create new inventory item in destination location
         to_inventory_item = InventoryItem.create!(
@@ -166,7 +176,7 @@ class Api::V1::InventoryController < Api::V1::BaseController
           item: item,
           added_at: original_added_at
         )
-        individual_item = to_inventory_item.add_individual_item!(added_at: original_added_at)
+        individual_item = to_inventory_item.add_individual_item!(added_at: original_added_at, reusable_barcode: moved_barcode)
       end
 
       response_data = {

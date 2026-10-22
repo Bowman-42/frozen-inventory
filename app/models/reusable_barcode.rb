@@ -30,6 +30,10 @@ class ReusableBarcode < ApplicationRecord
     end
   end
 
+  def claim!
+    update!(in_use: true, last_used_at: Time.current)
+  end
+
   def release!
     update!(in_use: false, last_used_at: Time.current)
   end

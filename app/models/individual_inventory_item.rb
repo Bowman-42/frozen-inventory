@@ -27,7 +27,12 @@ class IndividualInventoryItem < ApplicationRecord
 private
 
   def assign_barcode_and_sequence
-    self.reusable_barcode = ReusableBarcode.get_available_for_item(item)
+    # Keep the barcode printed on the label when one is given, otherwise take one from the pool
+    if reusable_barcode
+      reusable_barcode.claim!
+    else
+      self.reusable_barcode = ReusableBarcode.get_available_for_item(item)
+    end
     # Extract sequence number from the barcode or use counter
     if reusable_barcode.legacy_barcode?
       self.sequence_number = 1  # Legacy items get sequence 1

@@ -23,11 +23,12 @@ class InventoryItem < ApplicationRecord
   }
 
   # Individual item management methods
-  def add_individual_item!(added_at: nil)
+  def add_individual_item!(added_at: nil, reusable_barcode: nil)
     individual_item = IndividualInventoryItem.create!(
       location: location,
       item: item,
       inventory_item: self,
+      reusable_barcode: reusable_barcode,
       added_at: added_at
     )
 
