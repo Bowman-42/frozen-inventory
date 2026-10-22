@@ -14,18 +14,31 @@ class BarcodePrinter
   A4_WIDTH = 210 # mm
   A4_HEIGHT = 297 # mm
 
-  def self.generate_pdf(items, type: :item, positions: nil)
-    new.generate_pdf(items, type: type, positions: positions)
+  LABEL_COLORS = {
+    'black'  => '000000',
+    'red'    => 'CC0000',
+    'orange' => 'E67300',
+    'green'  => '1E7B34',
+    'blue'   => '1A5FB4',
+    'purple' => '6A1B9A'
+  }.freeze
+
+  DEFAULT_LABEL_COLOR = 'black'
+
+  def self.generate_pdf(items, type: :item, positions: nil, color: DEFAULT_LABEL_COLOR)
+    new.generate_pdf(items, type: type, positions: positions, color: color)
   end
 
-  def generate_pdf(items, type: :item, positions: nil)
+  def generate_pdf(items, type: :item, positions: nil, color: DEFAULT_LABEL_COLOR)
+    color_hex = LABEL_COLORS.fetch(color, LABEL_COLORS[DEFAULT_LABEL_COLOR])
+
     Prawn::Document.new(page_size: 'A4', margin: [0, 0, 0, 0]) do |pdf|
       if positions
-        generate_positioned_page(pdf, items, type, positions)
+        generate_positioned_page(pdf, items, type, positions, color_hex)
       else
         # Original sequential logic for fresh sheets
         items.each_slice(LABELS_PER_PAGE) do |page_items|
-          generate_page(pdf, page_items, type)
+          generate_page(pdf, page_items, type, color_hex)
           pdf.start_new_page unless page_items == items.last(LABELS_PER_PAGE)
         end
       end
@@ -34,7 +47,7 @@ class BarcodePrinter
 
   private
 
-  def generate_page(pdf, items, type)
+  def generate_page(pdf, items, type, color_hex)
     # Calculate positions for 14 labels (2x7 grid) starting from absolute top
     label_width_pts = mm_to_pts(LABEL_WIDTH)
     label_height_pts = mm_to_pts(LABEL_HEIGHT)
@@ -50,11 +63,11 @@ class BarcodePrinter
       x = margin_x + (col * label_width_pts)
       y = pdf.bounds.height - (row * label_height_pts)  # Start from very top
 
-      generate_label(pdf, item, x, y, label_width_pts, label_height_pts, type)
+      generate_label(pdf, item, x, y, label_width_pts, label_height_pts, type, color_hex)
     end
   end
 
-  def generate_positioned_page(pdf, items, type, positions)
+  def generate_positioned_page(pdf, items, type, positions, color_hex)
     position_map = positions.zip(items).to_h
 
     # Calculate positions for 14 labels (2x7 grid) starting from absolute top
@@ -73,11 +86,11 @@ class BarcodePrinter
       x = margin_x + (col * label_width_pts)
       y = pdf.bounds.height - (row * label_height_pts)
 
-      generate_label(pdf, position_map[pos], x, y, label_width_pts, label_height_pts, type)
+      generate_label(pdf, position_map[pos], x, y, label_width_pts, label_height_pts, type, color_hex)
     end
   end
 
-  def generate_label(pdf, item, x, y, width, height, type)
+  def generate_label(pdf, item, x, y, width, height, type, color_hex)
     pdf.bounding_box([x, y], width: width, height: height) do
       # Draw border for debugging (remove in production)
       pdf.stroke_bounds
@@ -101,6 +114,8 @@ class BarcodePrinter
       # Move barcode further down - position it lower on the label
       available_height = height - 55  # More space for text below
       barcode_y = height - 25 - ((available_height - barcode_height) / 2)
+
+      pdf.fill_color(color_hex)
 
       # Barcode text above barcode - moved further up by 10 points
       pdf.font_size(8) do

@@ -27,6 +27,25 @@
 <div class="locations-list">
   <% if @locations.any? %>
     <%= form_tag print_barcodes_locations_path, method: :post, id: "barcode-print-form", target: "_blank" do %>
+      <div class="label-color-selector">
+        <span class="label-color-selector-title"><%= t('items.select_label_color') %></span>
+        <div class="color-swatch-group">
+          <% [
+               ['black', '#000000'],
+               ['red', '#CC0000'],
+               ['orange', '#E67300'],
+               ['green', '#1E7B34'],
+               ['blue', '#1A5FB4'],
+               ['purple', '#6A1B9A']
+             ].each_with_index do |(key, hex), index| %>
+            <label class="color-swatch-option">
+              <input type="radio" name="label_color" value="<%= key %>" <%= 'checked' if index == 0 %> class="color-swatch-radio">
+              <span class="color-swatch" style="background-color: <%= hex %>;" title="<%= t("items.label_colors.#{key}") %>"></span>
+            </label>
+          <% end %>
+        </div>
+      </div>
+
       <div class="locations-table">
         <table>
           <thead>
@@ -143,3 +162,53 @@ document.addEventListener('DOMContentLoaded', initializeLocationsPrintButton);
 document.addEventListener('turbo:load', initializeLocationsPrintButton);
 document.addEventListener('turbo:render', initializeLocationsPrintButton);
 </script>
+
+<style>
+.label-color-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.label-color-selector-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #495057;
+}
+
+.color-swatch-group {
+  display: flex;
+  gap: 12px;
+}
+
+.color-swatch-option {
+  cursor: pointer;
+}
+
+.color-swatch-option .color-swatch-radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.color-swatch-option .color-swatch {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #dee2e6;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+
+.color-swatch-option .color-swatch-radio:checked + .color-swatch {
+  border-color: #212529;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px #212529;
+}
+
+.color-swatch-option:hover .color-swatch {
+  border-color: #007bff;
+}
+</style>

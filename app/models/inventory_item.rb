@@ -37,7 +37,7 @@ class InventoryItem < ApplicationRecord
     individual_item
   end
 
-  def remove_individual_item!(strategy: :fifo, target: nil)
+  def remove_individual_item!(strategy: :fifo, target: nil, removal_method: "manual")
     individual_item = if target
       target
     else
@@ -60,6 +60,19 @@ class InventoryItem < ApplicationRecord
       original_added_at: individual_item.added_at,
       storage_days: individual_item.storage_days
     }
+
+    RemovalHistory.create!(
+      item: item,
+      item_name: item.name,
+      item_barcode: item.barcode,
+      location: location,
+      location_name: location.name,
+      individual_barcode: individual_item.individual_barcode,
+      added_at: individual_item.added_at,
+      removed_at: Time.current,
+      storage_days: individual_item.storage_days,
+      removal_method: removal_method
+    )
 
     individual_item.destroy!
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_15_123702) do
+ActiveRecord::Schema[8.0].define(version: 2026_07_05_120000) do
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -79,6 +79,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_123702) do
     t.index ["barcode"], name: "index_locations_on_barcode"
   end
 
+  create_table "removal_histories", force: :cascade do |t|
+    t.integer "item_id"
+    t.string "item_name", null: false
+    t.string "item_barcode", null: false
+    t.integer "location_id"
+    t.string "location_name", null: false
+    t.string "individual_barcode", null: false
+    t.datetime "added_at", null: false
+    t.datetime "removed_at", null: false
+    t.float "storage_days", null: false
+    t.string "removal_method", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_removal_histories_on_item_id"
+    t.index ["location_id"], name: "index_removal_histories_on_location_id"
+    t.index ["removal_method"], name: "index_removal_histories_on_removal_method"
+    t.index ["removed_at"], name: "index_removal_histories_on_removed_at"
+  end
+
   create_table "reusable_barcodes", force: :cascade do |t|
     t.integer "item_id", null: false
     t.string "barcode", null: false
@@ -98,5 +117,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_123702) do
   add_foreign_key "inventory_items", "locations"
   add_foreign_key "item_id_counters", "items"
   add_foreign_key "items", "categories"
+  add_foreign_key "removal_histories", "items"
+  add_foreign_key "removal_histories", "locations"
   add_foreign_key "reusable_barcodes", "items"
 end

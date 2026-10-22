@@ -61,6 +61,20 @@ de:
     skip_middle: "Mitte Überspringen (8)"
     clear_all: "Alle Löschen"
 
+  # Inventar
+  inventory:
+    history:
+      title: "Entfernungsverlauf"
+      subtitle: "Sehen Sie, was aus dem Inventar entfernt wurde, wann es hinzugefügt wurde und wie lange es gelagert wurde."
+      nav_button: "Verlauf"
+      search_placeholder: "Entfernte Artikel nach Name, Barcode oder Standort suchen..."
+      removed_at: "Entfernt"
+      method: "Methode"
+      method_manual: "Manuell"
+      method_scan: "Gescannt"
+      no_results: "Kein Entfernungsverlauf gefunden für \"%{query}\"."
+      no_history: "Es wurden noch keine Artikel entfernt."
+
   # Dashboard
   dashboard:
     title: "Dashboard"
@@ -112,6 +126,14 @@ de:
     fresh_sheet_help: "Für neue Blätter oder nach dem Umdrehen gebrauchter Blätter verwenden"
     partial_sheet_help: "Spezifische Positionen auf teilweise verwendeten Blättern auswählen"
     select_label_positions: "Etikett-Positionen Auswählen (2×7-Raster)"
+    select_label_color: "Etikettenfarbe"
+    label_colors:
+      black: "Schwarz"
+      red: "Rot"
+      orange: "Orange"
+      green: "Grün"
+      blue: "Blau"
+      purple: "Lila"
     items_selected:
       zero: "0 Artikel ausgewählt"
       one: "1 Artikel ausgewählt (%{copies} Kopie)"
@@ -164,6 +186,8 @@ de:
     no_locations_message: "Noch keine %{locations} zum System hinzugefügt."
     no_items_in_location: "Noch keine Artikel zu diesem Standort hinzugefügt."
     create_first: "Erstellen Sie Ihren ersten %{location}"
+    remove_one: "Eins Entfernen"
+    confirm_remove_one: "Ein \"%{name}\" von diesem Standort entfernen?"
 
   # Einstellungen
   settings:

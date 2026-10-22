@@ -259,6 +259,10 @@ class ItemSelectionManager {
     // Clear any selected positions
     document.querySelectorAll('.modal-position-input').forEach(cb => cb.checked = false);
 
+    // Reset color selection to the first swatch (black)
+    const firstColorRadio = document.querySelector('input[name="modal_label_color"]');
+    if (firstColorRadio) firstColorRadio.checked = true;
+
     // Show modal
     modal.style.display = 'block';
 
@@ -393,6 +397,15 @@ class ItemSelectionManager {
         form.appendChild(positionInput);
       });
     }
+
+    // Add label color from modal
+    const labelColor = document.querySelector('input[name="modal_label_color"]:checked')?.value || 'black';
+    const labelColorInput = document.createElement('input');
+    labelColorInput.type = 'hidden';
+    labelColorInput.name = 'label_color';
+    labelColorInput.value = labelColor;
+    labelColorInput.className = 'persistent-selection-input';
+    form.appendChild(labelColorInput);
 
     this.closePrintModal();
     form.submit();

@@ -198,6 +198,25 @@
           <button type="button" class="preset-btn" onclick="clearAllModalPositions()"><%= t('navigation.clear_all') %></button>
         </div>
       </div>
+
+      <div class="label-color-selector">
+        <h4><%= t('items.select_label_color') %></h4>
+        <div class="color-swatch-group">
+          <% [
+               ['black', '#000000'],
+               ['red', '#CC0000'],
+               ['orange', '#E67300'],
+               ['green', '#1E7B34'],
+               ['blue', '#1A5FB4'],
+               ['purple', '#6A1B9A']
+             ].each_with_index do |(key, hex), index| %>
+            <label class="color-swatch-option">
+              <input type="radio" name="modal_label_color" value="<%= key %>" <%= 'checked' if index == 0 %> class="color-swatch-radio">
+              <span class="color-swatch" style="background-color: <%= hex %>;" title="<%= t("items.label_colors.#{key}") %>"></span>
+            </label>
+          <% end %>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary modal-cancel"><%= t('navigation.cancel') %></button>
@@ -543,6 +562,51 @@
 
 .preset-btn:active {
   background: #495057;
+}
+
+.label-color-selector {
+  margin-top: 20px;
+}
+
+.label-color-selector h4 {
+  margin: 0 0 10px 0;
+  color: #495057;
+  font-size: 15px;
+}
+
+.color-swatch-group {
+  display: flex;
+  gap: 12px;
+}
+
+.color-swatch-option {
+  cursor: pointer;
+}
+
+.color-swatch-option .color-swatch-radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.color-swatch-option .color-swatch {
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #dee2e6;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+
+.color-swatch-option .color-swatch-radio:checked + .color-swatch {
+  border-color: #212529;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px #212529;
+}
+
+.color-swatch-option:hover .color-swatch {
+  border-color: #007bff;
 }
 
 .filters-section {

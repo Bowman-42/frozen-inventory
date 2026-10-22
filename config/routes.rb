@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       get :search
     end
   end
+  delete 'locations/:barcode/remove-item/:item_id', to: 'locations#remove_item', as: :location_remove_item
   resources :items, only: [:index, :show, :new, :create, :edit, :update], param: :barcode do
     collection do
       post :print_barcodes
@@ -40,6 +41,7 @@ Rails.application.routes.draw do
   get 'inventory', to: 'inventory#index'
   get 'inventory/search', to: 'inventory#search'
   get 'inventory/oldest', to: 'inventory#oldest_items'
+  get 'inventory/history', to: 'inventory#history', as: :inventory_history
   get 'inventory/manual-remove', to: 'inventory#manual_remove', as: :inventory_manual_remove
   delete 'inventory/manual-remove/:id', to: 'inventory#remove_individual', as: :inventory_remove_individual
   get 'settings', to: 'settings#show'

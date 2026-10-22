@@ -102,6 +102,17 @@ en:
       remove_button: "Remove"
       confirm_remove: "Remove \"%{name}\" (%{barcode}) from inventory?"
       no_results: "No inventory items found matching \"%{query}\"."
+    history:
+      title: "Removal History"
+      subtitle: "See what's been removed from inventory, when it was added, and how long it was stored."
+      nav_button: "History"
+      search_placeholder: "Search removed items by name, barcode, or location..."
+      removed_at: "Removed"
+      method: "Method"
+      method_manual: "Manual"
+      method_scan: "Scanned Out"
+      no_results: "No removal history found matching \"%{query}\"."
+      no_history: "No items have been removed yet."
 
   # Dashboard
   dashboard:
@@ -154,6 +165,14 @@ en:
     fresh_sheet_help: "Use for new sheets or after flipping used sheets"
     partial_sheet_help: "Select specific positions on partially used sheets"
     select_label_positions: "Select Label Positions (2×7 grid)"
+    select_label_color: "Label Color"
+    label_colors:
+      black: "Black"
+      red: "Red"
+      orange: "Orange"
+      green: "Green"
+      blue: "Blue"
+      purple: "Purple"
     items_selected:
       zero: "0 items selected"
       one: "1 item selected (%{copies} copy)"
@@ -206,6 +225,8 @@ en:
     no_locations_message: "No %{locations} have been added to the system yet."
     no_items_in_location: "No items have been added to this location yet."
     create_first: "Create your first %{location}"
+    remove_one: "Remove One"
+    confirm_remove_one: "Remove one \"%{name}\" from this location?"
 
   # Settings
   settings:

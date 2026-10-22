@@ -79,7 +79,7 @@ class Api::V1::InventoryController < Api::V1::BaseController
     inventory_item = individual_item.inventory_item
 
     ActiveRecord::Base.transaction do
-      removed_info = inventory_item.remove_individual_item!(target: individual_item)
+      removed_info = inventory_item.remove_individual_item!(target: individual_item, removal_method: "scan")
 
       if removed_info[:completely_removed]
         response_data = {
@@ -150,7 +150,7 @@ class Api::V1::InventoryController < Api::V1::BaseController
 
     ActiveRecord::Base.transaction do
       # Remove the specific individual item from source location (preserving storage time info)
-      removed_info = from_inventory_item.remove_individual_item!(target: individual_item)
+      removed_info = from_inventory_item.remove_individual_item!(target: individual_item, removal_method: "moved")
       original_added_at = removed_info[:original_added_at]
 
       # Find or create inventory item in destination location

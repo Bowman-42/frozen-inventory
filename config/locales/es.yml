@@ -61,6 +61,20 @@ es:
     skip_middle: "Saltar Medio (8)"
     clear_all: "Limpiar Todo"
 
+  # Inventario
+  inventory:
+    history:
+      title: "Historial de Eliminaciones"
+      subtitle: "Vea qué se ha eliminado del inventario, cuándo se agregó y cuánto tiempo estuvo almacenado."
+      nav_button: "Historial"
+      search_placeholder: "Buscar artículos eliminados por nombre, código de barras o ubicación..."
+      removed_at: "Eliminado"
+      method: "Método"
+      method_manual: "Manual"
+      method_scan: "Escaneado"
+      no_results: "No se encontró historial de eliminaciones que coincida con \"%{query}\"."
+      no_history: "Aún no se ha eliminado ningún artículo."
+
   # Tablero
   dashboard:
     title: "Tablero"
@@ -112,6 +126,14 @@ es:
     fresh_sheet_help: "Usar para hojas nuevas o después de voltear hojas usadas"
     partial_sheet_help: "Seleccionar posiciones específicas en hojas parcialmente usadas"
     select_label_positions: "Seleccionar Posiciones de Etiquetas (cuadrícula 2×7)"
+    select_label_color: "Color de la Etiqueta"
+    label_colors:
+      black: "Negro"
+      red: "Rojo"
+      orange: "Naranja"
+      green: "Verde"
+      blue: "Azul"
+      purple: "Morado"
     items_selected:
       zero: "0 artículos seleccionados"
       one: "1 artículo seleccionado (%{copies} copia)"
@@ -164,6 +186,8 @@ es:
     no_locations_message: "No se han agregado %{locations} al sistema aún."
     no_items_in_location: "No se han agregado artículos a esta ubicación aún."
     create_first: "Cree su primer %{location}"
+    remove_one: "Eliminar Uno"
+    confirm_remove_one: "¿Eliminar uno de \"%{name}\" de esta ubicación?"
 
   # Configuración
   settings:

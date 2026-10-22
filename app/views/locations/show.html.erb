@@ -54,6 +54,13 @@
             <% end %>
             <small><%= t('items.added_ago', time: time_ago_in_words(inventory_item.added_at)) %></small>
           </div>
+          <div class="item-actions">
+            <%= form_with url: location_remove_item_path(@location.barcode, inventory_item.item_id), method: :delete, local: true do |f| %>
+              <%= f.submit t('locations.remove_one'),
+                  class: "btn btn-danger btn-sm",
+                  data: { confirm: t('locations.confirm_remove_one', name: inventory_item.item.name) } %>
+            <% end %>
+          </div>
         </div>
       <% end %>
     </div>

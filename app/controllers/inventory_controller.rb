@@ -40,6 +40,20 @@ class InventoryController < ApplicationController
     @very_old_items = InventoryItem.where('added_at < ?', 180.days.ago).count
   end
 
+  def history
+    @query = params[:q]
+    @removal_history = RemovalHistory.excluding_moves.recent_first
+
+    if @query.present?
+      @removal_history = @removal_history.where(
+        'LOWER(item_name) LIKE ? OR LOWER(item_barcode) LIKE ? OR LOWER(location_name) LIKE ?',
+        "%#{@query.downcase}%", "%#{@query.downcase}%", "%#{@query.downcase}%"
+      )
+    end
+
+    @removal_history = @removal_history.page(params[:page]).per(20)
+  end
+
   def manual_remove
     @query = params[:q]
     if @query.present?

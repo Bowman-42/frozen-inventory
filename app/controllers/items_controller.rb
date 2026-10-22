@@ -143,6 +143,8 @@ class ItemsController < ApplicationController
       end
     end
 
+    label_color = params[:label_color]
+
     if params[:sheet_type] == 'partial' && params[:label_positions].present?
       positions = params[:label_positions].map(&:to_i).sort
 
@@ -152,10 +154,10 @@ class ItemsController < ApplicationController
         return
       end
 
-      pdf = BarcodePrinter.generate_pdf(items_to_print, type: :item, positions: positions)
+      pdf = BarcodePrinter.generate_pdf(items_to_print, type: :item, positions: positions, color: label_color)
     else
       # Standard sequential printing
-      pdf = BarcodePrinter.generate_pdf(items_to_print, type: :item)
+      pdf = BarcodePrinter.generate_pdf(items_to_print, type: :item, color: label_color)
     end
 
     # Store print success in session for JavaScript to detect

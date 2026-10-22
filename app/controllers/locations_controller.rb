@@ -27,6 +27,17 @@ class LocationsController < ApplicationController
     @oldest_inventory_item = @location.inventory_items.order(:added_at).first
   end
 
+  def remove_item
+    location = Location.find_by!(barcode: params[:barcode])
+    inventory_item = location.inventory_items.find_by!(item_id: params[:item_id])
+    item_name = inventory_item.item.name
+
+    removed_info = inventory_item.remove_individual_item!
+
+    redirect_to location_path(location.barcode),
+      notice: t('messages.success.item_removed', name: item_name, barcode: removed_info[:individual_barcode])
+  end
+
   def new
     @location = Location.new
   end
@@ -49,7 +60,7 @@ class LocationsController < ApplicationController
       return
     end
 
-    pdf = BarcodePrinter.generate_pdf(@locations, type: :location)
+    pdf = BarcodePrinter.generate_pdf(@locations, type: :location, color: params[:label_color])
 
     send_data pdf,
               filename: "location_barcodes_#{Date.current.strftime('%Y%m%d')}.pdf",

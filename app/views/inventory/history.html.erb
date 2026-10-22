@@ -1,0 +1,73 @@
+<% if notice %>
+  <div class="flash-notice"><%= notice %></div>
+<% end %>
+
+<div class="breadcrumb">
+  <%= link_to t('navigation.back_to_dashboard'), root_path, class: "back-link" %>
+</div>
+
+<div class="header">
+  <h1>📜 <%= t('inventory.history.title') %></h1>
+  <p class="page-subtitle"><%= t('inventory.history.subtitle') %></p>
+
+  <%= form_with url: inventory_history_path, method: :get, local: true, class: "search-form" do |f| %>
+    <%= f.text_field :q, placeholder: t('inventory.history.search_placeholder'),
+        value: @query, class: "search-input" %>
+    <%= f.submit t('navigation.search'), class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<div class="history-list">
+  <% if @removal_history.any? %>
+    <div class="items-table">
+      <table>
+        <thead>
+          <tr>
+            <th><%= t('items.item_name') %></th>
+            <th><%= location_term %></th>
+            <th><%= t('dashboard.added') %></th>
+            <th><%= t('inventory.history.removed_at') %></th>
+            <th><%= t('aging.storage_duration') %></th>
+            <th><%= t('inventory.history.method') %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @removal_history.each do |entry| %>
+            <tr>
+              <td>
+                <%= entry.item_name %>
+                <br><small class="barcode"><%= entry.individual_barcode %></small>
+              </td>
+              <td><%= entry.location_name %></td>
+              <td class="timestamp"><%= entry.added_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <td class="timestamp"><%= entry.removed_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <td class="storage-duration">
+                <% days = entry.storage_days.round %>
+                <span class="storage-duration-badge <%= aging_css_class(days) %>">
+                  <%= days %> <%= days == 1 ? t('time.days.one') : t('time.days.other') %>
+                </span>
+              </td>
+              <td>
+                <% if entry.removal_method == 'scan' %>
+                  📱 <%= t('inventory.history.method_scan') %>
+                <% else %>
+                  🗑️ <%= t('inventory.history.method_manual') %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <%= paginate @removal_history %>
+  <% else %>
+    <div class="empty-state">
+      <% if @query.present? %>
+        <p><%= t('inventory.history.no_results', query: @query) %></p>
+      <% else %>
+        <p><%= t('inventory.history.no_history') %></p>
+      <% end %>
+    </div>
+  <% end %>
+</div>
