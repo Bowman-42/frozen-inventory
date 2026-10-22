@@ -2,8 +2,8 @@
 
 one:
   name: Vegetables
-  description: MyText
+  description: Frozen vegetables
 
 two:
   name: Meat
-  description: MyText
+  description: Frozen meat

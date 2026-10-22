@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  barcode: MyString
-  description: MyText
+  name: Peas
+  barcode: ITMFIXTURE01
+  description: Frozen peas
+  category: one
 
 two:
-  name: MyString
-  barcode: MyString
-  description: MyText
+  name: Steak
+  barcode: ITMFIXTURE02
+  description: Beef steak
+  category: two
